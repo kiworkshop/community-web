@@ -1,9 +1,9 @@
-import { singletons } from "pages/_app";
+import MyApp from 'pages/_app';
 import * as React from 'react';
 import Notice from '../../domain/model/Notice';
 import NoticeDetail from '../components/organisms/NoticeDetail';
 
-const noticeService = singletons.cms.mother.notice.service;
+const noticeService = MyApp.inversiftContainers.cms.mother.notice.service;
 
 const NoticeDetailContainer: React.FC = () => {
   const [notice, setNotice] = React.useState(Notice.builder()

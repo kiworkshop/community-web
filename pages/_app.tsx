@@ -8,17 +8,17 @@ import { inversifyIds } from 'src/inversify.id';
 import NoticeService from 'src/mother/notice/domain/service/NoticeService';
 import theme from '../src/common/presentation/components/theme';
 
-export const singletons = {
-  cms: {
-    mother: {
-      notice: {
-        service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
+class MyApp extends App {
+  public static inversiftContainers = {
+    cms: {
+      mother: {
+        notice: {
+          service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
+        }
       }
     }
   }
-}
 
-class MyApp extends App {
   public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
