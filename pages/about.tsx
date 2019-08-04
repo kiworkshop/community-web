@@ -1,10 +1,10 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Container from '@material-ui/core/Container';
 import MuiLink from '@material-ui/core/Link';
-import ProTip from '../src/ProTip';
-import Link from '../src/Link';
+import Typography from '@material-ui/core/Typography';
+import React from 'react';
+import Link from 'ui/Link';
+import ProTip from 'ui/ProTip';
 
 function MadeWithLove() {
   return (

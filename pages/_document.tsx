@@ -1,10 +1,10 @@
-import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
-import theme from '../src/theme';
+import Document, { Head, Main, NextScript } from 'next/document';
+import React from 'react';
+import theme from '../ui/theme';
 
 class MyDocument extends Document {
-  render() {
+  public render() {
     return (
       <html lang="en">
         <Head>
