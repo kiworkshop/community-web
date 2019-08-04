@@ -1,22 +1,23 @@
 import assert from "assert-plus"
+import Properties from "src/common/domain/model/Properties";
 
 export default class Notice {
   public static builder() {
-    const fields = {} as Notice
+    const properties = {} as Properties<Notice>
     const builder = {
       id: (id: number) => {
-        fields.id = id;
+        properties.id = id;
         return builder;
       },
       title: (title: string) => {
-        fields.title = title;
+        properties.title = title;
         return builder;
       },
       content: (content: string) => {
-        fields.content = content;
+        properties.content = content;
         return builder;
       },
-      build: () => new Notice(fields)
+      build: () => new Notice(properties)
     }
     return builder;
   }
@@ -25,7 +26,7 @@ export default class Notice {
   public title: string = "";
   public content: string = "";
 
-  private constructor({ id, title, content }: any) {
+  private constructor({ id, title, content }: Properties<Notice>) {
     assert.ok(title.trim().length > 0, "title must not be blank.")
     assert.ok(content.trim().length > 0, "content must not be blank.")
 
