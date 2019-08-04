@@ -1,12 +1,12 @@
-import React from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/styles';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../src/theme';
+import React from 'react';
+import theme from '../ui/theme';
 
 class MyApp extends App {
-  componentDidMount() {
+  public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
@@ -14,7 +14,7 @@ class MyApp extends App {
     }
   }
 
-  render() {
+  public render() {
     const { Component, pageProps } = this.props;
 
     return (
