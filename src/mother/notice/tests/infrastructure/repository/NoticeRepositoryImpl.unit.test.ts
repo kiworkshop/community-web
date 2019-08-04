@@ -1,6 +1,7 @@
 import _Axios from 'axios';
 jest.mock('axios')
 
+import 'reflect-metadata'
 import RepositoryError from 'src/common/infrastructure/repository/RepositoryError';
 import { getRepositoryErrorFixture } from 'src/common/tests/infrastructure/repository/RepositoryError.unit.test';
 import Notice from 'src/mother/notice/domain/model/Notice';
