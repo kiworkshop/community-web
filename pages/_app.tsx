@@ -8,17 +8,17 @@ import { inversifyIds } from 'src/inversify.id';
 import NoticeService from 'src/mother/notice/domain/service/NoticeService';
 import theme from '../src/common/presentation/components/theme';
 
-class MyApp extends App {
-  public static inversiftContainers = {
-    cms: {
-      mother: {
-        notice: {
-          service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
-        }
+export const inversifyServices = {
+  cms: {
+    mother: {
+      notice: {
+        service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
       }
     }
   }
+}
 
+export default class MyApp extends App {
   public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -44,5 +44,3 @@ class MyApp extends App {
     );
   }
 }
-
-export default MyApp;

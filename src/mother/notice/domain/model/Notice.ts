@@ -4,15 +4,15 @@ export default class Notice {
   public static builder() {
     const fields = {} as Notice
     const builder = {
-      setId: (id: number) => {
+      id: (id: number) => {
         fields.id = id;
         return builder;
       },
-      setTitle: (title: string) => {
+      title: (title: string) => {
         fields.title = title;
         return builder;
       },
-      setContent: (content: string) => {
+      content: (content: string) => {
         fields.content = content;
         return builder;
       },

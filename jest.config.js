@@ -23,7 +23,7 @@ module.exports = {
   // collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/inversify.id.ts"],
+  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/inversify.*.ts"],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -79,11 +79,8 @@ module.exports = {
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   moduleNameMapper: {
-    "^lib/(.*)$": "<rootDir>/lib/$1",
     "^pages/(.*)$": "<rootDir>/pages/$1",
     "^server/(.*)$": "<rootDir>/server/$1",
-    "^tests/(.*)$": "<rootDir>/tests/$1",
-    "^ui/(.*)$": "<rootDir>/ui/$1",
     "^src/(.*)$": "<rootDir>/src/$1"
   },
 
