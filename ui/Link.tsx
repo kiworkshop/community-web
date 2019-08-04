@@ -24,13 +24,13 @@ const NextComposed = React.forwardRef<HTMLAnchorElement, NextComposedProps>((pro
   );
 });
 
-interface ILinkPropsBase {
+interface LinkPropsBase {
   activeClassName?: string;
   innerRef?: React.Ref<HTMLAnchorElement>;
   naked?: boolean;
 }
 
-type LinkProps = ILinkPropsBase & NextComposedProps & Omit<MuiLinkProps, 'ref'>;
+type LinkProps = LinkPropsBase & NextComposedProps & Omit<MuiLinkProps, 'ref'>;
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/#with-link

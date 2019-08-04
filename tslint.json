@@ -26,6 +26,19 @@
     "no-boolean-literal-compare": true,
     "switch-final-break": true,
     "prefer-method-signature": true,
-    "ordered-imports": true
+    "ordered-imports": true,
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "variable-name": {
+      "options": [
+        "require-const-for-all-caps",
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ]
+    }
   }
 }

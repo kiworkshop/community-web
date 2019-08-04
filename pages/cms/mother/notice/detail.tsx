@@ -1,3 +1,3 @@
-import NoticeDetailContainer from "ui/containers/cms/mother/notice/NoticeDetailContainer";
+import NoticeDetailContainer from "src/mother/notice/presentation/containers/NoticeDetailContainer";
 
 export default () => <NoticeDetailContainer />;

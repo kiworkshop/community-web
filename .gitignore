@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 
 # misc
 .DS_Store
@@ -10,9 +10,16 @@
 .env.test.local
 .env.production.local
 
+*~
+*.swp
+coverage
+.vscode
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 # Next.js
-/.next
+.next
+.node_env
+.browser_env
