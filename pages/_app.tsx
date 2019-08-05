@@ -1,12 +1,12 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
-import { inversifyContainer } from 'inversify.config';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
+import theme from 'src/common/presentation/components/theme';
 import { inversifyIds } from 'src/inversify.id';
 import NoticeService from 'src/mother/notice/domain/service/NoticeService';
-import theme from '../src/common/presentation/components/theme';
+import { inversifyContainer } from '../inversify.config';
 
 export const inversifyServices = {
   cms: {

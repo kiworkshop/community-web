@@ -21,7 +21,7 @@ module.exports = {
   // collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/inversify.*.ts"],
+  collectCoverageFrom: ["**/*.{ts,tsx}", "!**/node_modules/**", "!**/inversify.*.ts", "!pages/_document.tsx"],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
@@ -127,7 +127,7 @@ module.exports = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
