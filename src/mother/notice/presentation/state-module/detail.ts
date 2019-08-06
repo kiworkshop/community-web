@@ -63,7 +63,13 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
+    // fail
+    // const t = noticeService.getNotice;
+    // const notice = yield call(() => t(id));
     // const notice = yield call(noticeService.getNotice, id);
+
+    // success
+    // noticeService 객체가 유지되어야 한다...
     // const notice = yield call(() => noticeService.getNotice(id));
     const notice = yield call((_id: number) => noticeService.getNotice(_id), id);
 
