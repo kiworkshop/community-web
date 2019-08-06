@@ -1,7 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
-import App, { AppContext, AppInitialProps, Container } from 'next/app';
+import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
@@ -11,6 +11,16 @@ import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-
 import { inversifyIds } from 'src/inversify.id';
 import NoticeService from 'src/mother/notice/domain/service/NoticeService';
 import { inversifyContainer } from '../inversify.config';
+
+export const inversifyServices = {
+  cms: {
+    mother: {
+      notice: {
+        service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
+      }
+    }
+  }
+};
 
 const store = (() => {
   const sagaMiddleware = createSagaMiddleware();
@@ -32,26 +42,6 @@ const store = (() => {
 })();
 
 export default class MyApp extends App {
-  public static inversifyServices = {
-    cms: {
-      mother: {
-        notice: {
-          service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
-        }
-      }
-    }
-  };
-
-  public static async getInitialProps({ Component, ctx }: AppContext): Promise<AppInitialProps> {
-    let pageProps = {}
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-
-    return { pageProps }
-  }
-
   public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
