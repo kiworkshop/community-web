@@ -1,11 +1,9 @@
 import { Record } from "immutable";
-import { inversifyContainer } from "inversify.config";
+import inversifyServices from "inversify.services";
 import Router from 'next/router';
 import { call, put, takeEvery } from "redux-saga/effects";
-import { inversifyIds } from "src/inversify.id";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/model/Notice";
-import NoticeService from "../../domain/service/NoticeService";
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
 
@@ -60,7 +58,7 @@ export function* saga() {
   yield takeEvery(getType(fetchNotice), sagaFetchNotice);
 }
 
-const noticeService = inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
+const noticeService = inversifyServices.cms.mother.notice.service
 function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload

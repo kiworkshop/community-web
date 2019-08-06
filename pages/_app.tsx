@@ -8,19 +8,6 @@ import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Store, StoreEnhancer } from 'redux';
 import theme from 'src/common/presentation/components/theme';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
-import { inversifyIds } from 'src/inversify.id';
-import NoticeService from 'src/mother/notice/domain/service/NoticeService';
-import { inversifyContainer } from '../inversify.config';
-
-export const inversifyServices = {
-  cms: {
-    mother: {
-      notice: {
-        service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
-      }
-    }
-  }
-};
 
 const store = (() => {
   const sagaMiddleware = createSagaMiddleware();
