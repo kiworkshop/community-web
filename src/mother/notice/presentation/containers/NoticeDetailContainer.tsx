@@ -1,15 +1,38 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import { RootState } from 'src/common/presentation/state-module/root';
 import Notice from '../../domain/model/Notice';
 import NoticeDetail from '../components/organisms/NoticeDetail';
+import * as detailModule from "../state-module/detail"
 
-const NoticeDetailContainer: React.FC = () => {
-  const [notice] = React.useState(Notice.builder()
-    .id(-1)
-    .title("title")
-    .content("content").build()
-  );
+interface Props {
+  notice: Notice
+  pending: boolean
+  rejected: boolean
 
-  return <NoticeDetail notice={notice} />;
+  dispatchers: typeof detailModule
 }
 
-export default NoticeDetailContainer;
+const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected, dispatchers }) => {
+  React.useEffect(() => {
+    dispatchers.fetchNotice({ id: 1 })
+  }, [])
+
+  return <NoticeDetail
+    notice={notice}
+    pending={pending}
+    rejected={rejected} />;
+}
+
+const mapStateToProps = ({ mother }: RootState) => ({
+  notice: mother.notice.detail.get("notice"),
+  pending: mother.notice.detail.get("pending"),
+  rejected: mother.notice.detail.get("rejected")
+})
+
+const mapDispatchToProps = (dispatch: Dispatch<detailModule.Action>) => ({
+  dispatchers: bindActionCreators(detailModule, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoticeDetailContainer);
