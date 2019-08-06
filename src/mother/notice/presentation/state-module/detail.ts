@@ -63,8 +63,9 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
-    const notice = yield call(noticeService.getNotice, id);
-    // const notice = yield noticeService.getNotice(id);
+    // const notice = yield call(noticeService.getNotice, id);
+    // const notice = yield call(() => noticeService.getNotice(id));
+    const notice = yield call((_id: number) => noticeService.getNotice(_id), id);
 
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
