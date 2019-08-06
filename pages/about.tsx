@@ -3,8 +3,8 @@ import Container from '@material-ui/core/Container';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import Link from 'ui/Link';
-import ProTip from 'ui/ProTip';
+import Link from 'src/common/presentation/components/Link';
+import ProTip from 'src/common/presentation/components/ProTip';
 
 function MadeWithLove() {
   return (

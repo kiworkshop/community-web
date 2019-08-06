@@ -3,9 +3,22 @@ import { ThemeProvider } from '@material-ui/styles';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
-import theme from '../ui/theme';
+import theme from 'src/common/presentation/components/theme';
+import { inversifyIds } from 'src/inversify.id';
+import NoticeService from 'src/mother/notice/domain/service/NoticeService';
+import { inversifyContainer } from '../inversify.config';
 
-class MyApp extends App {
+export const inversifyServices = {
+  cms: {
+    mother: {
+      notice: {
+        service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
+      }
+    }
+  }
+}
+
+export default class MyApp extends App {
   public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -31,5 +44,3 @@ class MyApp extends App {
     );
   }
 }
-
-export default MyApp;
