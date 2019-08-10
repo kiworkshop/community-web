@@ -1,30 +1,35 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
+import withReduxSaga from 'next-redux-saga'
 import withRedux, { AppProps } from 'next-redux-wrapper'
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
-import { AnyAction, applyMiddleware, createStore, Store, StoreEnhancer } from 'redux';
+import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
 import theme from 'src/common/presentation/components/theme';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
-const makeStore = () => {
+const bindMiddleware = (middlewares: Middleware[]) => {
+  if (process.env.NODE_ENV !== 'production') {
+    const { composeWithDevTools } = require('redux-devtools-extension')
+    const { createLogger } = require('redux-logger');
+    return composeWithDevTools(applyMiddleware(createLogger(), ...middlewares))
+  }
+  return applyMiddleware(...middlewares)
+}
+
+const makeStore = (preloadedState = {} as RootState) => {
   const sagaMiddleware = createSagaMiddleware();
 
-  let reduxStore: Store<RootState, AnyAction>;
-  if (process.env.NODE_ENV === "development") {
-    const { composeWithDevTools } = require('redux-devtools-extension');
-    const { createLogger } = require('redux-logger');
+  const reduxStore: Store<RootState, AnyAction> = createStore(
+    rootReducer,
+    preloadedState,
+    bindMiddleware([sagaMiddleware])
+  );
 
-    const logger = createLogger();
-    reduxStore = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, sagaMiddleware)));
-  } else {
-    reduxStore = createStore(rootReducer, applyMiddleware(sagaMiddleware) as StoreEnhancer<Store<RootState, AnyAction>, RootState>);
-  }
-
-  sagaMiddleware.run(rootSaga);
+  (reduxStore as any).sagaTask = sagaMiddleware.run(rootSaga);
 
   return reduxStore
 };
@@ -60,4 +65,4 @@ class MyApp extends App<AppProps> {
   }
 }
 
-export default withRedux(makeStore)(MyApp)
+export default withRedux(makeStore)(withReduxSaga(MyApp))

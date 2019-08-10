@@ -1,7 +1,7 @@
 import { produce } from 'immer'
 import inversifyServices from "inversify.services";
 import Router from 'next/router';
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/model/Notice";
 
@@ -30,19 +30,16 @@ export interface State {
 
 // Initial State
 const createInitialState = () => ({
-  notice: Notice.builder()
-    .id(-1)
-    .title("title")
-    .content("content").build(),
+  notice: Notice.builder().id(-1).title("title").content("content").build(),
   pending: true,
   rejected: false
 });
 
 export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(reset),
-    (_, __) => createInitialState())
+    () => createInitialState())
   .handleAction(getType(fetchNotice),
-    (state, __) => produce(state, draft => {
+    (state) => produce(state, draft => {
       draft.pending = false
       return draft;
     }))
@@ -64,7 +61,7 @@ export const reducer = createReducer<State, Action>(createInitialState())
     }))
 
 export function* saga() {
-  yield takeEvery(getType(fetchNotice), sagaFetchNotice);
+  yield takeLatest(getType(fetchNotice), sagaFetchNotice);
 }
 
 const noticeService = inversifyServices.cms.mother.notice.service
@@ -73,7 +70,6 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   const { id } = action.payload
   try {
     const notice = yield call(() => noticeService.getNotice(id));
-
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
     yield put(fetchNoticeAsync.failure());
