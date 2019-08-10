@@ -11,16 +11,16 @@ import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redu
 import theme from 'src/common/presentation/components/theme';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
-const bindMiddleware = (middlewares: Middleware[]) => {
-  if (process.env.NODE_ENV !== 'production') {
-    const { composeWithDevTools } = require('redux-devtools-extension')
-    const { createLogger } = require('redux-logger');
-    return composeWithDevTools(applyMiddleware(createLogger(), ...middlewares))
-  }
-  return applyMiddleware(...middlewares)
-}
-
 const makeStore = (preloadedState = {} as RootState) => {
+  const bindMiddleware = (middlewares: Middleware[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      const { composeWithDevTools } = require('redux-devtools-extension')
+      const { createLogger } = require('redux-logger');
+      return composeWithDevTools(applyMiddleware(createLogger(), ...middlewares))
+    }
+    return applyMiddleware(...middlewares)
+  }
+
   const sagaMiddleware = createSagaMiddleware();
 
   const reduxStore: Store<RootState, AnyAction> = createStore(

@@ -3,6 +3,7 @@ jest.mock('axios')
 
 import 'reflect-metadata'
 import RepositoryError from 'src/common/domain/model/RepositoryError';
+import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
 import { getRepositoryErrorFixture } from 'src/common/tests/domain/model/RepositoryError.unit.test';
 import Notice from 'src/mother/notice/domain/model/Notice';
 import NoticeRepository from 'src/mother/notice/domain/repository/NoticeRepository';
@@ -10,6 +11,8 @@ import NoticeRepositoryImpl from 'src/mother/notice/infrastructure/repository/No
 
 describe("NoticeRepositoryImpl test", () => {
   const noticeRepository: NoticeRepository = new NoticeRepositoryImpl();
+  Reflect.set(noticeRepository, "commonErrorService", new CommonErrorServiceImpl());
+
   const Axios = _Axios as jest.Mocked<typeof _Axios>
 
   test("findById_ValidInput_ValidOutput", async () => {

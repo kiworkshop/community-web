@@ -1,7 +1,7 @@
 import { produce } from 'immer'
-import inversifyServices from "inversify.services";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
+import inversifyServices from "../../../../inversify.services";
 import Notice from "../../domain/model/Notice";
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
@@ -29,7 +29,11 @@ export interface State {
 
 // Initial State
 const createInitialState = () => ({
-  notice: Notice.builder().id(-1).title("title").content("content").build(),
+  notice: {
+    id: -1,
+    title: "",
+    content: ""
+  },
   pending: true,
   rejected: false
 });
@@ -72,6 +76,5 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
     yield put(fetchNoticeAsync.failure());
-    console.log(e)
   }
 }

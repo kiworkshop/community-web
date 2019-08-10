@@ -18,10 +18,7 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
   public findById(id: number): Promise<Notice> {
     return new Promise((resolve, rejected) => {
       Axios.get<NoticeDto>(`http://localhost:8080/notices/${id}`)
-        .then(({ data }) => resolve(Notice.builder()
-          .id(data.id)
-          .title(data.title)
-          .content(data.content).build()))
+        .then(({ data }) => resolve(data))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
   }
