@@ -1,7 +1,9 @@
+import { common } from './common/inversify.id'
 import { mother } from './mother/inversify.id'
 
 const inversifyIds = {
-  mother
+  mother,
+  common
 }
 
 export { inversifyIds }

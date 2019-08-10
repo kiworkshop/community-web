@@ -1,4 +1,4 @@
-import RepositoryError from "src/common/infrastructure/repository/RepositoryError";
+import RepositoryError from "src/common/domain/model/RepositoryError";
 
 export const getRepositoryErrorFixture = () => {
   return RepositoryError.of({

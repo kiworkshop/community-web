@@ -1,24 +1,40 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
+import createSagaMiddleware from "@redux-saga/core";
+import withReduxSaga from 'next-redux-saga'
+import withRedux, { AppProps } from 'next-redux-wrapper'
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
+import { Provider as ReduxStoreProvider } from "react-redux";
+import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
 import theme from 'src/common/presentation/components/theme';
-import { inversifyIds } from 'src/inversify.id';
-import NoticeService from 'src/mother/notice/domain/service/NoticeService';
-import { inversifyContainer } from '../inversify.config';
+import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
-export const inversifyServices = {
-  cms: {
-    mother: {
-      notice: {
-        service: inversifyContainer.get<NoticeService>(inversifyIds.mother.notice.NoticeService)
-      }
+const makeStore = (preloadedState = {} as RootState) => {
+  const bindMiddleware = (middlewares: Middleware[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      const { composeWithDevTools } = require('redux-devtools-extension')
+      const { createLogger } = require('redux-logger');
+      return composeWithDevTools(applyMiddleware(createLogger(), ...middlewares))
     }
+    return applyMiddleware(...middlewares)
   }
-}
 
-export default class MyApp extends App {
+  const sagaMiddleware = createSagaMiddleware();
+
+  const reduxStore: Store<RootState, AnyAction> = createStore(
+    rootReducer,
+    preloadedState,
+    bindMiddleware([sagaMiddleware])
+  );
+
+  (reduxStore as any).sagaTask = sagaMiddleware.run(rootSaga);
+
+  return reduxStore
+};
+
+class MyApp extends App<AppProps> {
   public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -28,7 +44,7 @@ export default class MyApp extends App {
   }
 
   public render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, store } = this.props;
 
     return (
       <Container>
@@ -38,9 +54,15 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+
+          <ReduxStoreProvider store={store}>
+            <Component {...pageProps} />
+          </ReduxStoreProvider>
+
         </ThemeProvider>
       </Container>
     );
   }
 }
+
+export default withRedux(makeStore)(withReduxSaga(MyApp))

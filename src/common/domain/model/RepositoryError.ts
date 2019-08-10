@@ -1,6 +1,6 @@
 import Optional from 'optional-js'
 
-interface RepositoryErrorData {
+export interface RepositoryErrorData {
   timestamp: string;
   status: number;
   error: string;

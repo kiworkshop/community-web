@@ -8,8 +8,14 @@ describe("NoticeDetail test", () => {
 
   test("Render_ValidInput_ValidOutput", () => {
     expect(
-      shallow(<NoticeDetail notice={notice} />)
-        .contains(<div>{JSON.stringify(notice)}</div>)
+      shallow(<NoticeDetail notice={notice} pending={false} rejected={false} />)
+        .contains(<div>
+          {JSON.stringify(notice)}
+          <br />
+          pending: {JSON.stringify(false)}
+          <br />
+          rejected: {JSON.stringify(false)}
+        </div>)
     ).toBe(true)
   })
 })
