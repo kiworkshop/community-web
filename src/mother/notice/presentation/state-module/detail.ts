@@ -1,6 +1,5 @@
 import { produce } from 'immer'
 import inversifyServices from "inversify.services";
-import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/model/Notice";
@@ -73,6 +72,6 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
     yield put(fetchNoticeAsync.failure());
-    Router.push('/cms/mother/notice')
+    console.log(e)
   }
 }
