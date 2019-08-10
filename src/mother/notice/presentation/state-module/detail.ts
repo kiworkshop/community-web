@@ -1,4 +1,4 @@
-import { Record } from "immutable";
+import { produce } from 'immer'
 import inversifyServices from "inversify.services";
 import Router from 'next/router';
 import { call, put, takeEvery } from "redux-saga/effects";
@@ -22,14 +22,14 @@ export type Action = ActionType<
   typeof fetchNoticeAsync.failure
 >
 
-export type State = Record<{
+export interface State {
   notice: Notice
   pending: boolean
   rejected: boolean
-}>;
+}
 
 // Initial State
-const createInitialState = Record({
+const createInitialState = () => ({
   notice: Notice.builder()
     .id(-1)
     .title("title")
@@ -41,17 +41,26 @@ const createInitialState = Record({
 export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(reset),
     (_, __) => createInitialState())
+  .handleAction(getType(fetchNotice),
+    (state, __) => produce(state, draft => {
+      draft.pending = false
+      return draft;
+    }))
   .handleAction(getType(fetchNoticeAsync.request),
-    (state) => state.set("pending", true))
+    (state) => produce(state, draft => {
+      draft.pending = false;
+      return draft;
+    }))
   .handleAction(getType(fetchNoticeAsync.success),
-    (state, action) => state.merge({
-      notice: action.payload.notice,
-      pending: false
+    (state, action) => produce(state, draft => {
+      draft.notice = action.payload.notice;
+      return draft;
     }))
   .handleAction(getType(fetchNoticeAsync.failure),
-    (state) => state.merge({
-      pending: false,
-      rejected: true
+    (state) => produce(state, draft => {
+      draft.pending = false;
+      draft.rejected = true;
+      return draft
     }))
 
 export function* saga() {
@@ -63,15 +72,7 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
-    // fail
-    // const t = noticeService.getNotice;
-    // const notice = yield call(() => t(id));
-    // const notice = yield call(noticeService.getNotice, id);
-
-    // success
-    // noticeService 객체가 유지되어야 한다...
-    // const notice = yield call(() => noticeService.getNotice(id));
-    const notice = yield call((_id: number) => noticeService.getNotice(_id), id);
+    const notice = yield call(() => noticeService.getNotice(id));
 
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {

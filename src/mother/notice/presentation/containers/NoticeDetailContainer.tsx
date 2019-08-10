@@ -14,11 +14,7 @@ interface Props {
   dispatchers: typeof detailModule
 }
 
-const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected, dispatchers }) => {
-  React.useEffect(() => {
-    dispatchers.fetchNotice({ id: 1 })
-  }, [])
-
+const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected }) => {
   return <NoticeDetail
     notice={notice}
     pending={pending}
@@ -26,9 +22,9 @@ const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected, dis
 }
 
 const mapStateToProps = ({ mother }: RootState) => ({
-  notice: mother.notice.detail.get("notice"),
-  pending: mother.notice.detail.get("pending"),
-  rejected: mother.notice.detail.get("rejected")
+  notice: mother.notice.detail.notice,
+  pending: mother.notice.detail.pending,
+  rejected: mother.notice.detail.rejected
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<detailModule.Action>) => ({

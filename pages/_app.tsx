@@ -1,6 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
+import withRedux, { AppProps } from 'next-redux-wrapper'
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
@@ -9,7 +10,7 @@ import { AnyAction, applyMiddleware, createStore, Store, StoreEnhancer } from 'r
 import theme from 'src/common/presentation/components/theme';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
-const store = (() => {
+const makeStore = () => {
   const sagaMiddleware = createSagaMiddleware();
 
   let reduxStore: Store<RootState, AnyAction>;
@@ -26,9 +27,9 @@ const store = (() => {
   sagaMiddleware.run(rootSaga);
 
   return reduxStore
-})();
+};
 
-export default class MyApp extends App {
+class MyApp extends App<AppProps> {
   public componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -38,7 +39,7 @@ export default class MyApp extends App {
   }
 
   public render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, store } = this.props;
 
     return (
       <Container>
@@ -58,3 +59,5 @@ export default class MyApp extends App {
     );
   }
 }
+
+export default withRedux(makeStore)(MyApp)
