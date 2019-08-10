@@ -5,6 +5,8 @@ import { inversifyIds } from "src/inversify.id"
 import Notice from '../../domain/model/Notice';
 import NoticeRepository from '../../domain/repository/NoticeRepository'
 
+const NOTICE_REPO_URL = `${process.env.REPOSITORY_URL}/notices`
+
 interface NoticeDto {
   id: number
   title: string
@@ -17,7 +19,7 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
 
   public findById(id: number): Promise<Notice> {
     return new Promise((resolve, rejected) => {
-      Axios.get<NoticeDto>(`http://localhost:8080/notices/${id}`)
+      Axios.get<NoticeDto>(`${NOTICE_REPO_URL}/${id}`)
         .then(({ data }) => resolve(data))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
