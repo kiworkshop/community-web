@@ -17,11 +17,9 @@ interface NoticeDto {
 export default class NoticeRepositoryImpl implements NoticeRepository {
   @inject(inversifyIds.common.CommonErrorService) private commonErrorService!: CommonErrorService
 
-  public findById(id: number): Promise<Notice> {
-    return new Promise((resolve, rejected) => {
-      Axios.get<NoticeDto>(`${NOTICE_REPO_URL}/${id}`)
-        .then(({ data }) => resolve(data))
-        .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
-    })
-  }
+  public findById = (id: number): Promise<Notice> => new Promise((resolve, rejected) => {
+    Axios.get<NoticeDto>(`${NOTICE_REPO_URL}/${id}`)
+      .then(({ data }) => resolve(data))
+      .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
+  })
 }
