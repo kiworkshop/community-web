@@ -11,9 +11,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Home from '@material-ui/icons/Home';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import clsx from 'clsx';
 import React from 'react';
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     boxShadow: "0 0px 8px 0 rgba(0, 0, 0, 0.1)"
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 12,
     '&:hover': {
       background: "transparent"
     }
@@ -72,28 +72,37 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    margin: 0
   },
   listItemContent: {
     width: "100%"
   },
   listItemIcon: {
+    minWidth: 50,
     marginLeft: (theme.spacing(7) + 1) / 2 - 12,
     [theme.breakpoints.up('sm')]: {
       marginLeft: (theme.spacing(9) + 1) / 2 - 12,
-    }
+    },
   },
   listItemText: {
-    fontSize: "0.8em"
+    fontSize: "0.8em",
+    marginTop: 2
   },
   textAlignCenter: {
     textAlign: "center"
+  },
+  listDrawerClose: {
+    paddingTop: 0
+  },
+  listItemContentDrawerClose: {
+    paddingTop: 8
   }
 }));
 
 const CmsLayout: React.FC = ({ children }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleDrawerToggle = () => setOpen(!open);
 
   return (
@@ -114,7 +123,10 @@ const CmsLayout: React.FC = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap style={{
+            fontFamily: "BM HANNA",
+            cursor: 'default'
+          }}>
             광일공방 CMS
           </Typography>
         </Toolbar>
@@ -134,18 +146,21 @@ const CmsLayout: React.FC = ({ children }) => {
         open={open}
       >
         <div className={classes.toolbar} />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        <List className={clsx({
+          [classes.listDrawerClose]: !open
+        })}>
+          {['홈', '인기', '구독', '라이브러리'].map((text, index) => (
             <ListItem button key={text} className={classes.listItem}>
               <div className={clsx(classes.listItemContent, {
-                [classes.flex]: open
+                [classes.flex]: open,
+                [classes.listItemContentDrawerClose]: !open
               })}>
                 <ListItemIcon className={classes.listItemIcon}>
-                  {index % 2 === 0 ? <InboxIcon color="primary" /> : <MailIcon />}
+                  {index % 2 === 0 ? <Home color={index === 0 ? "primary" : "inherit"} /> : <MailIcon />}
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  primaryTypographyProps={{ style: { fontSize: open ? "1rem" : "1em" } }}
+                  primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
                   className={clsx(classes.listItemText, {
                     [classes.textAlignCenter]: !open
                   })}
@@ -162,7 +177,7 @@ const CmsLayout: React.FC = ({ children }) => {
                 [classes.flex]: open
               })}>
                 <ListItemIcon className={classes.listItemIcon}>
-                  {index % 2 === 0 ? <InboxIcon color="primary" /> : <MailIcon />}
+                  {index % 2 === 0 ? <Home /> : <MailIcon />}
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
