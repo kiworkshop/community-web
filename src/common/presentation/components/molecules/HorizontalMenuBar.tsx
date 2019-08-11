@@ -10,7 +10,7 @@ const TAB_WIDTH = 110;
 interface StyledTabsProps {
   value: number;
   className: string;
-  onChange(event: React.ChangeEvent<{}>, newValue: number): void;
+  onChange?(event: React.ChangeEvent<{}>, newValue: number): void;
 }
 
 const StyledTabs = withStyles((theme: Theme) => createStyles({
@@ -52,37 +52,22 @@ const useStyles = makeStyles({
     fontSize: "0.9em"
   },
   paper: {
-    boxShadow: "0 0px 8px 0 rgba(0, 0, 0, 0.1)",
     background: grey[50]
   }
 });
 
 interface Props {
-  pathname: string
+  value: number
 }
 
-const HorizontalMenuBar: React.FC<Props> = ({ pathname }) => {
+const HorizontalMenuBar: React.FC<Props> = ({ value }) => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  React.useEffect(() => {
-    if (pathname === "/") {
-      setValue(0);
-      return;
-    }
-    setValue(FIRST_DEPTH_PATHS.findIndex((urlPrefix, index) => index > 0 && pathname.startsWith(urlPrefix)))
-  })
-
-  const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  }
 
   return (
-    <Paper square className={classes.paper}>
+    <Paper square className={classes.paper} elevation={0}>
       <StyledTabs
         className={classes.tab}
         value={value}
-        onChange={handleChange}
       >
         {FIRST_DEPTH_PATHS.map((path, index) =>
           <Link key={index} href={path} underline="none" color="inherit">
