@@ -8,8 +8,10 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
+import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import theme from 'src/common/presentation/components/theme';
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
+import { setFirstDepthPath } from 'src/common/presentation/state-module/horizontal-menu-bar';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
 const makeStore = (preloadedState = {} as RootState) => {
@@ -35,6 +37,15 @@ const makeStore = (preloadedState = {} as RootState) => {
   return reduxStore
 };
 
+const getFirstDepthPath = (pathname: string): FirstDepthPath => {
+  const to = pathname.indexOf("/", 1);
+  if (to < 0) {
+    return pathname as FirstDepthPath
+  }
+
+  return pathname.substr(0, to) as FirstDepthPath
+}
+
 class MyApp extends App<AppProps> {
   public componentDidMount() {
     // Remove the server-side injected CSS.
@@ -46,6 +57,7 @@ class MyApp extends App<AppProps> {
 
   public render() {
     const { Component, pageProps, store, router } = this.props;
+    store.dispatch(setFirstDepthPath({ firstDepthPath: getFirstDepthPath(router.pathname) }))
 
     return (
       <Container>
@@ -57,7 +69,7 @@ class MyApp extends App<AppProps> {
           <CssBaseline />
 
           <ReduxStoreProvider store={store}>
-            <CmsLayoutContainer pathname={router.pathname}>
+            <CmsLayoutContainer>
               <Component {...pageProps} />
             </CmsLayoutContainer>
           </ReduxStoreProvider>

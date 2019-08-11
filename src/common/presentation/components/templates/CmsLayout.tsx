@@ -112,11 +112,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface Props {
-  pathname: string
   firstDepthPath: FirstDepthPath
 }
 
-const CmsLayout: React.FC<Props> = ({ children, pathname, firstDepthPath }) => {
+const CmsLayout: React.FC<Props> = ({ children, firstDepthPath }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerToggle = () => setOpen(!open);
@@ -195,7 +194,7 @@ const CmsLayout: React.FC<Props> = ({ children, pathname, firstDepthPath }) => {
       <div style={{ width: "100%" }}>
         <div className={classes.toolbar} />
         <div className={classes.horizontalMenuBarWrapper}>
-          <HorizontalMenuBarContainer pathname={pathname} />
+          <HorizontalMenuBarContainer />
         </div>
         <main className={classes.content}>
           <div className={classes.horizontalMenuBar} />

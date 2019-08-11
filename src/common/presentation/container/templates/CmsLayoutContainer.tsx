@@ -5,12 +5,11 @@ import CmsLayout from '../../components/templates/CmsLayout';
 import { RootState } from '../../state-module/root';
 
 interface Props {
-  pathname: string
   firstDepthPath: FirstDepthPath
 }
 
-const CmsLayoutContainer: React.FC<Props> = ({ children, firstDepthPath, pathname }) =>
-  <CmsLayout pathname={pathname} firstDepthPath={firstDepthPath}>
+const CmsLayoutContainer: React.FC<Props> = ({ children, firstDepthPath }) =>
+  <CmsLayout firstDepthPath={firstDepthPath}>
     {children}
   </CmsLayout>
 
