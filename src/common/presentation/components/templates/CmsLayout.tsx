@@ -16,7 +16,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React from 'react';
-import HorizontalMenuBar from '../molecules/HorizontalMenuBar';
+import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
+import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
 
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
@@ -111,7 +112,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface Props {
-  pathname: string
+  pathname: FirstDepthPath
 }
 
 const CmsLayout: React.FC<Props> = ({ children, pathname }) => {
@@ -208,7 +209,7 @@ const CmsLayout: React.FC<Props> = ({ children, pathname }) => {
       <div style={{ width: "100%" }}>
         <div className={classes.toolbar} />
         <div className={classes.horizontalMenuBarWrapper}>
-          <HorizontalMenuBar pathname={pathname} />
+          <HorizontalMenuBarContainer pathname={pathname} />
         </div>
         <main className={classes.content}>
           <div className={classes.horizontalMenuBar} />

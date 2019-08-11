@@ -8,6 +8,7 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
+import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import CmsLayout from 'src/common/presentation/components/templates/CmsLayout';
 import theme from 'src/common/presentation/components/theme';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
@@ -57,7 +58,7 @@ class MyApp extends App<AppProps> {
           <CssBaseline />
 
           <ReduxStoreProvider store={store}>
-            <CmsLayout pathname={router.pathname}>
+            <CmsLayout pathname={router.pathname as FirstDepthPath}>
               <Component {...pageProps} />
             </CmsLayout>
           </ReduxStoreProvider>
