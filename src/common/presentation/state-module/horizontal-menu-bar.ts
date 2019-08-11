@@ -14,7 +14,7 @@ export interface State {
 
 // Initial State
 const createInitialState = (): State => ({
-  firstDepthPath: "/mother"
+  firstDepthPath: "/"
 });
 
 export const reducer = createReducer<State, Action>(createInitialState())

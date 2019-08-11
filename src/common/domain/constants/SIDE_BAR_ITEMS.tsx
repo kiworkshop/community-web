@@ -1,4 +1,4 @@
-import { Announcement, Home, Mood } from '@material-ui/icons';
+import { Announcement, Edit, Home, Mood } from '@material-ui/icons';
 import FIRST_DEPTH_PATHS, { FirstDepthPath } from './FIRST_DEPTH_PATHS';
 
 interface SideBarItem {
@@ -36,8 +36,8 @@ SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[1], [[{
 }], dummy]);
 
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[2], [[{
-  text: "공지사항",
-  icon: <Home />,
+  text: "게시판",
+  icon: <Edit />,
   href: ""
 }], dummy]);
 

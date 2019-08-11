@@ -8,8 +8,8 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
-import CmsLayout from 'src/common/presentation/components/templates/CmsLayout';
 import theme from 'src/common/presentation/components/theme';
+import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
 const makeStore = (preloadedState = {} as RootState) => {
@@ -57,9 +57,9 @@ class MyApp extends App<AppProps> {
           <CssBaseline />
 
           <ReduxStoreProvider store={store}>
-            <CmsLayout pathname={router.pathname}>
+            <CmsLayoutContainer pathname={router.pathname}>
               <Component {...pageProps} />
-            </CmsLayout>
+            </CmsLayoutContainer>
           </ReduxStoreProvider>
         </ThemeProvider>
       </Container>

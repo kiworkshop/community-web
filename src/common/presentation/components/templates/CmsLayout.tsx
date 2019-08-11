@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React from 'react';
-import FIRST_DEPTH_PATHS from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
+import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
 
@@ -113,14 +113,15 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 interface Props {
   pathname: string
+  firstDepthPath: FirstDepthPath
 }
 
-const CmsLayout: React.FC<Props> = ({ children, pathname }) => {
+const CmsLayout: React.FC<Props> = ({ children, pathname, firstDepthPath }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerToggle = () => setOpen(!open);
 
-  const currentSideBarItems = SIDE_BAR_ITEMS.get(FIRST_DEPTH_PATHS[0]) || [[]]
+  const currentSideBarItems = SIDE_BAR_ITEMS.get(firstDepthPath) || [[]]
 
   return (
     <div className={classes.flex}>
