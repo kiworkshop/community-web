@@ -1,44 +1,46 @@
+import { PropTypes } from '@material-ui/core';
 import { AccountBalance, Announcement, Backspace, Edit, Home, RecordVoiceOver } from '@material-ui/icons';
 import FIRST_DEPTH_PATHS, { FirstDepthPath } from './FIRST_DEPTH_PATHS';
 
 interface SideBarItem {
   text: string
-  icon: JSX.Element
   href: string
+  icon({ color }: { color?: PropTypes.Color | 'action' | 'disabled' | 'error' }): JSX.Element
 }
 
 const dummy: SideBarItem[] = [{
   text: "더미1",
-  icon: <AccountBalance />,
-  href: ""
+  href: "",
+  icon: ({ color }) => <AccountBalance color={color} />,
 }, {
   text: "더미2",
-  icon: <Backspace />,
-  href: ""
+  href: "",
+  icon: ({ color }) => <Backspace color={color} />,
 }, {
   text: "더미3",
-  icon: <RecordVoiceOver />,
-  href: ""
+  href: "",
+  icon: ({ color }) => <RecordVoiceOver color={color} />,
 }]
 
 const SIDE_BAR_ITEMS = new Map<FirstDepthPath, SideBarItem[][]>();
 
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[0], [[{
-  text: "메인",
-  icon: <Home />,
-  href: ""
+  text: "홈",
+  href: FIRST_DEPTH_PATHS[0],
+  icon: ({ color }) => <Home color={color} />,
 }], dummy])
 
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[1], [[{
   text: "공지사항",
-  icon: <Announcement />,
-  href: `${FIRST_DEPTH_PATHS[1]}/notice`
+  href: `${FIRST_DEPTH_PATHS[1]}/notice`,
+  icon: ({ color }) => <Announcement color={color} />,
 }], dummy]);
 
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[2], [[{
   text: "게시판",
-  icon: <Edit />,
-  href: `${FIRST_DEPTH_PATHS[2]}/board`
+  href: `${FIRST_DEPTH_PATHS[2]}/board`,
+  icon: ({ color }) => <Edit color={color} />,
 }], dummy]);
 
+SIDE_BAR_ITEMS.set("/_error" as any, SIDE_BAR_ITEMS.get(FIRST_DEPTH_PATHS[0])!)
 export default SIDE_BAR_ITEMS;

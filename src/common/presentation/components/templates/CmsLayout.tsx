@@ -80,7 +80,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   listItem: {
     paddingLeft: 0,
     paddingRight: 0,
-    margin: 0
+    margin: 0,
+    '&:focus': {
+      background: grey[300]
+    }
   },
   listItemContent: {
     width: "100%"
@@ -121,6 +124,9 @@ interface Props {
 const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen }) => {
   const classes = useStyles();
   const currentSideBarItems = SIDE_BAR_ITEMS.get(firstDepthPath) || [[]]
+
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  React.useEffect(() => setSelectedIndex(0), [firstDepthPath])
 
   return (
     <div className={classes.flex}>
@@ -164,20 +170,29 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen
         open={open}
       >
         <div className={classes.toolbar} />
-        {currentSideBarItems.map((items, index) => <>
-          {index > 0 && <Divider />}
+        {currentSideBarItems.map((items, listIndex) => <>
+          {listIndex > 0 && <Divider />}
           <List className={clsx({
             [classes.listDrawerClose]: !open
           })}>
-            {items.map((item) => (
+            {items.map((item, listItemIndex) => (
               <Link key={item.text} href={item.href}>
-                <ListItem button className={classes.listItem}>
+                <ListItem
+                  button
+                  className={classes.listItem}
+                  // tslint:disable-next-line: jsx-no-lambda
+                  onClick={() => setSelectedIndex(listIndex * 1e5 + listItemIndex)}
+                >
                   <div className={clsx(classes.listItemContent, {
                     [classes.flex]: open,
                     [classes.listItemContentDrawerClose]: !open
                   })}>
                     <ListItemIcon className={classes.listItemIcon}>
-                      {item.icon}
+                      {item.icon({
+                        color: selectedIndex === listIndex * 1e5 + listItemIndex ?
+                          "primary" :
+                          "inherit"
+                      })}
                     </ListItemIcon>
                     <ListItemText
                       primary={item.text}
