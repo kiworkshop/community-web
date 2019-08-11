@@ -1,4 +1,4 @@
-import { Link } from '@material-ui/core';
+import { Link as MuiLink } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import { grey } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,6 +18,7 @@ import React from 'react';
 import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
+import Link from '../atmos/Link';
 
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
@@ -140,13 +141,13 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Link href="/" underline="none" color="inherit">
+          <MuiLink href="/" underline="none" color="inherit">
             <Typography variant="h6" noWrap style={{
               fontFamily: "BM HANNA",
             }}>
               광일공방 CMS
           </Typography>
-          </Link>
+          </MuiLink>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -170,23 +171,25 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath }) => {
             [classes.listDrawerClose]: !open
           })}>
             {items.map((item) => (
-              <ListItem button key={item.text} className={classes.listItem}>
-                <div className={clsx(classes.listItemContent, {
-                  [classes.flex]: open,
-                  [classes.listItemContentDrawerClose]: !open
-                })}>
-                  <ListItemIcon className={classes.listItemIcon}>
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.text}
-                    primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
-                    className={clsx(classes.listItemText, {
-                      [classes.textAlignCenter]: !open
-                    })}
-                  />
-                </div>
-              </ListItem>
+              <Link key={item.text} href={item.href}>
+                <ListItem button className={classes.listItem}>
+                  <div className={clsx(classes.listItemContent, {
+                    [classes.flex]: open,
+                    [classes.listItemContentDrawerClose]: !open
+                  })}>
+                    <ListItemIcon className={classes.listItemIcon}>
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={item.text}
+                      primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
+                      className={clsx(classes.listItemText, {
+                        [classes.textAlignCenter]: !open
+                      })}
+                    />
+                  </div>
+                </ListItem>
+              </Link>
             ))}
           </List>
         </>)}

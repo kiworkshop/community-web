@@ -1,4 +1,4 @@
-import { Announcement, Edit, Home, Mood } from '@material-ui/icons';
+import { AccountBalance, Announcement, Backspace, Edit, Home, RecordVoiceOver } from '@material-ui/icons';
 import FIRST_DEPTH_PATHS, { FirstDepthPath } from './FIRST_DEPTH_PATHS';
 
 interface SideBarItem {
@@ -9,15 +9,15 @@ interface SideBarItem {
 
 const dummy: SideBarItem[] = [{
   text: "더미1",
-  icon: <Mood />,
+  icon: <AccountBalance />,
   href: ""
 }, {
   text: "더미2",
-  icon: <Mood />,
+  icon: <Backspace />,
   href: ""
 }, {
   text: "더미3",
-  icon: <Mood />,
+  icon: <RecordVoiceOver />,
   href: ""
 }]
 
@@ -32,13 +32,13 @@ SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[0], [[{
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[1], [[{
   text: "공지사항",
   icon: <Announcement />,
-  href: ""
+  href: `${FIRST_DEPTH_PATHS[1]}/notice`
 }], dummy]);
 
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[2], [[{
   text: "게시판",
   icon: <Edit />,
-  href: ""
+  href: `${FIRST_DEPTH_PATHS[2]}/board`
 }], dummy]);
 
 export default SIDE_BAR_ITEMS;

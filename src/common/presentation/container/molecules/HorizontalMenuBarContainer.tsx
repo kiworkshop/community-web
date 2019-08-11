@@ -13,7 +13,7 @@ const HorizontalMenuBarContainer: React.FC<Props> = ({ firstDepthPath }) => {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  firstDepthPath: state.horizontalMenuBar.firstDepthPath
+  firstDepthPath: state.common.firstDepthPath
 })
 
 export default connect(mapStateToProps)(HorizontalMenuBarContainer);

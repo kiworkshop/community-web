@@ -41,6 +41,8 @@ function RouterLink(props: LinkProps) {
     className: classNameProps,
     innerRef,
     naked,
+    underline,
+    color,
     ...other
   } = props;
 
@@ -52,7 +54,13 @@ function RouterLink(props: LinkProps) {
     return <NextComposed className={className} ref={innerRef} {...other} />;
   }
 
-  return <MuiLink component={NextComposed} className={className} ref={innerRef} {...other} />;
+  return <MuiLink
+    component={NextComposed}
+    className={className}
+    ref={innerRef}
+    underline={underline || 'none'}
+    color={color || 'inherit'}
+    {...other} />;
 }
 
 export default React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (

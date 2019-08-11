@@ -15,7 +15,7 @@ const CmsLayoutContainer: React.FC<Props> = ({ children, firstDepthPath }) =>
 
 
 const mapStateToProps = (state: RootState) => ({
-  firstDepthPath: state.horizontalMenuBar.firstDepthPath
+  firstDepthPath: state.common.firstDepthPath
 })
 
 export default connect(mapStateToProps)(CmsLayoutContainer);
