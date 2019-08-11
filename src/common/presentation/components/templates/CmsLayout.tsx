@@ -16,8 +16,10 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React from 'react';
+import HorizontalMenuBar from '../molecules/HorizontalMenuBar';
 
 const drawerWidth = 240;
+const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   flex: {
@@ -66,6 +68,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
+  horizontalMenuBar: {
+    height: horizontalMenuBarHeight
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -97,6 +102,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   listItemContentDrawerClose: {
     paddingTop: 8
+  },
+  horizontalMenuBarWrapper: {
+    position: 'fixed',
+    zIndex: theme.zIndex.drawer - 1,
+    width: "100%"
   }
 }));
 
@@ -191,10 +201,16 @@ const CmsLayout: React.FC = ({ children }) => {
           ))}
         </List>
       </Drawer>
-      <main className={classes.content}>
+      <div style={{ width: "100%" }}>
         <div className={classes.toolbar} />
-        {children}
-      </main>
+        <div className={classes.horizontalMenuBarWrapper}>
+          <HorizontalMenuBar />
+        </div>
+        <main className={classes.content}>
+          <div className={classes.horizontalMenuBar} />
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
