@@ -39,7 +39,7 @@ const createInitialState = () => ({
 });
 
 export const reducer = createReducer<State, Action>(createInitialState())
-  .handleAction(getType(reset), () => createInitialState())
+  .handleAction(getType(reset), createInitialState)
   .handleAction(getType(fetchNotice), (state) => produce(state, draft => {
     draft.pending = false
     return draft;
@@ -55,7 +55,7 @@ export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(fetchNoticeAsync.failure), (state) => produce(state, draft => {
     draft.pending = false;
     draft.rejected = true;
-    return draft
+    return draft;
   }))
 
 export function* saga() {
