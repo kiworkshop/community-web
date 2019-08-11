@@ -8,10 +8,14 @@ interface Props {
   firstDepthPath: FirstDepthPath
 }
 
-const CmsLayoutContainer: React.FC<Props> = ({ children, firstDepthPath }) =>
-  <CmsLayout firstDepthPath={firstDepthPath}>
+const CmsLayoutContainer: React.FC<Props> = ({ children, firstDepthPath }) => {
+  const [open, setOpen] = React.useState(true);
+  const toggleOpen = () => setOpen(!open);
+
+  return <CmsLayout firstDepthPath={firstDepthPath} open={open} toggleOpen={toggleOpen}>
     {children}
   </CmsLayout>
+}
 
 
 const mapStateToProps = (state: RootState) => ({

@@ -114,13 +114,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 interface Props {
   firstDepthPath: FirstDepthPath
+  open: boolean
+  toggleOpen(): void
 }
 
-const CmsLayout: React.FC<Props> = ({ children, firstDepthPath }) => {
+const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerToggle = () => setOpen(!open);
-
   const currentSideBarItems = SIDE_BAR_ITEMS.get(firstDepthPath) || [[]]
 
   return (
@@ -135,7 +134,7 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath }) => {
         <Toolbar>
           <IconButton
             aria-label="open drawer"
-            onClick={handleDrawerToggle}
+            onClick={toggleOpen}
             edge="start"
             className={clsx(classes.menuButton)}
           >
