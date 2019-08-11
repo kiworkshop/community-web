@@ -1,2 +1,2 @@
-export type FirstDepthPath = "/mother" | "/content"
-export default ["/mother", "/content"]
+export type FirstDepthPath = "/" | "/mother" | "/content"
+export default ["/", "/mother", "/content"]

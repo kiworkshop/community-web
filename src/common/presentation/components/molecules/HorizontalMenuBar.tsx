@@ -66,7 +66,11 @@ const HorizontalMenuBar: React.FC<Props> = ({ pathname }) => {
   const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
-    setValue(FIRST_DEPTH_PATHS.findIndex(urlPrefix => pathname.startsWith(urlPrefix)))
+    if (pathname === "/") {
+      setValue(0);
+      return;
+    }
+    setValue(FIRST_DEPTH_PATHS.findIndex((urlPrefix, index) => index > 0 && pathname.startsWith(urlPrefix)))
   })
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
@@ -81,7 +85,7 @@ const HorizontalMenuBar: React.FC<Props> = ({ pathname }) => {
         onChange={handleChange}
       >
         {FIRST_DEPTH_PATHS.map((path, index) =>
-          <Link key={index} href={path} underline="none" color="textPrimary">
+          <Link key={index} href={path} underline="none" color="inherit">
             <StyledTab className={classes.tab} label={path} />
           </Link>
         )}

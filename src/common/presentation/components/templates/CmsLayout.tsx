@@ -1,3 +1,4 @@
+import { Link } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import { grey } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -138,12 +139,13 @@ const CmsLayout: React.FC<Props> = ({ children, pathname }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap style={{
-            fontFamily: "BM HANNA",
-            cursor: 'default'
-          }}>
-            광일공방 CMS
+          <Link href="/" underline="none" color="inherit">
+            <Typography variant="h6" noWrap style={{
+              fontFamily: "BM HANNA",
+            }}>
+              광일공방 CMS
           </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
