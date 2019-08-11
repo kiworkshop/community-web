@@ -14,7 +14,11 @@ interface Props {
   dispatchers: typeof detailModule
 }
 
-const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected }) => {
+const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected, dispatchers }) => {
+  React.useEffect(() => () => {
+    dispatchers.reset()
+  }, [])
+
   return <NoticeDetail
     notice={notice}
     pending={pending}

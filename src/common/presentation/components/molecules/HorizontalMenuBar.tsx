@@ -3,6 +3,8 @@ import { Paper, Tab, Tabs, Theme } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { createStyles, makeStyles, withStyles } from '@material-ui/styles';
 import * as React from 'react';
+import FIRST_DEPTH_PATHS from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
+import Link from '../atmos/Link';
 
 const TAB_WIDTH = 110;
 
@@ -20,7 +22,7 @@ const StyledTabs = withStyles((theme: Theme) => createStyles({
     '& > div': {
       maxWidth: TAB_WIDTH,
       width: '100%',
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 }))((props: StyledTabsProps) => <Tabs {...props} TabIndicatorProps={{ children: <div /> }} />);
@@ -56,9 +58,17 @@ const useStyles = makeStyles({
   }
 });
 
-const HorizontalMenuBar: React.FC = () => {
+interface Props {
+  pathname: string
+}
+
+const HorizontalMenuBar: React.FC<Props> = ({ pathname }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
+  React.useEffect(() => {
+    setValue(FIRST_DEPTH_PATHS.findIndex(urlPrefix => pathname.startsWith(urlPrefix)))
+  })
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -71,9 +81,11 @@ const HorizontalMenuBar: React.FC = () => {
         value={value}
         onChange={handleChange}
       >
-        <StyledTab className={classes.tab} label="메뉴1" />
-        <StyledTab className={classes.tab} label="메뉴2" />
-        <StyledTab className={classes.tab} label="메뉴3" />
+        {FIRST_DEPTH_PATHS.map((path, index) =>
+          <Link key={index} href={path} underline="none" color="textPrimary">
+            <StyledTab className={classes.tab} label={path} />
+          </Link>
+        )}
       </StyledTabs>
     </Paper>
   );

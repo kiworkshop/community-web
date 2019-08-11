@@ -45,7 +45,7 @@ class MyApp extends App<AppProps> {
   }
 
   public render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps, store, router } = this.props;
 
     return (
       <Container>
@@ -57,7 +57,7 @@ class MyApp extends App<AppProps> {
           <CssBaseline />
 
           <ReduxStoreProvider store={store}>
-            <CmsLayout>
+            <CmsLayout pathname={router.pathname}>
               <Component {...pageProps} />
             </CmsLayout>
           </ReduxStoreProvider>
