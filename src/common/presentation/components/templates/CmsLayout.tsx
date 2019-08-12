@@ -176,7 +176,7 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen
             [classes.listDrawerClose]: !open
           })}>
             {items.map((item, listItemIndex) => (
-              <Link key={item.text} href={item.href}>
+              <Link key={item.text} href={item.href}> {/* TODO: highlight icon when current url is same with item.hreef */}
                 <ListItem
                   button
                   className={classes.listItem}

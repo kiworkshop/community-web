@@ -2,7 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
 import withReduxSaga from 'next-redux-saga'
-import withRedux, { AppProps } from 'next-redux-wrapper'
+import withRedux from 'next-redux-wrapper'
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
@@ -44,6 +44,10 @@ const getFirstDepthPath = (pathname: string): FirstDepthPath => {
   }
 
   return pathname.substr(0, to) as FirstDepthPath
+}
+
+interface AppProps {
+  store: Store<RootState>
 }
 
 class MyApp extends App<AppProps> {
