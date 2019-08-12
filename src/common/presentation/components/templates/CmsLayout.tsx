@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   drawerPaper: {
     border: 0,
-    background: grey[50]
+    background: grey[100]
   },
   drawerOpen: {
     width: drawerWidth,

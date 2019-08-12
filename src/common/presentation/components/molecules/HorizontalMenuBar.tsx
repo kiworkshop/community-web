@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     fontSize: "0.9em"
   },
   paper: {
-    background: grey[50]
+    background: grey[100]
   }
 });
 
