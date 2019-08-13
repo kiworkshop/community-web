@@ -2,13 +2,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
 import withReduxSaga from 'next-redux-saga'
-import withRedux, { AppProps } from 'next-redux-wrapper'
+import withRedux from 'next-redux-wrapper'
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
 import theme from 'src/common/presentation/components/theme';
+import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
+import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
 const makeStore = (preloadedState = {} as RootState) => {
@@ -34,6 +36,10 @@ const makeStore = (preloadedState = {} as RootState) => {
   return reduxStore
 };
 
+interface AppProps {
+  store: Store<RootState>
+}
+
 class MyApp extends App<AppProps> {
   public componentDidMount() {
     // Remove the server-side injected CSS.
@@ -44,7 +50,8 @@ class MyApp extends App<AppProps> {
   }
 
   public render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps, store, router } = this.props;
+    store.dispatch(setPaths({ pathname: router.pathname }))
 
     return (
       <Container>
@@ -56,9 +63,10 @@ class MyApp extends App<AppProps> {
           <CssBaseline />
 
           <ReduxStoreProvider store={store}>
-            <Component {...pageProps} />
+            <CmsLayoutContainer>
+              <Component {...pageProps} />
+            </CmsLayoutContainer>
           </ReduxStoreProvider>
-
         </ThemeProvider>
       </Container>
     );

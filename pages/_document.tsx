@@ -9,6 +9,8 @@ class MyDocument extends Document {
       <html lang="en">
         <Head>
           <meta charSet="utf-8" />
+          <link href='/static/fonts_woff2.css' rel='stylesheet' type='text/css' />
+          <link href="https://fonts.googleapis.com/css?family=Inconsolata|Noto+Sans+KR:300,400,700" rel="stylesheet" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
             name="viewport"
@@ -16,10 +18,11 @@ class MyDocument extends Document {
           />
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
+          <style>{`
+          body {
+            font-family: Noto Sans KR;
+          }
+          `}</style>
         </Head>
         <body>
           <Main />

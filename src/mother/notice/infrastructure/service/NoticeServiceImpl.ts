@@ -8,7 +8,7 @@ import { notice } from "../../inversify.id"
 export default class NoticeServiceImpl implements NoticeService {
   @inject(notice.NoticeRepository) private noticeRepository!: NoticeRepository
 
-  public getNotice(id: number): Promise<Notice> {
+  public getNotice = (id: number): Promise<Notice> => {
     return this.noticeRepository.findById(id);
   }
 }
