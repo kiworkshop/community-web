@@ -123,8 +123,7 @@ interface Props {
 
 const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
   const classes = useStyles();
-  const firstDepthPath = paths[0] as FirstDepthPath
-  const currentSideBarItems = SIDE_BAR_ITEMS.get(firstDepthPath) || [[]]
+  const currentSideBarItems = SIDE_BAR_ITEMS.get(paths[0] as FirstDepthPath) || [[]]
 
   const currentPath = paths.reduce((prev, curr) => prev + "/" + curr)
 
