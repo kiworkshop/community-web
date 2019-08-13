@@ -1,6 +1,7 @@
 import { Paper, Tab, Tabs, Theme } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { createStyles, makeStyles, withStyles } from '@material-ui/styles';
+import clsx from 'clsx';
 import * as React from 'react';
 import FIRST_DEPTH_PATHS from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import Link from '../atmos/Link';
@@ -49,7 +50,12 @@ const StyledTab = withStyles((theme: Theme) =>
 const useStyles = makeStyles({
   tab: {
     minHeight: "initial",
-    fontSize: "0.9em"
+    fontSize: "0.9em",
+  },
+  eachTab: {
+    '&:focus': {
+      background: grey[300]
+    }
   },
   paper: {
     background: grey[100]
@@ -71,7 +77,7 @@ const HorizontalMenuBar: React.FC<Props> = ({ value }) => {
       >
         {FIRST_DEPTH_PATHS.map((path, index) =>
           <Link key={index} href={path} underline="none" color="inherit">
-            <StyledTab className={classes.tab} label={path} />
+            <StyledTab className={clsx(classes.tab, classes.eachTab)} label={path} />
           </Link>
         )}
       </StyledTabs>

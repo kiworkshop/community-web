@@ -11,7 +11,7 @@ import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redu
 import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import theme from 'src/common/presentation/components/theme';
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
-import { setFirstDepthPath } from 'src/common/presentation/state-module/common';
+import { setFirstDepthPath, setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 
 const makeStore = (preloadedState = {} as RootState) => {
@@ -62,6 +62,7 @@ class MyApp extends App<AppProps> {
   public render() {
     const { Component, pageProps, store, router } = this.props;
     store.dispatch(setFirstDepthPath({ firstDepthPath: getFirstDepthPath(router.pathname) }))
+    store.dispatch(setPaths({ pathname: router.pathname }))
 
     return (
       <Container>

@@ -5,15 +5,15 @@ import HorizontalMenuBar from '../../components/molecules/HorizontalMenuBar';
 import { RootState } from '../../state-module/root';
 
 interface Props {
-  firstDepthPath: FirstDepthPath
+  paths: string[]
 }
 
-const HorizontalMenuBarContainer: React.FC<Props> = ({ firstDepthPath }) => {
-  return <HorizontalMenuBar value={FIRST_DEPTH_PATHS.indexOf(firstDepthPath)} />;
+const HorizontalMenuBarContainer: React.FC<Props> = ({ paths }) => {
+  return <HorizontalMenuBar value={FIRST_DEPTH_PATHS.indexOf(paths[0] as FirstDepthPath)} />;
 }
 
 const mapStateToProps = (state: RootState) => ({
-  firstDepthPath: state.common.firstDepthPath
+  paths: state.common.paths
 })
 
 export default connect(mapStateToProps)(HorizontalMenuBarContainer);

@@ -116,17 +116,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 interface Props {
-  firstDepthPath: FirstDepthPath
+  paths: string[]
   open: boolean
   toggleOpen(): void
 }
 
-const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen }) => {
+const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
   const classes = useStyles();
+  const firstDepthPath = paths[0] as FirstDepthPath
   const currentSideBarItems = SIDE_BAR_ITEMS.get(firstDepthPath) || [[]]
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  React.useEffect(() => setSelectedIndex(0), [firstDepthPath])
+  const currentPath = paths.reduce((prev, curr) => prev + "/" + curr)
 
   return (
     <div className={classes.flex}>
@@ -175,13 +175,11 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen
           <List className={clsx({
             [classes.listDrawerClose]: !open
           })}>
-            {items.map((item, listItemIndex) => (
-              <Link key={item.text} href={item.href}> {/* TODO: highlight icon when current url is same with item.hreef */}
+            {items.map(item => (
+              <Link key={item.text} href={item.href}>
                 <ListItem
                   button
                   className={classes.listItem}
-                  // tslint:disable-next-line: jsx-no-lambda
-                  onClick={() => setSelectedIndex(listIndex * 1e5 + listItemIndex)}
                 >
                   <div className={clsx(classes.listItemContent, {
                     [classes.flex]: open,
@@ -189,7 +187,7 @@ const CmsLayout: React.FC<Props> = ({ children, firstDepthPath, open, toggleOpen
                   })}>
                     <ListItemIcon className={classes.listItemIcon}>
                       {item.icon({
-                        color: selectedIndex === listIndex * 1e5 + listItemIndex ?
+                        color: item.href === currentPath ?
                           "primary" :
                           "inherit"
                       })}
