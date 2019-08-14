@@ -15,13 +15,17 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React from 'react';
+import { WithTranslation } from 'react-i18next';
 import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
+import inversifyServices from 'src/inversifyServices';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
 import Link from '../atmos/Link';
 
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
+
+const { withTranslation } = inversifyServices.cms.common.i18NService;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   flex: {
@@ -115,13 +119,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   }
 }));
 
-interface Props {
+interface Props extends WithTranslation {
   paths: string[]
   open: boolean
   toggleOpen(): void
 }
 
-const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
+const CmsLayout: React.FC<Props> = ({ children, t, paths, open, toggleOpen }) => {
   const classes = useStyles();
   const currentSideBarItems = SIDE_BAR_ITEMS.get(paths[0] as FirstDepthPath) || [[]]
 
@@ -149,8 +153,8 @@ const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
             <Typography variant="h6" noWrap style={{
               fontFamily: "BM HANNA",
             }}>
-              광일공방 CMS
-          </Typography>
+              {t('kiworkshop')} CMS
+            </Typography>
           </MuiLink>
         </Toolbar>
       </AppBar>
@@ -219,4 +223,4 @@ const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
   );
 }
 
-export default CmsLayout;
+export default withTranslation('common')(CmsLayout);
