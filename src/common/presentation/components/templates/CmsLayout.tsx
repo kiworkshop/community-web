@@ -20,6 +20,7 @@ import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
 import inversifyServices from 'src/inversifyServices';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
+import LanguageToggleButton from '../atmos/LanguageToggleButton';
 import Link from '../atmos/Link';
 
 const drawerWidth = 240;
@@ -116,6 +117,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     position: 'fixed',
     zIndex: theme.zIndex.drawer - 1,
     width: "100%"
+  },
+  toolbarContents: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: "100%"
   }
 }));
 
@@ -149,13 +155,16 @@ const CmsLayout: React.FC<Props> = ({ children, t, paths, open, toggleOpen }) =>
           >
             <MenuIcon />
           </IconButton>
-          <MuiLink href="/" underline="none" color="inherit">
-            <Typography variant="h6" noWrap style={{
-              fontFamily: "BM HANNA",
-            }}>
-              {t('kiworkshop')} CMS
+          <div className={classes.toolbarContents}>
+            <MuiLink href="/" underline="none" color="inherit">
+              <Typography variant="h6" noWrap style={{
+                fontFamily: "BM HANNA",
+              }}>
+                {t('kiworkshop')} CMS
             </Typography>
-          </MuiLink>
+            </MuiLink>
+            <LanguageToggleButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
