@@ -205,7 +205,7 @@ const CmsLayout: React.FC<Props> = ({ children, t, paths, open, toggleOpen }) =>
                       })}
                     </ListItemIcon>
                     <ListItemText
-                      primary={item.text}
+                      primary={t(item.text)}
                       primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
                       className={clsx(classes.listItemText, {
                         [classes.textAlignCenter]: !open
