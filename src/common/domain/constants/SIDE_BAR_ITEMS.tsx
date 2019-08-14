@@ -1,5 +1,5 @@
 import { PropTypes } from '@material-ui/core';
-import { AccountBalance, Announcement, Backspace, Edit, Home, RecordVoiceOver } from '@material-ui/icons';
+import { AccountBalance, Announcement, Backspace, Edit, RecordVoiceOver } from '@material-ui/icons';
 import FIRST_DEPTH_PATHS, { FirstDepthPath } from './FIRST_DEPTH_PATHS';
 
 interface SideBarItem {
@@ -25,20 +25,14 @@ const dummy: SideBarItem[] = [{
 const SIDE_BAR_ITEMS = new Map<FirstDepthPath, SideBarItem[][]>();
 
 SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[0], [[{
-  text: 'home',
-  href: FIRST_DEPTH_PATHS[0],
-  icon: ({ color }) => <Home color={color} />,
-}], dummy])
-
-SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[1], [[{
   text: 'notice',
-  href: `${FIRST_DEPTH_PATHS[1]}/notice`,
+  href: `${FIRST_DEPTH_PATHS[0]}/notice`,
   icon: ({ color }) => <Announcement color={color} />,
 }], dummy]);
 
-SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[2], [[{
+SIDE_BAR_ITEMS.set(FIRST_DEPTH_PATHS[1], [[{
   text: 'board',
-  href: `${FIRST_DEPTH_PATHS[2]}/board`,
+  href: `${FIRST_DEPTH_PATHS[1]}/board`,
   icon: ({ color }) => <Edit color={color} />,
 }], dummy]);
 
