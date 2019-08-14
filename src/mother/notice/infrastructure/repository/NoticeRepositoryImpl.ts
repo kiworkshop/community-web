@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { inject, injectable } from "inversify";
 import CommonErrorService from 'src/common/domain/service/CommonErrorService';
-import { inversifyIds } from "src/inversify.id"
+import { inversifyIds } from "src/inversifyIds"
 import Notice from '../../domain/model/Notice';
 import NoticeRepository from '../../domain/repository/NoticeRepository'
 

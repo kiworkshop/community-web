@@ -12,6 +12,9 @@ import theme from 'src/common/presentation/components/theme';
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
+import inversifyServices from 'src/inversifyServices';
+
+const { appWithTranslation } = inversifyServices.cms.common.i18NService;
 
 const makeStore = (preloadedState = {} as RootState) => {
   const bindMiddleware = (middlewares: Middleware[]) => {
@@ -73,4 +76,4 @@ class MyApp extends App<AppProps> {
   }
 }
 
-export default withRedux(makeStore)(withReduxSaga(MyApp))
+export default withRedux(makeStore)(withReduxSaga(appWithTranslation(MyApp)))
