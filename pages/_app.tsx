@@ -14,7 +14,7 @@ import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
 import inversifyServices from 'src/inversifyServices';
 
-const { appWithTranslation } = inversifyServices.cms.common.i18NService;
+const { appWithTranslation } = inversifyServices.common.i18NService;
 
 const makeStore = (preloadedState = {} as RootState) => {
   const bindMiddleware = (middlewares: Middleware[]) => {

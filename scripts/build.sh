@@ -1,8 +1,24 @@
 
 #!/usr/bin/env bash
+npm run clean
 
-# set environment variable from .env
-# https://gist.github.com/judy2k/7656bfe3b322d669ef75364a46327836
+npm run lint
+if [ $? != 0 ]
+  then echo '>> failed to lint <<'
+  exit 1
+fi
+
+npm run report
+if [ $? != 0 ]
+  then echo '>> failed to pass tests <<'
+  exit 1
+fi
+
+npm run compileServer
+if [ $? != 0 ]
+  then echo '>> failed to compile server <<'
+  exit 1
+fi
 
 export $(egrep -v '^#' .browser-env | xargs) > /dev/null
 next build

@@ -26,7 +26,7 @@ import Link from '../atmos/Link';
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
 
-const { withTranslation } = inversifyServices.cms.common.i18NService;
+const { withTranslation } = inversifyServices.common.i18NService;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   flex: {

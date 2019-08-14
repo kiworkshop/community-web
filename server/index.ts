@@ -3,7 +3,7 @@ import next from 'next'
 import nextI18NextMiddleware from 'next-i18next/middleware'
 import inversifyServices from '../src/inversifyServices'
 
-const nextI18next = inversifyServices.cms.common.i18NService;
+const nextI18next = inversifyServices.common.i18NService;
 
 export const PORT = process.env.PORT || 3000;
 export const APP = next({ dev: process.env.NODE_ENV !== 'production' });

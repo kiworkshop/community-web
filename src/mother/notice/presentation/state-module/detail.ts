@@ -62,7 +62,7 @@ export function* saga() {
   yield takeLatest(getType(fetchNotice), sagaFetchNotice);
 }
 
-const noticeService = inversifyServices.cms.mother.notice.service
+const noticeService = inversifyServices.mother.notice.service
 function* sagaFetchNotice(action: ActionType<typeof fetchNotice>): Generator {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload

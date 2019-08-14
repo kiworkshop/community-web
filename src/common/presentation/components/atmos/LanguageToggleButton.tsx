@@ -3,7 +3,7 @@ import * as React from 'react';
 import inversifyServices from 'src/inversifyServices';
 import Maybe from './Maybe';
 
-const { i18n } = inversifyServices.cms.common.i18NService;
+const { i18n } = inversifyServices.common.i18NService;
 const toggleLanguage = () => i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko');
 
 const LanguageToggleButton: React.FC = () =>
