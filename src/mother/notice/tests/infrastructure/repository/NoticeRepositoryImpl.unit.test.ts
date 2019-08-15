@@ -1,6 +1,7 @@
 import _Axios from 'axios';
 jest.mock('axios')
 
+import { Page } from 'csstype';
 import 'reflect-metadata'
 import RepositoryError from 'src/common/domain/model/RepositoryError';
 import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
@@ -54,5 +55,30 @@ describe("NoticeRepositoryImpl test", () => {
     expect(repositoryError.status).toBe(status);
     expect(repositoryError.error).toBe(error);
     expect(repositoryError.message).toBe(message);
+  })
+
+  test("findById_ValidInput_ValidOutput", async () => {
+    // given
+    const response = {
+      data: {
+        content: [{
+          "id": 1,
+          "title": "title",
+          "content": "content"
+        }]
+      } as Page<Notice>
+    }
+    Axios.get.mockReturnValue(Promise.resolve(response));
+
+    // when
+    const res = await noticeRepository.findAll({ page: 1, size: 10 });
+
+    // then
+    expect(res.content.length).toBe(1);
+    expect(res.content[0]).toStrictEqual({
+      "id": 1,
+      "title": "title",
+      "content": "content"
+    });
   })
 })

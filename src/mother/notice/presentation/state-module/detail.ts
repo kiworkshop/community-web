@@ -40,15 +40,12 @@ const createInitialState = () => ({
 
 export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(reset), createInitialState)
-  .handleAction(getType(fetchNotice), (state) => produce(state, draft => {
-    draft.pending = false
-    return draft;
-  }))
   .handleAction(getType(fetchNoticeAsync.request), (state) => produce(state, draft => {
-    draft.pending = false;
+    draft.pending = true;
     return draft;
   }))
   .handleAction(getType(fetchNoticeAsync.success), (state, action) => produce(state, draft => {
+    draft.pending = false;
     draft.notice = action.payload.notice;
     return draft;
   }))
@@ -67,7 +64,7 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>): Generator {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
-    const notice = yield call(noticeService.getNotice, id);
+    const notice: Notice = yield call(noticeService.getNotice, id);
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
     yield put(fetchNoticeAsync.failure());
