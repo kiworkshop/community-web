@@ -1,1 +1,1 @@
-export { default } from './detail'
+export { default } from './list'
