@@ -1,4 +1,4 @@
-import MaterialTable, { Icons } from 'material-table';
+import MaterialTable, { Icons, MaterialTableProps } from 'material-table';
 import * as React from 'react';
 
 import { forwardRef } from 'react';
@@ -40,30 +40,12 @@ const tableIcons: Icons = {
 };
 
 // tslint:disable-next-line: no-empty-interface
-interface Props {
+interface Props<T extends object> extends MaterialTableProps<T> { }
 
-}
-
-const MyTable: React.FC<Props> = () => {
-  return <div style={{ maxWidth: "100%" }}>
-    <MaterialTable
-      icons={tableIcons}
-      columns={[
-        { title: "Adı", field: "name" },
-        { title: "Soyadı", field: "surname" },
-        { title: "Doğum Yılı", field: "birthYear", type: "numeric" },
-        {
-          title: "Doğum Yeri",
-          field: "birthCity",
-          lookup: { 34: "İstanbul", 63: "Şanlıurfa" }
-        }
-      ]}
-      data={[
-        { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 }
-      ]}
-      title="Demo Title"
-    />
-  </div>;
-}
+const MyTable = <T extends object>(props: React.PropsWithChildren<Props<T>>) =>
+  <MaterialTable<T>
+    icons={tableIcons}
+    {...props}
+  />
 
 export default MyTable;
