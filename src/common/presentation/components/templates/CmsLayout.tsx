@@ -15,13 +15,18 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import React from 'react';
+import { WithTranslation } from 'react-i18next';
 import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
+import inversifyServices from 'src/inversifyServices';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
+import LanguageToggleButton from '../atmos/LanguageToggleButton';
 import Link from '../atmos/Link';
 
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
+
+const { withTranslation } = inversifyServices.common.i18NService;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   flex: {
@@ -112,16 +117,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     position: 'fixed',
     zIndex: theme.zIndex.drawer - 1,
     width: "100%"
+  },
+  toolbarContents: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: "100%"
   }
 }));
 
-interface Props {
+interface Props extends WithTranslation {
   paths: string[]
   open: boolean
   toggleOpen(): void
 }
 
-const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
+const CmsLayout: React.FC<Props> = ({ children, t, paths, open, toggleOpen }) => {
   const classes = useStyles();
   const currentSideBarItems = SIDE_BAR_ITEMS.get(paths[0] as FirstDepthPath) || [[]]
 
@@ -145,13 +155,16 @@ const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
           >
             <MenuIcon />
           </IconButton>
-          <MuiLink href="/" underline="none" color="inherit">
-            <Typography variant="h6" noWrap style={{
-              fontFamily: "BM HANNA",
-            }}>
-              광일공방 CMS
-          </Typography>
-          </MuiLink>
+          <div className={classes.toolbarContents}>
+            <MuiLink href="/" underline="none" color="inherit">
+              <Typography variant="h6" noWrap style={{
+                fontFamily: "BM HANNA",
+              }}>
+                {t('kiworkshop')} CMS
+            </Typography>
+            </MuiLink>
+            <LanguageToggleButton />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -192,7 +205,7 @@ const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
                       })}
                     </ListItemIcon>
                     <ListItemText
-                      primary={item.text}
+                      primary={t(item.text)}
                       primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
                       className={clsx(classes.listItemText, {
                         [classes.textAlignCenter]: !open
@@ -219,4 +232,4 @@ const CmsLayout: React.FC<Props> = ({ children, paths, open, toggleOpen }) => {
   );
 }
 
-export default CmsLayout;
+export default withTranslation('common')(CmsLayout);

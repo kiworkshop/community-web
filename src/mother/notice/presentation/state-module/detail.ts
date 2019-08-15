@@ -1,6 +1,6 @@
 import { produce } from 'immer'
 import { call, put, takeLatest } from "redux-saga/effects";
-import inversifyServices from "src/inversify.services";
+import inversifyServices from "src/inversifyServices";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/model/Notice";
 
@@ -62,7 +62,7 @@ export function* saga() {
   yield takeLatest(getType(fetchNotice), sagaFetchNotice);
 }
 
-const noticeService = inversifyServices.cms.mother.notice.service
+const noticeService = inversifyServices.mother.notice.service
 function* sagaFetchNotice(action: ActionType<typeof fetchNotice>): Generator {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
