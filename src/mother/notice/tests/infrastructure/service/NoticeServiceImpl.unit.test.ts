@@ -10,8 +10,7 @@ describe("NoticeServiceImpl test", () => {
     findAll: jest.fn()
   }
 
-  const noticeService: NoticeService = new NoticeServiceImpl();
-  Reflect.set(noticeService, "noticeRepository", mockNoticeRepository);
+  const noticeService: NoticeService = new NoticeServiceImpl(mockNoticeRepository);
 
   test("getNotice_ValidInput_ValidOutput", async () => {
     // given
