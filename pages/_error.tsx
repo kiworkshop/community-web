@@ -12,6 +12,7 @@ const statusCodes: { [code: number]: string } = {
 export interface ErrorProps {
   statusCode: number
   title?: string
+  namespacesRequired?: string[]
 }
 
 /**
@@ -26,7 +27,10 @@ export default class Error<P = {}> extends React.Component<P & ErrorProps> {
   }: NextPageContext): Promise<ErrorProps> | ErrorProps {
     const statusCode =
       res && res.statusCode ? res.statusCode : err ? err.statusCode! : 404
-    return { statusCode }
+    return {
+      statusCode,
+      namespacesRequired: ['common'],
+    }
   }
 
   public render() {
