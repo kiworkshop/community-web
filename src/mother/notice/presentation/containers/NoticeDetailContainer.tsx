@@ -7,6 +7,8 @@ import NoticeDetail from '../components/organisms/NoticeDetail';
 import * as detailModule from "../state-module/detail"
 
 interface Props {
+  id: number
+
   notice: Notice
   pending: boolean
   rejected: boolean
@@ -14,7 +16,13 @@ interface Props {
   dispatchers: typeof detailModule
 }
 
-const NoticeDetailContainer: React.FC<Props> = ({ notice, pending, rejected, dispatchers }) => {
+const NoticeDetailContainer: React.FC<Props> = ({ id, notice, pending, rejected, dispatchers }) => {
+  React.useEffect(() => {
+    if (notice.id < 1) {
+      dispatchers.fetchNotice({ id });
+    }
+  }, [])
+
   React.useEffect(() => () => {
     dispatchers.reset()
   }, [])

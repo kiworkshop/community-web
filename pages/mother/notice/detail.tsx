@@ -1,4 +1,6 @@
 import { NextPageContext } from 'next';
+import { useRouter } from 'next/router';
+import Error from 'pages/_error'
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
@@ -7,12 +9,24 @@ import NoticeDetailContainer from "src/mother/notice/presentation/containers/Not
 import { fetchNotice } from 'src/mother/notice/presentation/state-module/detail';
 
 const NoticePage: React.FC = () => {
-  return <NoticeDetailContainer />;
+  const router = useRouter();
+  const { id: idString } = router.query;
+
+  const id = Number(idString);
+
+  if (isNaN(id)) {
+    return <Error statusCode={400} />
+  }
+
+  return <>
+    <NoticeDetailContainer id={Number(router.query.id)} />
+    {JSON.stringify(router.query)}
+  </>;
 }
 
-(NoticePage as any).getInitialProps = ({ store }: { store: Store<RootState> } & NextPageContext) => {
+(NoticePage as any).getInitialProps = ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
   if (store.getState().mother.notice.detail.notice.id < 1) {
-    store.dispatch(fetchNotice({ id: 1 }));
+    store.dispatch(fetchNotice({ id: Number(query.id) }));
   }
 
   return {}
