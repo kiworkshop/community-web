@@ -1,9 +1,7 @@
 {
-  "notice.title": "제목",
-  "notice.content": "내용",
+  "notice": "공지사항",
   "kiworkshop": "광일공방",
   "home": "홈",
-  "notice": "공지사항",
   "board": "게시판",
   "dummy1": "더미1",
   "dummy2": "더미2",

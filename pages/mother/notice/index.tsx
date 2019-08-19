@@ -1,6 +1,11 @@
 import * as React from 'react';
+import NextPage from 'src/common/domain/model/NextPage';
 import NoticeListContainer from 'src/mother/notice/presentation/containers/NoticeListContainer';
 
-const NoticePage: React.FC = () => <NoticeListContainer />;
+const NoticePage: NextPage = () => <NoticeListContainer />;
+
+NoticePage.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'mother'],
+})
 
 export default NoticePage;

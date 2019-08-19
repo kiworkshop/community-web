@@ -1,9 +1,7 @@
 {
-  "notice.title": "Title",
-  "notice.content": "Content",
+  "notice": "Notice",
   "kiworkshop": "kiworkshop",
   "home": "Home",
-  "notice": "Notice",
   "board": "Board",
   "dummy1": "Dummy1",
   "dummy2": "Dummy2",
