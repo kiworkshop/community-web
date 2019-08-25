@@ -1,9 +1,9 @@
 import { produce } from 'immer'
 import { call, put, takeLatest } from "redux-saga/effects";
-import Page from 'src/common/domain/model/Page';
+import Page from 'src/common/domain/Page';
 import inversifyServices from "src/inversifyServices";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
-import Notice from "../../domain/model/Notice";
+import Notice from "../../domain/Notice";
 
 export const reset = createStandardAction("@noticeList/RESET")();
 

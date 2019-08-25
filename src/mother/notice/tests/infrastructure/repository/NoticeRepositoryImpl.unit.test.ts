@@ -3,11 +3,11 @@ jest.mock('axios')
 
 import { Page } from 'csstype';
 import 'reflect-metadata'
-import RepositoryError from 'src/common/domain/model/RepositoryError';
+import RepositoryError from 'src/common/domain/RepositoryError';
 import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
 import { getRepositoryErrorFixture } from 'src/common/tests/domain/model/RepositoryError.unit.test';
-import Notice from 'src/mother/notice/domain/model/Notice';
-import NoticeRepository from 'src/mother/notice/domain/repository/NoticeRepository';
+import Notice from 'src/mother/notice/domain/Notice';
+import NoticeRepository from 'src/mother/notice/domain/NoticeRepository';
 import NoticeRepositoryImpl from 'src/mother/notice/infrastructure/repository/NoticeRepositoryImpl';
 
 describe("NoticeRepositoryImpl test", () => {

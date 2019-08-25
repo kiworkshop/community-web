@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Notice from 'src/mother/notice/domain/model/Notice';
+import Notice from 'src/mother/notice/domain/Notice';
 
 interface Props {
   notice: Notice

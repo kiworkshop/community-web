@@ -1,8 +1,8 @@
 import "reflect-metadata"
-import NoticeRepository from "src/mother/notice/domain/repository/NoticeRepository";
-import NoticeService from "src/mother/notice/domain/service/NoticeService";
 import NoticeServiceImpl from "src/mother/notice/infrastructure/service/NoticeServiceImpl";
-import { getNoticeFixture } from "../../domain/model/Notice.unit.test";
+import NoticeRepository from "../../domain/NoticeRepository";
+import NoticeService from "../../service/NoticeService";
+import { getNoticeFixture } from "../domain/Notice.unit.test";
 
 describe("NoticeServiceImpl test", () => {
   const mockNoticeRepository: NoticeRepository = {

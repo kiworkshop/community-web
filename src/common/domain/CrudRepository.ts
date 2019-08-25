@@ -1,5 +1,5 @@
-import Page from "../model/Page";
-import PageRequest from "../model/PageRequest";
+import Page from "./Page";
+import PageRequest from "./PageRequest";
 
 export default interface CrudRepository<T> {
   findById(id: number): Promise<T>

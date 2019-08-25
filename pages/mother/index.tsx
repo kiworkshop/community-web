@@ -1,6 +1,6 @@
 import { NextPageContext } from 'next';
 import Router from 'next/router';
-import NextPage from 'src/common/domain/model/NextPage';
+import NextPage from 'src/common/domain/NextPage';
 
 const MotherPage: NextPage = () => <></>;
 

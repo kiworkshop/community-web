@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'src/common/presentation/state-module/root';
-import Notice from '../../domain/model/Notice';
+import Notice from '../../domain/Notice';
 import NoticeDetail from '../components/organisms/NoticeDetail';
 import * as detailModule from "../state-module/detail"
 
