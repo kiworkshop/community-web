@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import NoticeServiceImpl from "src/mother/notice/infrastructure/service/NoticeServiceImpl";
+import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
 import NoticeRepository from "../../domain/NoticeRepository";
 import NoticeService from "../../service/NoticeService";
 import { getNoticeFixture } from "../domain/Notice.unit.test";
@@ -7,7 +8,8 @@ import { getNoticeFixture } from "../domain/Notice.unit.test";
 describe("NoticeServiceImpl test", () => {
   const mockNoticeRepository: NoticeRepository = {
     findById: jest.fn(),
-    findAll: jest.fn()
+    findAll: jest.fn(),
+    save: jest.fn(),
   }
 
   const noticeService: NoticeService = new NoticeServiceImpl(mockNoticeRepository);
@@ -37,5 +39,29 @@ describe("NoticeServiceImpl test", () => {
     expect(mockNoticeRepository.findAll).toBeCalledWith({ page: 1, size: 10 });
     expect(noticePage.content.length).toBe(1);
     expect(noticePage.content[0]).toStrictEqual(getNoticeFixture());
+  })
+
+  test("postNotice_ValidInput_ValidOutput", async () => {
+    // given
+    (mockNoticeRepository.save as jest.Mock).mockResolvedValue("1");
+    const noticeRequestDto: NoticeRequestDto = NoticeRequestDto.of({ title: "title", content: "content" });
+
+    // when
+    const id = await noticeService.postNotice(noticeRequestDto);
+
+    // then
+    expect(mockNoticeRepository.save).toBeCalledWith({ id: -1, title: "title", content: "content" });
+    expect(id).toBe("1");
+  })
+
+  test("putNotice_ValidInput_ValidOutput", async () => {
+    // given
+    (mockNoticeRepository.save as jest.Mock).mockResolvedValue("1");
+    const noticeRequestDto: NoticeRequestDto = NoticeRequestDto.of({ title: "title", content: "content" });
+
+    // expect
+    expect(await noticeService.putNotice("1", noticeRequestDto)).toBeUndefined();
+
+    expect(mockNoticeRepository.save).toBeCalledWith({ id: 1, title: "title", content: "content" });
   })
 })

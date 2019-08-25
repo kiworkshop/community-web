@@ -34,7 +34,7 @@ describe("NoticeRepositoryImpl test", () => {
     expect(res.id).toBe(1);
     expect(res.title).toBe("title");
     expect(res.content).toBe("content");
-  })
+  });
 
   test("findById_RepositoryError_ThrowException", async () => {
     // given
@@ -55,9 +55,9 @@ describe("NoticeRepositoryImpl test", () => {
     expect(repositoryError.status).toBe(status);
     expect(repositoryError.error).toBe(error);
     expect(repositoryError.message).toBe(message);
-  })
+  });
 
-  test("findById_ValidInput_ValidOutput", async () => {
+  test("findAll_ValidInput_ValidOutput", async () => {
     // given
     const response = {
       data: {
@@ -80,5 +80,77 @@ describe("NoticeRepositoryImpl test", () => {
       "title": "title",
       "content": "content"
     });
-  })
+  });
+
+  test("findAll_RepositoryError_ThrowException", async () => {
+    // given
+    const { timestamp, status, error, message } = getRepositoryErrorFixture();
+    Axios.get.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
+
+    // when
+    let repositoryError;
+    try {
+      await noticeRepository.findAll({ page: 1, size: 50 });
+    } catch (e) {
+      repositoryError = e;
+    }
+
+    // then
+    expect(repositoryError).toBeInstanceOf(RepositoryError);
+    expect(repositoryError.timestamp).toBe(timestamp);
+    expect(repositoryError.status).toBe(status);
+    expect(repositoryError.error).toBe(error);
+    expect(repositoryError.message).toBe(message);
+  });
+
+  test("save_WithId_ValidOutput", async () => {
+    // given
+    const response = {
+      data: "1"
+    }
+    Axios.put.mockReturnValue(Promise.resolve(response));
+
+    // when
+    const res = await noticeRepository.save({ id: 1, title: "title", content: "content" });
+
+    // then
+    expect(res).toBe("1");
+  });
+
+  test("save_Without_ValidOutput", async () => {
+    // given
+    const response = {
+      data: "1"
+    }
+    Axios.post.mockReturnValue(Promise.resolve(response));
+
+    // when
+    const res = await noticeRepository.save({ id: -1, title: "title", content: "content" });
+
+    // then
+    expect(res).toBe("1");
+  });
+
+  [1, -1].forEach((id) =>
+    test("save_RepositoryError_ThrowException", async () => {
+      // given
+      const { timestamp, status, error, message } = getRepositoryErrorFixture();
+      Axios.put.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
+      Axios.post.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
+
+      // when
+      let repositoryError;
+      try {
+        await noticeRepository.save({ id, title: "title", content: "content" });
+      } catch (e) {
+        repositoryError = e;
+      }
+
+      // then
+      expect(repositoryError).toBeInstanceOf(RepositoryError);
+      expect(repositoryError.timestamp).toBe(timestamp);
+      expect(repositoryError.status).toBe(status);
+      expect(repositoryError.error).toBe(error);
+      expect(repositoryError.message).toBe(message);
+    }));
 })

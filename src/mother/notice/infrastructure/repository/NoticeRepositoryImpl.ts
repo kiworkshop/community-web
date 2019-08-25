@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import { inject, injectable } from "inversify";
+import { Id } from 'src/common/domain/Id';
 import Page from 'src/common/domain/Page';
 import PageRequest from 'src/common/domain/PageRequest';
 import CommonErrorService from 'src/common/service/CommonErrorService';
@@ -29,4 +30,20 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
         .then(({ data }) => resolve(data))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
+
+  public save = (notice: Notice): Promise<Id> => {
+    if (notice.id > 0) {
+      return new Promise((resolve, rejected) => {
+        Axios.put<void>(`${NOTICE_REPO_URL}/${notice.id}`, notice)
+          .then(() => resolve(notice.id + ""))
+          .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
+      })
+    }
+
+    return new Promise((resolve, rejected) => {
+      Axios.post<Id>(NOTICE_REPO_URL, notice)
+        .then(({ data }) => resolve(data))
+        .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
+    })
+  }
 }
