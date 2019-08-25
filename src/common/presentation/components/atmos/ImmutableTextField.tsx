@@ -3,6 +3,7 @@ import { TextFieldProps } from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx'
 import * as React from 'react';
+import inversifyServices from 'src/inversifyServices';
 
 const useStyles = makeStyles(createStyles({
   root: {
@@ -10,13 +11,14 @@ const useStyles = makeStyles(createStyles({
   }
 }));
 
-type Props = TextFieldProps
+const { useTranslation } = inversifyServices.common.i18NService;
 
-const ImmutableTextField: React.FC<Props> = (
+const ImmutableTextField: React.FC<TextFieldProps> = (
   props
 ) => {
   const classes = useStyles();
   const { className, margin, placeholder, disabled, value } = props;
+  const { t } = useTranslation("common");
 
   return <TextField
     {...props}
@@ -25,7 +27,7 @@ const ImmutableTextField: React.FC<Props> = (
     InputProps={{ readOnly: true }}
     InputLabelProps={{ shrink: true }}
     // It's okay to let a default value be "none" because this component is immutable.
-    placeholder={placeholder || "NONE"}
+    placeholder={placeholder || t("none")}
     disabled={disabled || (!value && value !== 0)}
   />;
 }
