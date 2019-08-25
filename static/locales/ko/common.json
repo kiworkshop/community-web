@@ -9,5 +9,8 @@
   "none": "없음",
   "rejected": {
     "get": "데이터를 불러오지 못했습니다."
-  }
+  },
+  "create": "등록",
+  "update": "수정",
+  "delete": "삭제"
 }

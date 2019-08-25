@@ -20,11 +20,12 @@ const useStyles = makeStyles(createStyles({
   }
 }));
 
-interface Props {
+interface Props extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   __html: string
 }
 
-export default ({ __html }: Props) => {
+export default (props: Props) => {
+  const { __html } = props;
   const classes = useStyles();
-  return <div dangerouslySetInnerHTML={{ __html }} className={classes.wrapper} />
+  return <div {...props} dangerouslySetInnerHTML={{ __html }} className={classes.wrapper} />
 }

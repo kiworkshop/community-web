@@ -7,7 +7,7 @@ import React from 'react';
 export interface SpeedDialActionData {
   icon: JSX.Element
   name: string
-  handleClick(): void
+  handleClick(e: React.BaseSyntheticEvent<MouseEvent, any, any>): any
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -58,7 +58,6 @@ const MySpeedDial: React.FC<Props> = ({ actions }) => {
             key={action.name}
             icon={action.icon}
             tooltipTitle={action.name}
-            tooltipOpen
             onClick={action.handleClick}
           />
         ))}

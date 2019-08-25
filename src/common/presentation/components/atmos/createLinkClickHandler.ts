@@ -20,7 +20,7 @@ interface Options {
  * If 'scroll' property is true, a browser scroll will be set to the top. The default of 'scroll' is true.
  */
 export const createLinkClickHandler = (href?: string, as?: string, method: "push" | "replace" = "push", options?: Options) =>
-  (e: React.BaseSyntheticEvent<MouseEvent, any, any>): Promise<boolean> => {
+  (e: React.MouseEvent<any, MouseEvent>): Promise<boolean> => {
     if (e.nativeEvent.metaKey || e.nativeEvent.shiftKey || e.nativeEvent.ctrlKey) {
       if (as || href) {
         e.preventDefault()
