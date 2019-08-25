@@ -19,10 +19,7 @@ const NoticePage: NextPage = () => {
     return <Error statusCode={400} />
   }
 
-  return <>
-    <NoticeDetailContainer id={Number(router.query.id)} />
-    {JSON.stringify(router.query)}
-  </>;
+  return <NoticeDetailContainer id={id} />;
 }
 
 NoticePage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {

@@ -17,7 +17,7 @@ interface Props {
 
 const NoticePageContainer: React.FC<Props> = ({ page, pending, rejected, dispatchers }) => {
   React.useEffect(() => {
-    dispatchers.fetchNoticePage()
+      dispatchers.fetchNoticePage()
   }, [])
 
   React.useEffect(() => () => {
