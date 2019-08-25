@@ -1,3 +1,4 @@
+import { Fab, Tooltip } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -38,6 +39,23 @@ const MySpeedDial: React.FC<Props> = ({ actions }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  if (actions.length === 1) {
+    return (
+      <div>
+        <Tooltip title={actions[0].name} placement="left">
+          <Fab
+            aria-label="MySpeedDial"
+            color="primary"
+            className={classes.speedDial}
+            onClick={actions[0].handleClick}
+          >
+            {actions[0].icon}
+          </Fab>
+        </Tooltip>
+      </div>
+    );
+  }
 
   return (
     <div>
