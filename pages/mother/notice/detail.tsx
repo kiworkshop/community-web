@@ -9,7 +9,7 @@ import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeDetailContainer from "src/mother/notice/presentation/containers/NoticeDetailContainer";
 import { fetchNotice } from 'src/mother/notice/presentation/state-module/detail';
 
-const NoticePage: NextPage = () => {
+const NoticeDetailPage: NextPage = () => {
   const router = useRouter();
   const { id: idString } = router.query;
 
@@ -22,7 +22,7 @@ const NoticePage: NextPage = () => {
   return <NoticeDetailContainer id={id} />;
 }
 
-NoticePage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
+NoticeDetailPage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
   if (store.getState().mother.notice.detail.notice.id < 1) {
     store.dispatch(fetchNotice({ id: Number(query.id) }));
   }
@@ -30,4 +30,4 @@ NoticePage.getInitialProps = async ({ store, query }: { store: Store<RootState> 
   return {}
 }
 
-export default connect(state => state)(NoticePage);
+export default connect(state => state)(NoticeDetailPage);

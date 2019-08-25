@@ -2,6 +2,7 @@ import * as React from 'react';
 import Page from 'src/common/domain/Page';
 import { createLinkClickHandler } from 'src/common/presentation/components/atmos/createLinkClickHandler';
 import MyTable from "src/common/presentation/components/atmos/MyTable";
+import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import inversifyServices from 'src/inversifyServices';
 import Notice from 'src/mother/notice/domain/Notice';
 
@@ -27,6 +28,9 @@ const onRowClick = (e?: React.MouseEvent, data?: Notice) => {
 const NoticeDetail: React.FC<Props> = ({ page, pending, rejected }) => {
   const { t } = useTranslation(['common', 'mother']);
   return <div>
+    <ErrorTypography hidden={!rejected}>
+      {t("common:rejected.get")}
+    </ErrorTypography>
     <MyTable<Notice>
       isLoading={pending}
       style={{ boxShadow: '0px 0px 0px 5px rgba(0,0,0,0.03)' }}
@@ -42,11 +46,6 @@ const NoticeDetail: React.FC<Props> = ({ page, pending, rejected }) => {
         initialPage: 3,
       }}
     />
-
-    <br />
-    pending: {JSON.stringify(pending)}
-    <br />
-    rejected: {JSON.stringify(rejected)}
   </div>
 }
 

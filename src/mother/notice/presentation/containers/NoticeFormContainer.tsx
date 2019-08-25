@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
-import NoticeForm from '../components/organisms/NoticeForm';
+import NoticeForm from '../components/templates/NoticeForm';
 import * as formModule from "../state-module/form";
 
 interface Props {
   id?: number
+  isEditing: boolean
 
   initialNoticeFormDto: NoticeFormDto
   pending: boolean
@@ -16,9 +17,9 @@ interface Props {
   dispatchers: typeof formModule
 }
 
-const NoticeFormContainer: React.FC<Props> = ({ id, initialNoticeFormDto, pending, rejected, dispatchers }) => {
+const NoticeFormContainer: React.FC<Props> = ({ id, isEditing, initialNoticeFormDto, pending, rejected, dispatchers }) => {
   React.useEffect(() => {
-    if (id && initialNoticeFormDto.title === "") {
+    if (id && isEditing && initialNoticeFormDto.title === "") {
       dispatchers.fetchInitialNotice({ id });
     }
   }, [])
@@ -27,8 +28,22 @@ const NoticeFormContainer: React.FC<Props> = ({ id, initialNoticeFormDto, pendin
     dispatchers.reset()
   }, [])
 
+  const [post] = React.useState(() => (noticeFormDto: NoticeFormDto) => {
+    dispatchers.postNotice({ noticeFormDto });
+  })
+
+  const [put] = React.useState(() => (noticeFormDto: NoticeFormDto) => {
+    if (!id) {
+      return;
+    }
+    dispatchers.putNotice({ id: id + "", noticeFormDto });
+  })
+
   return <NoticeForm
-    initialNoticeFormDto={initialNoticeFormDto}
+    onSubmit={isEditing ? put : post}
+    initialValues={initialNoticeFormDto}
+
+    isEditing={isEditing}
     pending={pending}
     rejected={rejected} />;
 }

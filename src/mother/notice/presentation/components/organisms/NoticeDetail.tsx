@@ -1,10 +1,16 @@
 import { Card, CardContent, Theme } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
+import PrintIcon from '@material-ui/icons/Print';
+import SaveIcon from '@material-ui/icons/Save';
+import ShareIcon from '@material-ui/icons/Share';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
 import ArticleHtmlPreview from 'src/common/presentation/components/atmos/ArticleHtmlPreview';
 import ImmutableTextField from 'src/common/presentation/components/atmos/ImmutableTextField';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
+import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import inversifyServices from 'src/inversifyServices';
 import Notice from 'src/mother/notice/domain/Notice';
 
@@ -29,6 +35,15 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     width: 400
   }
 }))
+
+
+const actions: SpeedDialActionData[] = [
+  { icon: <FileCopyIcon />, name: 'Copy', handleClick: () => { alert('hi') } },
+  { icon: <SaveIcon />, name: 'Save', handleClick: () => { alert('hi') } },
+  { icon: <PrintIcon />, name: 'Print', handleClick: () => { alert('hi') } },
+  { icon: <ShareIcon />, name: 'Share', handleClick: () => { alert('hi') } },
+  { icon: <DeleteIcon />, name: 'Delete', handleClick: () => { alert('hi') } },
+];
 
 const { useTranslation } = inversifyServices.common.i18NService;
 const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
@@ -59,6 +74,8 @@ const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
         </Card>
       </div>
     </div>
+
+    <MySpeedDial actions={actions} />
   </>
 }
 
