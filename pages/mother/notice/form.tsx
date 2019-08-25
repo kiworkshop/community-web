@@ -6,7 +6,7 @@ import { Store } from 'redux';
 import NextPage from 'src/common/domain/NextPage';
 import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeFormContainer from "src/mother/notice/presentation/containers/NoticeFormContainer";
-import { fetchInitialNotice } from 'src/mother/notice/presentation/state-module/form';
+import { fetchInitialNotice, setPendingFalse } from 'src/mother/notice/presentation/state-module/form';
 
 const NoticeFormPage: NextPage = () => {
   const router = useRouter();
@@ -24,6 +24,8 @@ const NoticeFormPage: NextPage = () => {
 NoticeFormPage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
   if (query.id && store.getState().mother.notice.form.initialNoticeFormDto.title === "") {
     store.dispatch(fetchInitialNotice({ id: Number(query.id) }));
+  } else {
+    store.dispatch(setPendingFalse());
   }
 
   return {}

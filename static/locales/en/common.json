@@ -10,7 +10,11 @@
   "rejected": {
     "get": "Failed to get data."
   },
-  "create": "Create",
-  "update": "Update",
-  "delete": "Delete"
+  "add": "Add",
+  "edit": "Edit",
+  "delete": "Delete",
+  "complete": {
+    "add": "Complete adding",
+    "edit": "Complete editing"
+  }
 }

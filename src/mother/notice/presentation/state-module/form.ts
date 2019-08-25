@@ -11,6 +11,7 @@ import NoticeRequestDto from '../../api/dto/NoticeRequestDto';
 import Notice from "../../domain/Notice";
 
 export const reset = createStandardAction("@noticeForm/RESET")();
+export const setPendingFalse = createStandardAction("@noticeForm/SET_PENDING_FALSE")();
 
 export const fetchInitialNotice = createStandardAction("@noticeForm/FETCH_INITIAL_NOTICE")<{ id: number }>();
 const fetchInitialNoticeAsync = createAsyncAction(
@@ -35,6 +36,7 @@ const putNoticeAsync = createAsyncAction(
 
 export type Action = ActionType<
   typeof reset |
+  typeof setPendingFalse |
   typeof fetchInitialNotice |
   typeof fetchInitialNoticeAsync.request |
   typeof fetchInitialNoticeAsync.success |
@@ -68,6 +70,10 @@ const createInitialState = () => ({
 
 export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(reset), createInitialState)
+  .handleAction(getType(setPendingFalse), (state) => produce(state, draft => {
+    draft.pending = false;
+    return draft;
+  }))
   .handleAction(getType(fetchInitialNoticeAsync.request), (state) => produce(state, draft => {
     draft.pending = true;
     return draft;

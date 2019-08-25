@@ -3,9 +3,9 @@ import { Delete, Edit } from '@material-ui/icons';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
-import ArticleHtmlPreview from 'src/common/presentation/components/atmos/ArticleHtmlPreview';
 import { createLinkClickHandler } from 'src/common/presentation/components/atmos/createLinkClickHandler';
 import ImmutableTextField from 'src/common/presentation/components/atmos/ImmutableTextField';
+import MarkdownPreview from 'src/common/presentation/components/atmos/previews/MarkdownPreview';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import inversifyServices from 'src/inversifyServices';
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     margin: 10
   },
   card: {
-    width: 400
+    width: 600
   }
 }))
 
@@ -42,7 +42,7 @@ const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
   const actions: SpeedDialActionData[] = [
     {
       icon: <Edit />,
-      name: t('common:update'),
+      name: t('common:edit'),
       handleClick: createLinkClickHandler(
         `/mother/notice/form?id=${notice.id}`,
         `/mother/notice/edit/${notice.id}`,
@@ -50,6 +50,7 @@ const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
     },
     { icon: <Delete />, name: t('common:delete'), handleClick: () => { alert('hi') } },
   ];
+  const [previewWidth] = React.useState(320);
 
 
   const { id, title, content } = notice;
@@ -58,20 +59,22 @@ const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
       {t("common:rejected.get")}
     </ErrorTypography>
 
-    <div className={clsx(classes.flex, {
+    <div className={clsx({
       [classes.semiTransparent]: pending || rejected
     })}>
-      <div className={classes.cardContainer}>
-        <Card className={classes.card}>
-          <ArticleHtmlPreview __html={content} />
-        </Card>
-      </div>
       <div className={classes.cardContainer}>
         <Card className={classes.card}>
           <CardContent>
             <ImmutableTextField label="ID" value={id} fullWidth />
             <div className={classes.spacing} />
             <ImmutableTextField label={t("notice.title")} value={title} fullWidth />
+          </CardContent>
+        </Card>
+      </div>
+      <div className={classes.cardContainer}>
+        <Card style={{ width: previewWidth }}>
+          <CardContent>
+            <MarkdownPreview markdown={content} />
           </CardContent>
         </Card>
       </div>

@@ -10,7 +10,11 @@
   "rejected": {
     "get": "데이터를 불러오지 못했습니다."
   },
-  "create": "등록",
-  "update": "수정",
-  "delete": "삭제"
+  "add": "등록",
+  "edit": "수정",
+  "delete": "삭제",
+  "complete": {
+    "add": "등록 완료",
+    "edit": "수정 완료"
+  }
 }

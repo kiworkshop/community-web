@@ -1,10 +1,12 @@
-import { Button, Card, CardContent, Theme } from '@material-ui/core';
+import { Card, CardContent, Theme } from '@material-ui/core';
+import { Check } from '@material-ui/icons';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import MutableTextField from 'src/common/presentation/components/atmos/MutableTextField';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
+import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import MarkdownEditor from 'src/common/presentation/components/organisms/MarkdownEditor';
 import inversifyServices from 'src/inversifyServices';
 import NoticeFormDto from 'src/mother/notice/api/dto/NoticeFormDto';
@@ -15,13 +17,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     opacity: 0.5
   },
   flex: {
-    display: 'flex'
+    display: 'flex',
   },
   cardContainer: {
     margin: 10
   },
   card: {
-    width: 400
+    width: 600
   }
 }))
 
@@ -40,21 +42,21 @@ const NoticeForm: React.FC<InjectedFormProps<NoticeFormDto, Props> & Props> = ({
   rejected
 }) => {
   const classes = useStyles();
-  const { t } = useTranslation("mother");
+  const { t } = useTranslation(["mother", "common"]);
+  const actions: SpeedDialActionData[] = [{
+    icon: <Check />,
+    name: isEditing ? t('common:complete.edit') : t('common:complete.add'),
+    handleClick: handleSubmit
+  }]
 
-  return <>
+  return <form>
     <ErrorTypography hidden={!rejected}>
       {t("common:rejected.get")}
     </ErrorTypography>
 
-    <div className={clsx(classes.flex, { [classes.semiTransparent]: pending })}>
+    <div className={clsx({ [classes.semiTransparent]: pending })}>
       <div className={classes.cardContainer}>
-        <Field name="content" component={MarkdownEditor} props={{
-          label: t("notice.content"),
-        }} />
-      </div>
-      <div className={classes.cardContainer}>
-        <Card>
+        <Card className={classes.card}>
           <CardContent>
             <Field
               name="title"
@@ -64,10 +66,15 @@ const NoticeForm: React.FC<InjectedFormProps<NoticeFormDto, Props> & Props> = ({
           </CardContent>
         </Card>
       </div>
+      <div className={classes.cardContainer}>
+        <Field name="content" component={MarkdownEditor} props={{
+          label: t("notice.content"),
+        }} />
+      </div>
     </div>
 
-    <Button onClick={handleSubmit}>{isEditing ? "edit" : "create"}</Button>
-  </>;
+    <MySpeedDial actions={actions} />
+  </form>;
 }
 
 export default reduxForm<NoticeFormDto, Props>({
