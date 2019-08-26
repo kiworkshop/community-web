@@ -16,5 +16,7 @@
   "complete": {
     "add": "등록 완료",
     "edit": "수정 완료"
-  }
+  },
+  "abort": "취소",
+  "confirm": "확인"
 }

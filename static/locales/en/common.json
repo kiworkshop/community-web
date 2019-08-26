@@ -16,5 +16,7 @@
   "complete": {
     "add": "Complete adding",
     "edit": "Complete editing"
-  }
+  },
+  "abort": "Abort",
+  "confirm": "Confirm"
 }

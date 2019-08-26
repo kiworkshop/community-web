@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import * as commonModule from "src/common/presentation/state-module/common"
 import { RootState } from 'src/common/presentation/state-module/root';
+import inversifyServices from 'src/inversifyServices';
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
 import NoticeForm from '../components/templates/NoticeForm';
 import * as formModule from "../state-module/form";
@@ -15,9 +17,20 @@ interface Props {
   rejected: boolean
 
   dispatchers: typeof formModule
+  commonDispatchers: typeof commonModule
 }
 
-const NoticeFormContainer: React.FC<Props> = ({ id, isEditing, initialNoticeFormDto, pending, rejected, dispatchers }) => {
+const { useTranslation } = inversifyServices.common.i18NService;
+const NoticeFormContainer: React.FC<Props> = ({
+  id,
+  isEditing,
+  initialNoticeFormDto,
+  pending,
+  rejected,
+  dispatchers,
+  commonDispatchers
+}) => {
+  const { t } = useTranslation('mother');
   React.useEffect(() => {
     if (id && isEditing && initialNoticeFormDto.title === "") {
       dispatchers.fetchInitialNotice({ id });
@@ -29,14 +42,21 @@ const NoticeFormContainer: React.FC<Props> = ({ id, isEditing, initialNoticeForm
   }, [])
 
   const [post] = React.useState(() => (noticeFormDto: NoticeFormDto) => {
-    dispatchers.postNotice({ noticeFormDto });
+    commonDispatchers.openConfirmDialog({
+      content: t("notice.confirm.add"),
+      onClick: () => dispatchers.postNotice({ noticeFormDto })
+    })
   })
 
   const [put] = React.useState(() => (noticeFormDto: NoticeFormDto) => {
     if (!id) {
       return;
     }
-    dispatchers.putNotice({ id: id + "", noticeFormDto });
+
+    commonDispatchers.openConfirmDialog({
+      content: t("notice.confirm.edit"),
+      onClick: () => dispatchers.putNotice({ id: id + "", noticeFormDto })
+    })
   })
 
   return <NoticeForm
@@ -52,8 +72,9 @@ const mapStateToProps = ({ mother }: RootState) => ({
   ...mother.notice.form
 })
 
-const mapDispatchToProps = (dispatch: Dispatch<formModule.Action>) => ({
-  dispatchers: bindActionCreators(formModule, dispatch)
+const mapDispatchToProps = (dispatch: Dispatch<formModule.Action | commonModule.Action>) => ({
+  dispatchers: bindActionCreators(formModule, dispatch),
+  commonDispatchers: bindActionCreators(commonModule, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoticeFormContainer);

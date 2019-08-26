@@ -1,6 +1,10 @@
 {
   "notice": {
     "title": "Title",
-    "content": "Content"
+    "content": "Content",
+    "confirm": {
+      "add": "Would you like to add a notice?",
+      "edit": "Would you like to edit a notice?"
+    }
   }
 }
