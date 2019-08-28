@@ -18,5 +18,6 @@
     "edit": "수정 완료"
   },
   "abort": "취소",
-  "confirm": "확인"
+  "confirm": "확인",
+  "dismiss": "확인"
 }

@@ -4,6 +4,7 @@ import { produce } from 'immer'
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
 import { Id } from 'src/common/domain/Id';
+import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import inversifyServices from "src/inversifyServices";
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
@@ -141,6 +142,14 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
     const id: Id = yield call(noticeService.postNotice, noticeRequestDto);
     yield put(postNoticeAsync.success());
+
+    yield put(enqueueSnackbar({
+      snackbar: {
+        message: 'mother:notice.done.add',
+        variant: 'success'
+      }
+    }))
+
     Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
