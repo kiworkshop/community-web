@@ -1,9 +1,10 @@
 import { NextPageContext } from 'next';
 import Router from 'next/router';
+import NextPage from 'src/common/domain/NextPage';
 
-const MotherPage = () => <></>;
+const MotherPage: NextPage = () => <></>;
 
-(MotherPage as any).getInitialProps = ({ res }: NextPageContext) => {
+MotherPage.getInitialProps = async ({ res }: NextPageContext) => {
   if (res) {
     res.writeHead(302, {
       Location: '/mother/notice'

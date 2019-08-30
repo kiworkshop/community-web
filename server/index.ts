@@ -1,7 +1,8 @@
-import express from 'express'
-import next from 'next'
-import nextI18NextMiddleware from 'next-i18next/middleware'
-import inversifyServices from '../src/inversifyServices'
+import express from 'express';
+import next from 'next';
+import nextI18NextMiddleware from 'next-i18next/middleware';
+import inversifyServices from '../src/inversifyServices';
+import registerControllers from './registerControllers';
 
 const nextI18next = inversifyServices.common.i18NService;
 
@@ -11,12 +12,14 @@ export const SERVER = express();
 export const handle = APP.getRequestHandler();
 
 APP.prepare().then(() => {
-  SERVER.use(nextI18NextMiddleware(nextI18next))
+  SERVER.use(nextI18NextMiddleware(nextI18next));
 
-  SERVER.get('*', (req, res) => handle(req, res))
+  registerControllers(APP, SERVER);
 
-  SERVER.listen(PORT)
+  SERVER.get('*', (req, res) => handle(req, res));
+
+  SERVER.listen(PORT);
 
   // tslint:disable-next-line: no-console
-  console.log(`> Ready on http://localhost:${PORT}`)
+  console.log(`> Ready on http://localhost:${PORT}`);
 })

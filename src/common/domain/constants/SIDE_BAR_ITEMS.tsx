@@ -10,15 +10,15 @@ interface SideBarItem {
 
 const dummy: SideBarItem[] = [{
   text: "dummy1",
-  href: "",
+  href: "/dummy1",
   icon: ({ color }) => <AccountBalance color={color} />,
 }, {
   text: "dummy2",
-  href: "",
+  href: "/dummy2",
   icon: ({ color }) => <Backspace color={color} />,
 }, {
   text: "dummy3",
-  href: "",
+  href: "/dummy3",
   icon: ({ color }) => <RecordVoiceOver color={color} />,
 }]
 

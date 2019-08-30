@@ -1,8 +1,8 @@
-import CommonErrorService from "src/common/domain/service/CommonErrorService";
+import CommonErrorService from "src/common/service/CommonErrorService";
 import { inversifyContainer } from "src/inversifyConfig";
 import { inversifyIds } from "src/inversifyIds";
-import NoticeService from "src/mother/notice/domain/service/NoticeService";
-import I18NService from "./common/domain/service/I18NService";
+import NoticeService from "src/mother/notice/service/NoticeService";
+import I18NService from "./common/service/I18NService";
 
 const inversifyServices = {
   common: {

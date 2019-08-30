@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { WithTranslation } from 'react-i18next';
 import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
@@ -182,41 +182,42 @@ const CmsLayout: React.FC<Props> = ({ children, t, paths, open, toggleOpen }) =>
         open={open}
       >
         <div className={classes.toolbar} />
-        {currentSideBarItems.map((items, listIndex) => <>
-          {listIndex > 0 && <Divider />}
-          <List className={clsx({
-            [classes.listDrawerClose]: !open
-          })}>
-            {items.map(item => (
-              <Link key={item.text} href={item.href}>
-                <ListItem
-                  button
-                  className={classes.listItem}
-                >
-                  <div className={clsx(classes.listItemContent, {
-                    [classes.flex]: open,
-                    [classes.listItemContentDrawerClose]: !open
-                  })}>
-                    <ListItemIcon className={classes.listItemIcon}>
-                      {item.icon({
-                        color: item.href === currentPath ?
-                          "primary" :
-                          "inherit"
-                      })}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={t(item.text)}
-                      primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
-                      className={clsx(classes.listItemText, {
-                        [classes.textAlignCenter]: !open
-                      })}
-                    />
-                  </div>
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </>)}
+        {currentSideBarItems.map((items, listIndex) =>
+          <Fragment key={listIndex}>
+            {listIndex > 0 && <Divider />}
+            <List className={clsx({
+              [classes.listDrawerClose]: !open
+            })}>
+              {items.map(item => (
+                <Link key={item.text} href={item.href}>
+                  <ListItem
+                    button
+                    className={classes.listItem}
+                  >
+                    <div className={clsx(classes.listItemContent, {
+                      [classes.flex]: open,
+                      [classes.listItemContentDrawerClose]: !open
+                    })}>
+                      <ListItemIcon className={classes.listItemIcon}>
+                        {item.icon({
+                          color: currentPath.startsWith(item.href) ?
+                            "primary" :
+                            "inherit"
+                        })}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={t(item.text)}
+                        primaryTypographyProps={{ style: { fontSize: open ? "0.8rem" : "0.9em" } }}
+                        className={clsx(classes.listItemText, {
+                          [classes.textAlignCenter]: !open
+                        })}
+                      />
+                    </div>
+                  </ListItem>
+                </Link>
+              ))}
+            </List>
+          </Fragment>)}
       </Drawer>
       <div style={{ width: "100%" }}>
         <div className={classes.toolbar} />

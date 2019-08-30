@@ -1,14 +1,17 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
-import withReduxSaga from 'next-redux-saga'
-import withRedux from 'next-redux-wrapper'
+import withReduxSaga from 'next-redux-saga';
+import withRedux from 'next-redux-wrapper';
 import App, { Container } from 'next/app';
 import Head from 'next/head';
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
 import theme from 'src/common/presentation/components/theme';
+import ConfirmContainer from 'src/common/presentation/container/molecules/ConfirmContainer';
+import SnackbarContainer from 'src/common/presentation/container/molecules/SnackbarContainer';
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
@@ -66,9 +69,13 @@ class MyApp extends App<AppProps> {
           <CssBaseline />
 
           <ReduxStoreProvider store={store}>
-            <CmsLayoutContainer>
-              <Component {...pageProps} />
-            </CmsLayoutContainer>
+            <SnackbarProvider style={{ whiteSpace: 'pre' }}>
+              <CmsLayoutContainer>
+                <Component {...pageProps} />
+              </CmsLayoutContainer>
+              <ConfirmContainer />
+              <SnackbarContainer />
+            </SnackbarProvider>
           </ReduxStoreProvider>
         </ThemeProvider>
       </Container>

@@ -1,1 +1,11 @@
-export { default } from './detail'
+import * as React from 'react';
+import NextPage from 'src/common/domain/NextPage';
+import NoticeListContainer from 'src/mother/notice/presentation/containers/NoticeListContainer';
+
+const NoticePage: NextPage = () => <NoticeListContainer />;
+
+NoticePage.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'mother', 'noti'],
+})
+
+export default NoticePage;

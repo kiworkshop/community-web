@@ -1,19 +1,10 @@
-import { NextPageContext } from 'next';
-import Router from 'next/router';
 import * as React from 'react';
+import NextPage from 'src/common/domain/NextPage';
 
-const ContentPage = () => <></>;
+const ContentPage: NextPage = () => <>컨텐츠</>;
 
-(ContentPage as any).getInitialProps = ({ res }: NextPageContext) => {
-  if (res) {
-    res.writeHead(302, {
-      Location: '/content/board'
-    })
-    res.end()
-  } else {
-    Router.push('/content/board')
-  }
-  return {}
-}
+ContentPage.getInitialProps = async () => ({
+  namespacesRequired: ['common'],
+})
 
 export default ContentPage

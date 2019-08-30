@@ -1,12 +1,13 @@
-import RepositoryError from "src/common/domain/model/RepositoryError";
+import RepositoryError from "src/common/domain/RepositoryError";
+import createAxiosErrorWithData from "src/util/test/createAxiosErrorWithData";
 
 export const getRepositoryErrorFixture = () => {
-  return RepositoryError.of({
+  return RepositoryError.of(createAxiosErrorWithData({
     timestamp: new Date().toISOString(),
     error: "Server Internal Error",
     status: 500,
     message: "An internal error has been occurred",
-  })
+  }))
 }
 
 describe("RepositoryError test", () => {
@@ -25,12 +26,12 @@ describe("RepositoryError test", () => {
     const status = 500;
     const message = "An internal error has been occurred";
 
-    const repositoryError = RepositoryError.of({
+    const repositoryError = RepositoryError.of(createAxiosErrorWithData({
       timestamp,
       error,
       status,
       message
-    })
+    }))
 
     expect(repositoryError.timestamp).toBe(timestamp);
     expect(repositoryError.error).toBe(error);

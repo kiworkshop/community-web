@@ -1,21 +1,35 @@
 import { NextPageContext } from 'next';
+import { useRouter } from 'next/router';
+import Error from 'pages/_error'
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
+import NextPage from 'src/common/domain/NextPage';
 import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeDetailContainer from "src/mother/notice/presentation/containers/NoticeDetailContainer";
 import { fetchNotice } from 'src/mother/notice/presentation/state-module/detail';
 
-const NoticePage: React.FC = () => {
-  return <NoticeDetailContainer />;
-}
+const NoticeDetailPage: NextPage = () => {
+  const router = useRouter();
+  const { id: idString } = router.query;
 
-(NoticePage as any).getInitialProps = ({ store }: { store: Store<RootState> } & NextPageContext) => {
-  if (store.getState().mother.notice.detail.notice.id < 1) {
-    store.dispatch(fetchNotice({ id: 1 }));
+  const id = Number(idString);
+
+  if (isNaN(id)) {
+    return <Error statusCode={400} />
   }
 
-  return {}
+  return <NoticeDetailContainer id={id} />;
 }
 
-export default connect(state => state)(NoticePage);
+NoticeDetailPage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
+  if (store.getState().mother.notice.detail.notice.id < 1) {
+    store.dispatch(fetchNotice({ id: Number(query.id) }));
+  }
+
+  return {
+    namespacesRequired: ['common', 'mother', 'noti']
+  }
+}
+
+export default connect(state => state)(NoticeDetailPage);
