@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js';
-
 const JSONbig = require('json-bigint');
 
 describe('json-bigint test', () => {
