@@ -1,4 +1,5 @@
 import "reflect-metadata"
+import { Id } from "src/common/domain/Id";
 import NoticeServiceImpl from "src/mother/notice/infrastructure/service/NoticeServiceImpl";
 import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
 import NoticeRepository from "../../domain/NoticeRepository";
@@ -10,6 +11,7 @@ describe("NoticeServiceImpl test", () => {
     findById: jest.fn(),
     findAll: jest.fn(),
     save: jest.fn(),
+    deleteById: jest.fn(),
   }
 
   const noticeService: NoticeService = new NoticeServiceImpl(mockNoticeRepository);
@@ -17,12 +19,13 @@ describe("NoticeServiceImpl test", () => {
   test("getNotice_ValidInput_ValidOutput", async () => {
     // given
     (mockNoticeRepository.findById as jest.Mock).mockResolvedValue(getNoticeFixture());
+    const id = new Id(1);
 
     // when
-    const notice = await noticeService.getNotice(1);
+    const notice = await noticeService.getNotice(id);
 
     // then
-    expect(mockNoticeRepository.findById).toBeCalledWith(1);
+    expect(mockNoticeRepository.findById).toBeCalledWith(id);
     expect(notice.id).toBeTruthy()
     expect(notice.title).toBeTruthy()
     expect(notice.content).toBeTruthy()
@@ -43,15 +46,15 @@ describe("NoticeServiceImpl test", () => {
 
   test("postNotice_ValidInput_ValidOutput", async () => {
     // given
-    (mockNoticeRepository.save as jest.Mock).mockResolvedValue("1");
+    (mockNoticeRepository.save as jest.Mock).mockResolvedValue(new Id(1));
     const noticeRequestDto: NoticeRequestDto = NoticeRequestDto.of({ title: "title", content: "content" });
 
     // when
     const id = await noticeService.postNotice(noticeRequestDto);
 
     // then
-    expect(mockNoticeRepository.save).toBeCalledWith({ id: -1, title: "title", content: "content" });
-    expect(id).toBe("1");
+    expect(mockNoticeRepository.save).toBeCalledWith({ id: new Id(-1), title: "title", content: "content" });
+    expect(id.isEqualTo(1)).toBe(true);
   })
 
   test("putNotice_ValidInput_ValidOutput", async () => {
@@ -60,8 +63,8 @@ describe("NoticeServiceImpl test", () => {
     const noticeRequestDto: NoticeRequestDto = NoticeRequestDto.of({ title: "title", content: "content" });
 
     // expect
-    expect(await noticeService.putNotice("1", noticeRequestDto)).toBeUndefined();
+    expect(await noticeService.putNotice(new Id(1), noticeRequestDto)).toBeUndefined();
 
-    expect(mockNoticeRepository.save).toBeCalledWith({ id: 1, title: "title", content: "content" });
+    expect(mockNoticeRepository.save).toBeCalledWith({ id: new Id(1), title: "title", content: "content" });
   })
 })
