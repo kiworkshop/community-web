@@ -5,7 +5,7 @@ import NoticeListContainer from 'src/mother/notice/presentation/containers/Notic
 const NoticePage: NextPage = () => <NoticeListContainer />;
 
 NoticePage.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'mother'],
+  namespacesRequired: ['common', 'mother', 'noti'],
 })
 
 export default NoticePage;

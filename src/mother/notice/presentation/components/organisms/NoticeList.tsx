@@ -1,12 +1,13 @@
 import { Add } from '@material-ui/icons';
 import * as React from 'react';
 import Page from 'src/common/domain/Page';
-import { createLinkClickHandler } from 'src/common/presentation/components/atmos/createLinkClickHandler';
 import MyTable from "src/common/presentation/components/atmos/MyTable";
+import Spacer from 'src/common/presentation/components/atmos/Spacer';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import inversifyServices from 'src/inversifyServices';
 import Notice from 'src/mother/notice/domain/Notice';
+import { createLinkClickHandler } from 'src/util/createLinkClickHandler';
 
 interface Props {
   page: Page<Notice>
@@ -40,6 +41,7 @@ const NoticeDetail: React.FC<Props> = ({ page, pending, rejected }) => {
   return <div>
     <ErrorTypography hidden={!rejected}>
       {t("common:rejected.get")}
+      <Spacer />
     </ErrorTypography>
 
     <MyTable<Notice>
@@ -50,7 +52,7 @@ const NoticeDetail: React.FC<Props> = ({ page, pending, rejected }) => {
         { title: "ID", field: "id" },
         { title: t("mother:notice.title"), field: "title" },
       ]}
-      title={t("notice")}
+      title={t("common:notice")}
       onRowClick={onRowClick}
       options={{
         initialPage: 3,

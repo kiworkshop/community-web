@@ -9,6 +9,7 @@ import { getRepositoryErrorFixture } from 'src/common/tests/domain/model/Reposit
 import Notice from 'src/mother/notice/domain/Notice';
 import NoticeRepository from 'src/mother/notice/domain/NoticeRepository';
 import NoticeRepositoryImpl from 'src/mother/notice/infrastructure/repository/NoticeRepositoryImpl';
+import createAxiosErrorWithData from 'src/util/test/createAxiosErrorWithData';
 
 describe("NoticeRepositoryImpl test", () => {
   const noticeRepository: NoticeRepository = new NoticeRepositoryImpl();
@@ -39,7 +40,7 @@ describe("NoticeRepositoryImpl test", () => {
   test("findById_RepositoryError_ThrowException", async () => {
     // given
     const { timestamp, status, error, message } = getRepositoryErrorFixture();
-    Axios.get.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
+    Axios.get.mockReturnValue(Promise.reject(createAxiosErrorWithData({ timestamp, status, error, message })));
 
     // when
     let repositoryError;
@@ -85,7 +86,7 @@ describe("NoticeRepositoryImpl test", () => {
   test("findAll_RepositoryError_ThrowException", async () => {
     // given
     const { timestamp, status, error, message } = getRepositoryErrorFixture();
-    Axios.get.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
+    Axios.get.mockReturnValue(Promise.reject(createAxiosErrorWithData({ timestamp, status, error, message })));
 
     // when
     let repositoryError;
@@ -135,8 +136,8 @@ describe("NoticeRepositoryImpl test", () => {
     test("save_RepositoryError_ThrowException", async () => {
       // given
       const { timestamp, status, error, message } = getRepositoryErrorFixture();
-      Axios.put.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
-      Axios.post.mockReturnValue(Promise.reject({ timestamp, status, error, message }));
+      Axios.put.mockReturnValue(Promise.reject(createAxiosErrorWithData({ timestamp, status, error, message })));
+      Axios.post.mockReturnValue(Promise.reject(createAxiosErrorWithData({ timestamp, status, error, message })));
 
       // when
       let repositoryError;

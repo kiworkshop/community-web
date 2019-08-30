@@ -1,19 +1,25 @@
-import { Card, CardContent, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { CardContent, createStyles, makeStyles, Theme } from '@material-ui/core';
 import * as React from 'react';
 import { WrappedFieldProps } from 'redux-form';
 import MutableTextField from '../atmos/MutableTextField';
 import MarkdownPreview from '../atmos/previews/MarkdownPreview';
+import Spacer from '../atmos/Spacer';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   spacing: { height: theme.spacing(1) },
   flex: {
-    display: 'flex'
+    display: 'flex',
+    flexWrap: 'wrap'
   },
   textInput: {
     background: theme.palette.primary.contrastText
   },
   previewContainer: {
     marginRight: 20
+  },
+  preview: {
+    boxShadow: '0px 0px 0px 3px rgba(0,0,0,0.1)',
+    borderRadius: 5
   }
 }))
 
@@ -24,23 +30,20 @@ const MarkdownEditor: React.FC<WrappedFieldProps> = (props) => {
   const [textFieldWidth] = React.useState(320);
   return <div className={classes.flex}>
     <div className={classes.previewContainer}>
-      <Card style={{ minHeight: 10 }}>
-        <CardContent>
-          <MarkdownPreview markdown={input.value} style={{
-            width: previewWidth
-          }} />
-        </CardContent>
-      </Card>
+      <Spacer size={2.5} />
+      <CardContent className={classes.preview}>
+        <MarkdownPreview markdown={input.value} style={{
+          width: previewWidth
+        }} />
+      </CardContent>
     </div>
     <div>
-      <Card style={{ width: textFieldWidth }}>
-        <CardContent>
-          <MutableTextField
-            {...props}
-            multiline
-          />
-        </CardContent>
-      </Card>
+      <CardContent style={{ width: textFieldWidth }}>
+        <MutableTextField
+          {...props}
+          multiline
+        />
+      </CardContent>
     </div>
   </div>;
 }

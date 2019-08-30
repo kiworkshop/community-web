@@ -1,7 +1,9 @@
 import { produce } from 'immer'
 import { call, put, takeLatest } from "redux-saga/effects";
 import Page from 'src/common/domain/Page';
+import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import inversifyServices from "src/inversifyServices";
+import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/Notice";
 
@@ -64,5 +66,12 @@ function* sagaFetchNotice(): Generator {
     yield put(fetchNoticePageAsync.success({ page }));
   } catch (e) {
     yield put(fetchNoticePageAsync.failure());
+    yield put(enqueueSnackbar({
+      snackbar: {
+        message: 'noti:mother.notice.get.rejected',
+        messageOptions: { e: stringify(e) },
+        variant: 'error'
+      }
+    }))
   }
 }

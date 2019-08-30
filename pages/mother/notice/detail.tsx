@@ -27,7 +27,9 @@ NoticeDetailPage.getInitialProps = async ({ store, query }: { store: Store<RootS
     store.dispatch(fetchNotice({ id: Number(query.id) }));
   }
 
-  return {}
+  return {
+    namespacesRequired: ['common', 'mother', 'noti']
+  }
 }
 
 export default connect(state => state)(NoticeDetailPage);

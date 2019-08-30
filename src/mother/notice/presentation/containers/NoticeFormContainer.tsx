@@ -30,7 +30,7 @@ const NoticeFormContainer: React.FC<Props> = ({
   dispatchers,
   commonDispatchers
 }) => {
-  const { t } = useTranslation('mother');
+  const { t } = useTranslation('noti');
   React.useEffect(() => {
     if (id && isEditing && initialNoticeFormDto.title === "") {
       dispatchers.fetchInitialNotice({ id });
@@ -43,7 +43,7 @@ const NoticeFormContainer: React.FC<Props> = ({
 
   const [post] = React.useState(() => (noticeFormDto: NoticeFormDto) => {
     commonDispatchers.openConfirmDialog({
-      content: t("notice.confirm.add"),
+      content: t("mother.notice.add.confirm"),
       onClick: () => dispatchers.postNotice({ noticeFormDto })
     })
   })
@@ -54,7 +54,7 @@ const NoticeFormContainer: React.FC<Props> = ({
     }
 
     commonDispatchers.openConfirmDialog({
-      content: t("notice.confirm.edit"),
+      content: t("mother.notice.edit.confirm"),
       onClick: () => dispatchers.putNotice({ id: id + "", noticeFormDto })
     })
   })

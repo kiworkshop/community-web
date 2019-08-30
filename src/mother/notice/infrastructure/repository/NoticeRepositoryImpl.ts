@@ -46,4 +46,10 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
   }
+
+  public deleteById = (id: number): Promise<void> => new Promise((resolve, rejected) => {
+    Axios.delete<void>(`${NOTICE_REPO_URL}/${id}`)
+      .then(() => resolve())
+      .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
+  })
 }

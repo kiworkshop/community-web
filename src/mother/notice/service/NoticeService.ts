@@ -9,4 +9,5 @@ export default interface NoticeService {
   getNoticePage(pageRequest: PageRequest): Promise<Page<Notice>>
   postNotice(noticeRequestDto: NoticeRequestDto): Promise<Id>
   putNotice(id: Id, noticeRequestDto: NoticeRequestDto): Promise<void>
+  deleteNotice(id: Id): Promise<void>
 }

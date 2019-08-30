@@ -28,7 +28,9 @@ NoticeFormPage.getInitialProps = async ({ store, query }: { store: Store<RootSta
     store.dispatch(setPendingFalse());
   }
 
-  return {}
+  return {
+    namespacesRequired: ['common', 'mother', 'noti']
+  }
 }
 
 export default connect(state => state)(NoticeFormPage);

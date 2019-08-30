@@ -1,3 +1,4 @@
+import { TOptions } from "i18next";
 import produce from "immer";
 import { OptionsObject, VariantType } from "notistack";
 import Optional from "optional-js";
@@ -5,14 +6,16 @@ import { ActionType, createReducer, createStandardAction, getType } from "typesa
 import uuid from 'uuid';
 
 export interface SnackbarEnqueuePayload {
-  message: string
+  message: string | string[]
+  messageOptions?: TOptions | string
   variant: VariantType
   options?: OptionsObject | { onClose: any }
 }
 
 export interface Snackbar {
   key: string
-  message: string
+  message: string | string[]
+  messageOptions?: TOptions | string
   dismissed?: boolean
   options?: OptionsObject | { onClose: any }
 }

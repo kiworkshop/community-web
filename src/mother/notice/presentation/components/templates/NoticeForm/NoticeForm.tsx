@@ -1,10 +1,12 @@
 import { Card, CardContent, Theme } from '@material-ui/core';
+import { TextFieldProps } from '@material-ui/core/TextField';
 import { Check } from '@material-ui/icons';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { BaseFieldProps, Field, InjectedFormProps, reduxForm } from 'redux-form';
 import MutableTextField from 'src/common/presentation/components/atmos/MutableTextField';
+import Spacer from 'src/common/presentation/components/atmos/Spacer';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import MarkdownEditor from 'src/common/presentation/components/organisms/MarkdownEditor';
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     margin: 10
   },
   card: {
-    width: 600
+    minWidth: 600
   }
 }))
 
@@ -58,18 +60,26 @@ const NoticeForm: React.FC<InjectedFormProps<NoticeFormDto, Props> & Props> = ({
       <div className={classes.cardContainer}>
         <Card className={classes.card}>
           <CardContent>
-            <Field
+            <Field<BaseFieldProps<TextFieldProps>>
               name="title"
               component={MutableTextField}
-              label={t("notice.title")}
+              props={{
+                label: t("notice.title")
+              }}
+            />
+
+            <Spacer />
+
+            <Field<BaseFieldProps<TextFieldProps>>
+              name="content"
+              component={MarkdownEditor}
+              props={{
+                label: t("notice.content"),
+                variant: "outlined",
+              }}
             />
           </CardContent>
         </Card>
-      </div>
-      <div className={classes.cardContainer}>
-        <Field name="content" component={MarkdownEditor} props={{
-          label: t("notice.content"),
-        }} />
       </div>
     </div>
 

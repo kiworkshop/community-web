@@ -3,19 +3,14 @@ import { Delete, Edit } from '@material-ui/icons';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
-import { createLinkClickHandler } from 'src/common/presentation/components/atmos/createLinkClickHandler';
 import ImmutableTextField from 'src/common/presentation/components/atmos/ImmutableTextField';
 import MarkdownPreview from 'src/common/presentation/components/atmos/previews/MarkdownPreview';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import inversifyServices from 'src/inversifyServices';
 import Notice from 'src/mother/notice/domain/Notice';
+import { createLinkClickHandler } from 'src/util/createLinkClickHandler';
 
-interface Props {
-  notice: Notice
-  pending: boolean
-  rejected: boolean
-}
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   spacing: { height: theme.spacing(1) },
@@ -34,9 +29,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }))
 
 
+interface Props {
+  notice: Notice
+  pending: boolean
+  rejected: boolean
+
+  deleteNotice(): void
+}
+
 const { useTranslation } = inversifyServices.common.i18NService;
 
-const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
+const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected, deleteNotice }) => {
   const classes = useStyles();
   const { t } = useTranslation(["mother", "common"]);
   const actions: SpeedDialActionData[] = [
@@ -48,7 +51,7 @@ const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected }) => {
         `/mother/notice/edit/${notice.id}`,
       )
     },
-    { icon: <Delete />, name: t('common:delete'), handleClick: () => { alert('hi') } },
+    { icon: <Delete />, name: t('common:delete'), handleClick: deleteNotice },
   ];
   const [previewWidth] = React.useState(320);
 

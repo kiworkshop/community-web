@@ -22,6 +22,9 @@ export default class NoticeServiceImpl implements NoticeService {
 
   public putNotice = (id: Id, { title, content }: NoticeRequestDto): Promise<void> =>
     this.noticeRepository.save({ id: Number(id), title, content }).then(() => { return });
+
+  public deleteNotice = (id: Id): Promise<void> =>
+    this.noticeRepository.deleteById(Number(id)).then(() => { return });
 }
 
 decorate(inject(notice.NoticeRepository) as ParameterDecorator, NoticeServiceImpl, 0);

@@ -46,11 +46,11 @@ class SnackbarContainer extends React.Component<Props> {
   public componentDidUpdate() {
     const { snackbars = [], t } = this.props;
 
-    snackbars.forEach(({ key, message, options = {} }) => {
+    snackbars.forEach(({ key, message, messageOptions, options = {} }) => {
       // Do nothing if snackbar is already displayed
       if (this.displayed.includes(key)) { return; }
       // Display snackbar using notistack
-      this.props.enqueueSnackbar(t(message), {
+      this.props.enqueueSnackbar(t(message, messageOptions), {
         ...options,
         action: keyToDismiss => (
           // tslint:disable-next-line: jsx-no-lambda
@@ -82,7 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch<snackbarModule.Action>) => ({
   dispatchers: bindActionCreators(snackbarModule, dispatch)
 })
 
-export default withTranslation(['common', 'mother'])(withSnackbar(connect(
+export default withTranslation('noti')(withSnackbar(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SnackbarContainer)));

@@ -6,6 +6,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { Id } from 'src/common/domain/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import inversifyServices from "src/inversifyServices";
+import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
 import NoticeRequestDto from '../../api/dto/NoticeRequestDto';
@@ -132,6 +133,12 @@ function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>):
     yield put(fetchInitialNoticeAsync.success({ initialNoticeFormDto }));
   } catch (e) {
     yield put(fetchInitialNoticeAsync.failure());
+    yield put(enqueueSnackbar({
+      snackbar: {
+        message: 'noti:mother.notice.get.rejected',
+        variant: 'error'
+      }
+    }))
   }
 }
 
@@ -141,11 +148,11 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
     const id: Id = yield call(noticeService.postNotice, noticeRequestDto);
-    yield put(postNoticeAsync.success());
 
+    yield put(postNoticeAsync.success());
     yield put(enqueueSnackbar({
       snackbar: {
-        message: 'mother:notice.done.add',
+        message: 'noti:mother.notice.add.fulfilled',
         variant: 'success'
       }
     }))
@@ -153,6 +160,12 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
     Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
+    yield put(enqueueSnackbar({
+      snackbar: {
+        message: 'noti:mother.notice.add.rejected',
+        variant: 'error'
+      }
+    }))
   }
 }
 
@@ -162,9 +175,24 @@ function* sagaPutNotice(action: ActionType<typeof putNotice>): Generator {
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
     yield call(noticeService.putNotice, id, noticeRequestDto);
+
     yield put(postNoticeAsync.success());
+    yield put(enqueueSnackbar({
+      snackbar: {
+        message: 'noti:mother.notice.edit.fulfilled',
+        variant: 'success'
+      }
+    }))
+
     Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
+    yield put(enqueueSnackbar({
+      snackbar: {
+        message: 'noti:mother.notice.edit.rejected',
+        messageOptions: { e: stringify(e) },
+        variant: 'error'
+      }
+    }))
   }
 }
