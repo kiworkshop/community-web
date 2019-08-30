@@ -14,7 +14,7 @@ const NOTICE_REPO_URL = `${process.env.REPOSITORY_URL}/notices`
 export default class NoticeRepositoryImpl implements NoticeRepository {
   @inject(inversifyIds.common.CommonErrorService) private commonErrorService!: CommonErrorService
 
-  public findById = (id: number): Promise<Notice> => new Promise((resolve, rejected) => {
+  public findById = (id: Id): Promise<Notice> => new Promise((resolve, rejected) => {
     Axios.get<Notice>(`${NOTICE_REPO_URL}/${id}`)
       .then(({ data }) => resolve(data))
       .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
@@ -32,10 +32,10 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
     })
 
   public save = (notice: Notice): Promise<Id> => {
-    if (notice.id > 0) {
+    if (notice.id.isGreaterThan(0)) {
       return new Promise((resolve, rejected) => {
         Axios.put<void>(`${NOTICE_REPO_URL}/${notice.id}`, notice)
-          .then(() => resolve(notice.id + ""))
+          .then(() => resolve(notice.id))
           .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
       })
     }
@@ -47,7 +47,7 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
     })
   }
 
-  public deleteById = (id: number): Promise<void> => new Promise((resolve, rejected) => {
+  public deleteById = (id: Id): Promise<void> => new Promise((resolve, rejected) => {
     Axios.delete<void>(`${NOTICE_REPO_URL}/${id}`)
       .then(() => resolve())
       .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));

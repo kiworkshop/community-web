@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import { Id } from 'src/common/domain/Id';
 import * as commonModule from "src/common/presentation/state-module/common"
 import { RootState } from 'src/common/presentation/state-module/root';
 import inversifyServices from 'src/inversifyServices';
@@ -9,7 +10,7 @@ import NoticeDetail from '../components/organisms/NoticeDetail';
 import * as detailModule from "../state-module/detail"
 
 interface Props {
-  id: number
+  id: Id
 
   notice: Notice
   pending: boolean
@@ -23,7 +24,7 @@ const { useTranslation } = inversifyServices.common.i18NService;
 
 const NoticeDetailContainer: React.FC<Props> = ({ id, notice, pending, rejected, dispatchers, commonDispatchers }) => {
   React.useEffect(() => {
-    if (notice.id < 1) {
+    if (new Id(notice.id).isLessThan(1)) {
       dispatchers.fetchNotice({ id });
     }
   }, [])

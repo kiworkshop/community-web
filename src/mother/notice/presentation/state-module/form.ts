@@ -15,7 +15,7 @@ import Notice from "../../domain/Notice";
 export const reset = createStandardAction("@noticeForm/RESET")();
 export const setPendingFalse = createStandardAction("@noticeForm/SET_PENDING_FALSE")();
 
-export const fetchInitialNotice = createStandardAction("@noticeForm/FETCH_INITIAL_NOTICE")<{ id: number }>();
+export const fetchInitialNotice = createStandardAction("@noticeForm/FETCH_INITIAL_NOTICE")<{ id: Id }>();
 const fetchInitialNoticeAsync = createAsyncAction(
   '@noticeForm/FETCH_INITIAL_NOTICE_REQUEST',
   '@noticeForm/FETCH_INITIAL_NOTICE_SUCCESS',
@@ -62,7 +62,7 @@ export interface State {
 // Initial State
 const createInitialState = () => ({
   initialNoticeFormDto: NoticeFormDto.of({
-    id: -1,
+    id: new Id(-1),
     title: "",
     content: ""
   }),

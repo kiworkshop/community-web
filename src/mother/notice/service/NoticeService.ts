@@ -5,7 +5,7 @@ import NoticeRequestDto from "../api/dto/NoticeRequestDto";
 import Notice from "../domain/Notice";
 
 export default interface NoticeService {
-  getNotice(id: number): Promise<Notice>
+  getNotice(id: Id): Promise<Notice>
   getNoticePage(pageRequest: PageRequest): Promise<Page<Notice>>
   postNotice(noticeRequestDto: NoticeRequestDto): Promise<Id>
   putNotice(id: Id, noticeRequestDto: NoticeRequestDto): Promise<void>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import { Id } from 'src/common/domain/Id';
 import * as commonModule from "src/common/presentation/state-module/common"
 import { RootState } from 'src/common/presentation/state-module/root';
 import inversifyServices from 'src/inversifyServices';
@@ -9,7 +10,7 @@ import NoticeForm from '../components/templates/NoticeForm';
 import * as formModule from "../state-module/form";
 
 interface Props {
-  id?: number
+  id?: Id
   isEditing: boolean
 
   initialNoticeFormDto: NoticeFormDto
@@ -55,7 +56,7 @@ const NoticeFormContainer: React.FC<Props> = ({
 
     commonDispatchers.openConfirmDialog({
       content: t("mother.notice.edit.confirm"),
-      onClick: () => dispatchers.putNotice({ id: id + "", noticeFormDto })
+      onClick: () => dispatchers.putNotice({ id, noticeFormDto })
     })
   })
 
