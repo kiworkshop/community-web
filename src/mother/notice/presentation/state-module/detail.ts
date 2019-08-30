@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
-import { Id } from 'src/common/domain/Id';
+import Long from 'src/common/domain/Long';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
@@ -10,14 +10,14 @@ import Notice from "../../domain/Notice";
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
 
-export const fetchNotice = createStandardAction("@noticeDetail/FETCH_NOTICE")<{ id: Id }>();
+export const fetchNotice = createStandardAction("@noticeDetail/FETCH_NOTICE")<{ id: Long }>();
 const fetchNoticeAsync = createAsyncAction(
   '@noticeDetail/FETCH_NOTICE_REQUEST',
   '@noticeDetail/FETCH_NOTICE_SUCCESS',
   '@noticeDetail/FETCH_NOTICE_FAILURE',
 )<void, { notice: Notice }, void>();
 
-export const deleteNotice = createStandardAction("@noticeDetail/DELETE_NOTICE")<{ id: Id }>();
+export const deleteNotice = createStandardAction("@noticeDetail/DELETE_NOTICE")<{ id: Long }>();
 const deleteNoticeAsync = createAsyncAction(
   '@noticeDetail/DELETE_NOTICE_REQUEST',
   '@noticeDetail/DELETE_NOTICE_SUCCESS',
@@ -44,7 +44,7 @@ export interface State {
 // Initial State
 const createInitialState = () => ({
   notice: {
-    id: new Id(-1),
+    id: new Long(-1),
     title: "",
     content: ""
   } as Notice,

@@ -3,7 +3,7 @@
 import { produce } from 'immer'
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
-import { Id } from 'src/common/domain/Id';
+import Long from 'src/common/domain/Long';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
@@ -15,7 +15,7 @@ import Notice from "../../domain/Notice";
 export const reset = createStandardAction("@noticeForm/RESET")();
 export const setPendingFalse = createStandardAction("@noticeForm/SET_PENDING_FALSE")();
 
-export const fetchInitialNotice = createStandardAction("@noticeForm/FETCH_INITIAL_NOTICE")<{ id: Id }>();
+export const fetchInitialNotice = createStandardAction("@noticeForm/FETCH_INITIAL_NOTICE")<{ id: Long }>();
 const fetchInitialNoticeAsync = createAsyncAction(
   '@noticeForm/FETCH_INITIAL_NOTICE_REQUEST',
   '@noticeForm/FETCH_INITIAL_NOTICE_SUCCESS',
@@ -29,7 +29,7 @@ const postNoticeAsync = createAsyncAction(
   '@noticeForm/POST_NOTICE_FAILURE',
 )<void, void, void>();
 
-export const putNotice = createStandardAction("@noticeForm/PUT_NOTICE")<{ id: Id, noticeFormDto: NoticeFormDto }>();
+export const putNotice = createStandardAction("@noticeForm/PUT_NOTICE")<{ id: Long, noticeFormDto: NoticeFormDto }>();
 const putNoticeAsync = createAsyncAction(
   '@noticeForm/PUT_NOTICE_REQUEST',
   '@noticeForm/PUT_NOTICE_SUCCESS',
@@ -62,7 +62,7 @@ export interface State {
 // Initial State
 const createInitialState = () => ({
   initialNoticeFormDto: NoticeFormDto.of({
-    id: new Id(-1),
+    id: new Long(-1),
     title: "",
     content: ""
   }),
@@ -147,7 +147,7 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
   const { noticeFormDto } = action.payload;
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
-    const id: Id = yield call(noticeService.postNotice, noticeRequestDto);
+    const id: Long = yield call(noticeService.postNotice, noticeRequestDto);
 
     yield put(postNoticeAsync.success());
     yield put(enqueueSnackbar({
