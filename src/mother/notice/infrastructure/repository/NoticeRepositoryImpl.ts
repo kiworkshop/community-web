@@ -16,7 +16,10 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
 
   public findById = (id: Id): Promise<Notice> => new Promise((resolve, rejected) => {
     Axios.get<Notice>(`${NOTICE_REPO_URL}/${id}`)
-      .then(({ data }) => resolve(data))
+      .then(({ data }) => resolve({
+        ...data,
+        id
+      }))
       .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
   })
 
@@ -27,7 +30,13 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
           page, size, sort
         }
       })
-        .then(({ data }) => resolve(data))
+        .then(({ data }) => resolve({
+          ...data,
+          content: data.content.map(n => {
+            n.id = new Id(n.id);
+            return n;
+          })
+        }))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
 
@@ -35,14 +44,14 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
     if (notice.id.isGreaterThan(0)) {
       return new Promise((resolve, rejected) => {
         Axios.put<void>(`${NOTICE_REPO_URL}/${notice.id}`, notice)
-          .then(() => resolve(notice.id))
+          .then(() => resolve(new Id(notice.id)))
           .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
       })
     }
 
     return new Promise((resolve, rejected) => {
       Axios.post<Id>(NOTICE_REPO_URL, notice)
-        .then(({ data }) => resolve(data))
+        .then(({ data: id }) => resolve(new Id(id)))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
   }

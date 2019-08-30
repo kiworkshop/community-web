@@ -12,9 +12,7 @@ import { fetchNotice } from 'src/mother/notice/presentation/state-module/detail'
 
 const NoticeDetailPage: NextPage = () => {
   const router = useRouter();
-  const { id: idString } = router.query;
-
-  const id = new Id(idString.toString());
+  const id = new Id(router.query.id.toString());
 
   if (id.isNaN()) {
     return <Error statusCode={400} />
