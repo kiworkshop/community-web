@@ -39,16 +39,16 @@ const createInitialState = () => ({
 
 export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(reset), createInitialState)
-  .handleAction(getType(fetchNoticePageAsync.request), (state) => produce(state, draft => {
+  .handleAction(getType(fetchNoticePageAsync.request), (state) => produce<State, State>(state, draft => {
     draft.pending = true;
     return draft;
   }))
-  .handleAction(getType(fetchNoticePageAsync.success), (state, action) => produce(state, draft => {
+  .handleAction(getType(fetchNoticePageAsync.success), (state, action) => produce<State, State>(state, draft => {
     draft.pending = false;
     draft.page = action.payload.page;
     return draft;
   }))
-  .handleAction(getType(fetchNoticePageAsync.failure), (state) => produce(state, draft => {
+  .handleAction(getType(fetchNoticePageAsync.failure), (state) => produce<State, State>(state, draft => {
     draft.pending = false;
     draft.rejected = true;
     return draft;

@@ -23,6 +23,7 @@
     "no-duplicated-branches": false,
     "no-big-function": false,
     "no-identical-functions": false,
+    "no-var-requires": false,
     "no-var-keyword": true,
     "arrow-return-shorthand": true,
     "no-boolean-literal-compare": true,

@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
+import Long from 'src/common/domain/Long';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
@@ -9,14 +10,14 @@ import Notice from "../../domain/Notice";
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
 
-export const fetchNotice = createStandardAction("@noticeDetail/FETCH_NOTICE")<{ id: number }>();
+export const fetchNotice = createStandardAction("@noticeDetail/FETCH_NOTICE")<{ id: Long }>();
 const fetchNoticeAsync = createAsyncAction(
   '@noticeDetail/FETCH_NOTICE_REQUEST',
   '@noticeDetail/FETCH_NOTICE_SUCCESS',
   '@noticeDetail/FETCH_NOTICE_FAILURE',
 )<void, { notice: Notice }, void>();
 
-export const deleteNotice = createStandardAction("@noticeDetail/DELETE_NOTICE")<{ id: number }>();
+export const deleteNotice = createStandardAction("@noticeDetail/DELETE_NOTICE")<{ id: Long }>();
 const deleteNoticeAsync = createAsyncAction(
   '@noticeDetail/DELETE_NOTICE_REQUEST',
   '@noticeDetail/DELETE_NOTICE_SUCCESS',
@@ -43,39 +44,39 @@ export interface State {
 // Initial State
 const createInitialState = () => ({
   notice: {
-    id: -1,
+    id: new Long(-1),
     title: "",
     content: ""
-  },
+  } as Notice,
   pending: true,
   rejected: false
 });
 
 export const reducer = createReducer<State, Action>(createInitialState())
   .handleAction(getType(reset), createInitialState)
-  .handleAction(getType(fetchNoticeAsync.request), (state) => produce(state, draft => {
+  .handleAction(getType(fetchNoticeAsync.request), (state) => produce<State, State>(state, draft => {
     draft.pending = true;
     return draft;
   }))
-  .handleAction(getType(fetchNoticeAsync.success), (state, action) => produce(state, draft => {
+  .handleAction(getType(fetchNoticeAsync.success), (state, action) => produce<State, State>(state, draft => {
     draft.pending = false;
     draft.notice = action.payload.notice;
     return draft;
   }))
-  .handleAction(getType(fetchNoticeAsync.failure), (state) => produce(state, draft => {
+  .handleAction(getType(fetchNoticeAsync.failure), (state) => produce<State, State>(state, draft => {
     draft.pending = false;
     draft.rejected = true;
     return draft;
   }))
-  .handleAction(getType(deleteNoticeAsync.request), (state) => produce(state, draft => {
+  .handleAction(getType(deleteNoticeAsync.request), (state) => produce<State, State>(state, draft => {
     draft.pending = true;
     return draft;
   }))
-  .handleAction(getType(deleteNoticeAsync.success), (state) => produce(state, draft => {
+  .handleAction(getType(deleteNoticeAsync.success), (state) => produce<State, State>(state, draft => {
     draft.pending = false;
     return draft;
   }))
-  .handleAction(getType(deleteNoticeAsync.failure), (state) => produce(state, draft => {
+  .handleAction(getType(deleteNoticeAsync.failure), (state) => produce<State, State>(state, draft => {
     draft.pending = false;
     draft.rejected = true;
     return draft;
@@ -109,7 +110,7 @@ function* sagaDeleteNotice(action: ActionType<typeof deleteNotice>): Generator {
   yield put(deleteNoticeAsync.request())
   const { id } = action.payload
   try {
-    yield call(noticeService.deleteNotice, id.toString());
+    yield call(noticeService.deleteNotice, id);
     yield put(deleteNoticeAsync.success());
     yield put(enqueueSnackbar({
       snackbar: {
