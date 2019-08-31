@@ -1,7 +1,7 @@
-import Long from 'src/common/domain/Long';
+import Id from 'src/common/domain/Id';
 
 export default interface Notice {
-  id: Long;
+  id: Id;
   title: string;
   content: string;
 }

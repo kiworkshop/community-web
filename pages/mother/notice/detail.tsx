@@ -4,7 +4,7 @@ import Error from 'pages/_error'
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import Long from 'src/common/domain/Long';
+import Id from 'src/common/domain/Id';
 import NextPage from 'src/common/domain/NextPage';
 import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeDetailContainer from "src/mother/notice/presentation/containers/NoticeDetailContainer";
@@ -12,9 +12,9 @@ import { fetchNotice } from 'src/mother/notice/presentation/state-module/detail'
 
 const NoticeDetailPage: NextPage = () => {
   const router = useRouter();
-  const id = new Long(router.query.id.toString());
+  const id = new Id(router.query.id.toString());
 
-  if (id.isNaN()) {
+  if (isNaN(id)) {
     return <Error statusCode={400} />
   }
 
@@ -22,9 +22,9 @@ const NoticeDetailPage: NextPage = () => {
 }
 
 NoticeDetailPage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
-  const id = new Long(store.getState().mother.notice.detail.notice.id)
-  if (id.isLessThan(1)) {
-    store.dispatch(fetchNotice({ id: new Long(query.id.toString()) }));
+  const id = new Id(store.getState().mother.notice.detail.notice.id)
+  if (id < 1) {
+    store.dispatch(fetchNotice({ id: new Id(query.id.toString()) }));
   }
 
   return {

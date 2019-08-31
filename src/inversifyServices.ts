@@ -9,9 +9,7 @@ const inversifyServices = {
   common: {
     errorService: inversifyContainer.get<CommonErrorService>(inversifyIds.common.CommonErrorService),
     i18NService: I18NService,
-    axios: Axios.create({
-      transformResponse: data => require('json-bigint').parse(data)
-    })
+    axios: Axios.create()
   },
   mother: {
     notice: {

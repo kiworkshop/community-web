@@ -1,15 +1,15 @@
-import Long from 'src/common/domain/Long';
+import Id from 'src/common/domain/Id';
 import Notice from "src/mother/notice/domain/Notice";
 
 export const getNoticeFixture = (): Notice => ({
-  "id": new Long(1),
+  "id": new Id(1),
   "title": "title",
   "content": "content"
 })
 
 test('fixture test', () => {
   expect(getNoticeFixture()).toStrictEqual({
-    "id": new Long(1),
+    "id": new Id(1),
     "title": "title",
     "content": "content"
   })
