@@ -44,7 +44,7 @@ export interface State {
 // Initial State
 const createInitialState = () => ({
   notice: {
-    id: new Id(-1),
+    id: -1,
     title: "",
     content: ""
   } as Notice,

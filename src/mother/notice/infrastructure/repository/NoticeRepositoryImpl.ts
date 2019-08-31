@@ -30,13 +30,7 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
           page, size, sort
         }
       })
-        .then(({ data }) => resolve({
-          ...data,
-          content: data.content.map(n => {
-            n.id = new Id(n.id);
-            return n;
-          })
-        }))
+        .then(({ data }) => resolve(data))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
 
@@ -44,14 +38,14 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
     if (notice.id > 0) {
       return new Promise((resolve, rejected) => {
         Axios.put<void>(`${NOTICE_REPO_URL}/${notice.id}`, notice)
-          .then(() => resolve(new Id(notice.id)))
+          .then(() => resolve(notice.id))
           .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
       })
     }
 
     return new Promise((resolve, rejected) => {
       Axios.post<Id>(NOTICE_REPO_URL, notice)
-        .then(({ data: id }) => resolve(new Id(id)))
+        .then(({ data: id }) => resolve(id))
         .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
     })
   }

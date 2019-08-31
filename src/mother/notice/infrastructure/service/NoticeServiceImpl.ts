@@ -18,7 +18,7 @@ export default class NoticeServiceImpl implements NoticeService {
     this.noticeRepository.findAll(pageRequest);
 
   public postNotice = ({ title, content }: NoticeRequestDto): Promise<Id> =>
-    this.noticeRepository.save({ id: new Id(-1), title, content });
+    this.noticeRepository.save({ id: -1, title, content });
 
   public putNotice = (id: Id, { title, content }: NoticeRequestDto): Promise<void> =>
     this.noticeRepository.save({ id, title, content }).then(() => { return });

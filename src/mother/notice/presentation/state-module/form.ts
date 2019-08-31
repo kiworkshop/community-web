@@ -62,7 +62,7 @@ export interface State {
 // Initial State
 const createInitialState = () => ({
   initialNoticeFormDto: NoticeFormDto.of({
-    id: new Id(-1),
+    id: -1,
     title: "",
     content: ""
   }),

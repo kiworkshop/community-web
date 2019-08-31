@@ -3,7 +3,6 @@ jest.mock('axios')
 
 import { Page } from 'csstype';
 import 'reflect-metadata'
-import Id from 'src/common/domain/Id';
 import RepositoryError from 'src/common/domain/RepositoryError';
 import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
 import { getRepositoryErrorFixture } from 'src/common/tests/domain/model/RepositoryError.unit.test';
@@ -22,7 +21,7 @@ describe("NoticeRepositoryImpl test", () => {
     // given
     const response = {
       data: {
-        "id": new Id(1),
+        "id": 1,
         "title": "title",
         "content": "content"
       } as Notice
@@ -30,7 +29,7 @@ describe("NoticeRepositoryImpl test", () => {
     Axios.get.mockReturnValue(Promise.resolve(response));
 
     // when
-    const res = await noticeRepository.findById(new Id(1));
+    const res = await noticeRepository.findById(1);
 
     // then
     expect(res.id).toBe(1);
@@ -46,7 +45,7 @@ describe("NoticeRepositoryImpl test", () => {
     // when
     let repositoryError;
     try {
-      await noticeRepository.findById(new Id(1));
+      await noticeRepository.findById(1);
     } catch (e) {
       repositoryError = e;
     }
@@ -78,7 +77,7 @@ describe("NoticeRepositoryImpl test", () => {
     // then
     expect(res.content.length).toBe(1);
     expect(res.content[0]).toStrictEqual({
-      "id": new Id(1),
+      "id": 1,
       "title": "title",
       "content": "content"
     });
@@ -113,7 +112,7 @@ describe("NoticeRepositoryImpl test", () => {
     Axios.put.mockReturnValue(Promise.resolve(response));
 
     // when
-    const res = await noticeRepository.save({ id: new Id(1), title: "title", content: "content" });
+    const res = await noticeRepository.save({ id: 1, title: "title", content: "content" });
 
     // then
     expect(res).toBe(1);
@@ -122,18 +121,18 @@ describe("NoticeRepositoryImpl test", () => {
   test("save_Without_ValidOutput", async () => {
     // given
     const response = {
-      data: "1"
+      data: 1
     }
     Axios.post.mockReturnValue(Promise.resolve(response));
 
     // when
-    const res = await noticeRepository.save({ id: new Id(-1), title: "title", content: "content" });
+    const res = await noticeRepository.save({ id: -1, title: "title", content: "content" });
 
     // then
     expect(res).toBe(1);
   });
 
-  [new Id(1), new Id(-1)].forEach((id) =>
+  [1, -1].forEach((id) =>
     test("save_RepositoryError_ThrowException", async () => {
       // given
       const { timestamp, status, error, message } = getRepositoryErrorFixture();
