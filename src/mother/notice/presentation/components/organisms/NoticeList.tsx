@@ -49,7 +49,12 @@ const NoticeDetail: React.FC<Props> = ({ page, pending, rejected }) => {
       style={{ boxShadow: '0px 0px 0px 5px rgba(0,0,0,0.03)' }}
       data={page.content}
       columns={[
-        { title: "ID", field: "id" },
+        {
+          title: "ID",
+          field: "id",
+          render: data => data.id.toString(),
+          customSort: (a, b) => a.id.isLessThan(b.id) ? 1 : -1
+        },
         { title: t("mother:notice.title"), field: "title" },
       ]}
       title={t("common:notice")}
