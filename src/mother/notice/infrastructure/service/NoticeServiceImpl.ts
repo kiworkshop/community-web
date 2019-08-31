@@ -1,5 +1,5 @@
 import { decorate, inject, injectable } from "inversify";
-import Long from 'src/common/domain/Long';
+import Id from 'src/common/domain/Id';
 import Page from "src/common/domain/Page";
 import PageRequest from "src/common/domain/PageRequest";
 import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
@@ -12,18 +12,18 @@ import NoticeService from "../../service/NoticeService";
 export default class NoticeServiceImpl implements NoticeService {
   constructor(private noticeRepository: NoticeRepository) { }
 
-  public getNotice = (id: Long): Promise<Notice> => this.noticeRepository.findById(id)
+  public getNotice = (id: Id): Promise<Notice> => this.noticeRepository.findById(id)
 
   public getNoticePage = (pageRequest: PageRequest): Promise<Page<Notice>> =>
     this.noticeRepository.findAll(pageRequest);
 
-  public postNotice = ({ title, content }: NoticeRequestDto): Promise<Long> =>
-    this.noticeRepository.save({ id: new Long(-1), title, content });
+  public postNotice = ({ title, content }: NoticeRequestDto): Promise<Id> =>
+    this.noticeRepository.save({ id: -1, title, content });
 
-  public putNotice = (id: Long, { title, content }: NoticeRequestDto): Promise<void> =>
+  public putNotice = (id: Id, { title, content }: NoticeRequestDto): Promise<void> =>
     this.noticeRepository.save({ id, title, content }).then(() => { return });
 
-  public deleteNotice = (id: Long): Promise<void> =>
+  public deleteNotice = (id: Id): Promise<void> =>
     this.noticeRepository.deleteById(id).then(() => { return });
 }
 

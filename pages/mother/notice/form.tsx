@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import Long from 'src/common/domain/Long';
 import NextPage from 'src/common/domain/NextPage';
 import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeFormContainer from "src/mother/notice/presentation/containers/NoticeFormContainer";
@@ -11,9 +10,9 @@ import { fetchInitialNotice, setPendingFalse } from 'src/mother/notice/presentat
 
 const NoticeFormPage: NextPage = () => {
   const router = useRouter();
-  const id = new Long(String(router.query.id));
+  const id = parseInt(String(router.query.id), 10);
 
-  if (id.isNaN()) {
+  if (isNaN(id)) {
     return <NoticeFormContainer isEditing={false} />;
   }
 
@@ -22,7 +21,7 @@ const NoticeFormPage: NextPage = () => {
 
 NoticeFormPage.getInitialProps = async ({ store, query }: { store: Store<RootState> } & NextPageContext) => {
   if (query.id && store.getState().mother.notice.form.initialNoticeFormDto.title === "") {
-    store.dispatch(fetchInitialNotice({ id: new Long(String(query.id)) }));
+    store.dispatch(fetchInitialNotice({ id: parseInt(String(query.id), 10) }));
   } else {
     store.dispatch(setPendingFalse());
   }
