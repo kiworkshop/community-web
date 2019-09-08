@@ -1,4 +1,4 @@
-import { Card, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Card, createStyles, Fade, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { blue, green, grey, orange, red } from '@material-ui/core/colors';
 import { Cancel } from '@material-ui/icons';
 import { VariantType } from 'notistack';
@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     background: 'rgba(0, 0, 0, 0.35)',
     color: theme.palette.primary.contrastText,
     border: '0.5px solid #333',
-    cursor: 'default'
+    cursor: 'default',
+    fontSize: '0.8rem'
   },
   titleWrapper: {
     background: 'rgba(0, 0, 0, 0.20)',
@@ -64,6 +65,7 @@ colorMap.set("success", green[colorWeight]);
 colorMap.set("warning", orange[colorWeight]);
 
 const RenderNotification: React.FC<Props> = ({ snackbar, handleRemove }) => {
+  const theme = useTheme();
   const classes = useStyles();
 
   const options = Optional.ofNullable(snackbar.options);
@@ -75,26 +77,69 @@ const RenderNotification: React.FC<Props> = ({ snackbar, handleRemove }) => {
   const showCancelButton = () => setIsCancelButtonHidden(false);
   const hideCancelButton = () => setIsCancelButtonHidden(true);
 
+  const [checked, setChecked] = React.useState(true);
+  const fadeOut = () => setChecked(false);
+
+  const [ref] = React.useState(React.createRef<HTMLDivElement>());
+  const removeWithFadeoutAnimation = () => {
+    if (!ref.current) {
+      return;
+    }
+
+    const { leavingScreen } = theme.transitions.duration;
+
+    const initialHeight = ref.current.offsetHeight;
+    const deltaHeight = initialHeight / leavingScreen;
+
+    const initialMargin = theme.spacing(1.5);
+    const deltaMargin = initialMargin / leavingScreen;
+
+    ref.current.style.height = initialHeight + "px";
+    ref.current.style.margin = initialMargin + "px";
+
+    // Remove element
+    setTimeout(handleRemove, leavingScreen);
+    fadeOut();
+
+    // Animation
+    for (let i = 0; i < leavingScreen; i++) {
+      setTimeout(() => {
+        if (!ref.current) {
+          return;
+        }
+        ref.current.style.height = (initialHeight - deltaHeight * i) + "px"
+        ref.current.style.margin = (initialMargin - deltaMargin * i) + "px"
+      }, i);
+    }
+  }
+
   return <>
-    <Card className={classes.card} onMouseOver={showCancelButton} onMouseOut={hideCancelButton}>
-      <div className={classes.titleWrapper}>
-        <div className={classes.title}>
-          <span style={{ color: colorMap.get(variant) }}> ● </span>
-          <span>{variant}{title}</span>
+    <Fade in={checked}>
+      <Card
+        ref={ref}
+        className={classes.card}
+        onMouseOver={showCancelButton}
+        onMouseOut={hideCancelButton}
+      >
+        <div className={classes.titleWrapper}>
+          <div className={classes.title}>
+            <span style={{ color: colorMap.get(variant) }}> ● </span>
+            <span>{variant}{title}</span>
+          </div>
+          <div hidden={isCancelButtonHidden} onMouseUp={removeWithFadeoutAnimation} >
+            <Cancel className={classes.cancel} />
+          </div>
         </div>
-        <div hidden={isCancelButtonHidden} onMouseUp={handleRemove} >
-          <Cancel className={classes.cancel} />
+        <div className={classes.notiContent}>
+          <div className={classes.message}>
+            {snackbar.message}
+          </div>
+          <div className={classes.messageOptions}>
+            {Optional.ofNullable(snackbar.messageOptions).map((mo: any) => mo.e).orElse("")}
+          </div>
         </div>
-      </div>
-      <div className={classes.notiContent}>
-        <div className={classes.message}>
-          {snackbar.message}
-        </div>
-        <div className={classes.messageOptions}>
-          {Optional.ofNullable(snackbar.messageOptions).map((mo: any) => mo.e).orElse("")}
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </Fade>
   </>;
 }
 

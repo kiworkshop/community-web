@@ -31,9 +31,9 @@ const NotificationCenter: React.SFC<Props> = ({ snackbars, opened, handleClose, 
     onClose={handleClose}
   >
     <div className={classes.drawerItems}>
-      {snackbars.map((s, i) =>
+      {snackbars.map(s =>
         <RenderNotification
-          key={i}
+          key={s.key}
           snackbar={s}
           // tslint:disable-next-line: jsx-no-lambda
           handleRemove={() => handleRemove(s.key)}
