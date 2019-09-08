@@ -34,6 +34,7 @@ const NoticeDetailContainer: React.FC<Props> = ({ id, notice, pending, rejected,
   }, [])
 
   const { t } = useTranslation('noti');
+
   const deleteNotice = () => {
     commonDispatchers.openConfirmDialog({
       "content": t("mother.notice.delete.confirm"),

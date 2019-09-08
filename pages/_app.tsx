@@ -12,6 +12,7 @@ import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redu
 import theme from 'src/common/presentation/components/theme';
 import ConfirmContainer from 'src/common/presentation/container/molecules/ConfirmContainer';
 import SnackbarContainer from 'src/common/presentation/container/molecules/SnackbarContainer';
+import NotificationCenterContainer from 'src/common/presentation/container/organisms/NotificationCenterContainer';
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
@@ -75,6 +76,7 @@ class MyApp extends App<AppProps> {
               </CmsLayoutContainer>
               <ConfirmContainer />
               <SnackbarContainer />
+              <NotificationCenterContainer />
             </SnackbarProvider>
           </ReduxStoreProvider>
         </ThemeProvider>

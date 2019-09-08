@@ -22,6 +22,7 @@ import inversifyServices from 'src/inversifyServices';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
 import LanguageToggleButton from '../atmos/LanguageToggleButton';
 import Link from '../atmos/Link';
+import NotificationCenterButton from '../atmos/NotificationCenterButton';
 
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
@@ -163,7 +164,10 @@ const CmsLayout: React.FC<Props> = ({ children, t, paths, open, toggleOpen }) =>
                 {t('kiworkshop')} CMS
             </Typography>
             </MuiLink>
-            <LanguageToggleButton />
+            <div>
+              <NotificationCenterButton />
+              <LanguageToggleButton />
+            </div>
           </div>
         </Toolbar>
       </AppBar>

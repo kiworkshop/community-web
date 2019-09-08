@@ -5,11 +5,16 @@ import Optional from "optional-js";
 import { ActionType, createReducer, createStandardAction, getType } from "typesafe-actions";
 import uuid from 'uuid';
 
+export interface SnackbarOptionsObject extends OptionsObject {
+  onClose?: any
+  remove?(): void
+}
+
 export interface SnackbarEnqueuePayload {
   message: string | string[]
   messageOptions?: TOptions | string
   variant: VariantType
-  options?: OptionsObject | { onClose: any }
+  options?: SnackbarOptionsObject
 }
 
 export interface Snackbar {
@@ -17,27 +22,35 @@ export interface Snackbar {
   message: string | string[]
   messageOptions?: TOptions | string
   dismissed?: boolean
-  options?: OptionsObject | { onClose: any }
+  options?: SnackbarOptionsObject
 }
 
 export const reset = createStandardAction("@snackbar/RESET")();
+
 export const enqueueSnackbar = createStandardAction("@snackbar/ENQUEUE_SNACKBAR")<{ snackbar: SnackbarEnqueuePayload }>();
 export const dismissSnackbar = createStandardAction("@snackbar/DISMISS_SNACKBAR")<{ key: string }>();
 export const removeSnackbar = createStandardAction("@snackbar/REMOVE_SNACKBAR")<{ key: string }>();
+
+export const openNotificationCenter = createStandardAction("@snackbar/OPEN_NOTIFICATION_CENTER")();
+export const closeNotificationCenter = createStandardAction("@snackbar/CLOSE_NOTIFICATION_CENTER")();
 
 export type Action = ActionType<
   typeof reset |
   typeof enqueueSnackbar |
   typeof dismissSnackbar |
-  typeof removeSnackbar
+  typeof removeSnackbar |
+  typeof openNotificationCenter |
+  typeof closeNotificationCenter
 >
 
 export interface State {
   snackbars: Snackbar[]
+  isNotificationCenterOpened: boolean
 }
 
 const createInitialState = (): State => ({
   snackbars: [],
+  isNotificationCenterOpened: false
 });
 
 export const reducer = createReducer<State, Action>(createInitialState())
@@ -64,4 +77,12 @@ export const reducer = createReducer<State, Action>(createInitialState())
     const { key } = action.payload;
     draft.snackbars = draft.snackbars.filter(s => s.key !== key);
     return draft
+  }))
+  .handleAction(getType(openNotificationCenter), (state) => produce(state, draft => {
+    draft.isNotificationCenterOpened = true;
+    return draft;
+  }))
+  .handleAction(getType(closeNotificationCenter), (state) => produce(state, draft => {
+    draft.isNotificationCenterOpened = false;
+    return draft;
   }))
