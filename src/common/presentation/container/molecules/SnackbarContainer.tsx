@@ -63,7 +63,7 @@ class SnackbarContainer extends React.Component<Props> {
           if (options.onClose) {
             options.onClose(event, reason, keyOfOption);
           }
-        }) as any
+        }) as any,
       });
       // Keep track of snackbars that we've displayed
       this.storeDisplayed(key);

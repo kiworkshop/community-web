@@ -18,8 +18,14 @@ const NotificationCenterContainer: React.FC<Props> = ({
   dispatchers,
 }) => {
   const handleClose = dispatchers.closeNotificationCenter;
+  const handleRemove = (key: string) => dispatchers.removeSnackbar({ key });
 
-  return <NotificationCenter snackbars={snackbars} opened={opened} handleClose={handleClose} />
+  return <NotificationCenter
+    snackbars={snackbars}
+    opened={opened}
+    handleClose={handleClose}
+    handleRemove={handleRemove}
+  />
 }
 
 

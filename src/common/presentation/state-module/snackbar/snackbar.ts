@@ -5,11 +5,16 @@ import Optional from "optional-js";
 import { ActionType, createReducer, createStandardAction, getType } from "typesafe-actions";
 import uuid from 'uuid';
 
+export interface SnackbarOptionsObject extends OptionsObject {
+  onClose?: any
+  remove?(): void
+}
+
 export interface SnackbarEnqueuePayload {
   message: string | string[]
   messageOptions?: TOptions | string
   variant: VariantType
-  options?: OptionsObject | { onClose: any }
+  options?: SnackbarOptionsObject
 }
 
 export interface Snackbar {
@@ -17,7 +22,7 @@ export interface Snackbar {
   message: string | string[]
   messageOptions?: TOptions | string
   dismissed?: boolean
-  options?: OptionsObject | { onClose: any }
+  options?: SnackbarOptionsObject
 }
 
 export const reset = createStandardAction("@snackbar/RESET")();
