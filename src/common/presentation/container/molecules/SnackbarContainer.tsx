@@ -1,6 +1,6 @@
 import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { OptionsObject, withSnackbar, WithSnackbarProps } from 'notistack';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 import * as React from 'react';
 import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
@@ -52,7 +52,7 @@ class SnackbarContainer extends React.Component<Props> {
       // Display snackbar using notistack
       this.props.enqueueSnackbar(t(message, messageOptions), {
         ...options,
-        persist: (options as OptionsObject).variant === "error" ? true : false,
+        persist: options.variant === "error" ? true : false,
         action: keyToDismiss => (
           // tslint:disable-next-line: jsx-no-lambda
           <IconButton key="close" color="inherit" onClick={() => this.props.closeSnackbar(keyToDismiss)}>
