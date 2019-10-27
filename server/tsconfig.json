@@ -3,8 +3,9 @@
 {
   "compilerOptions": {
     "baseUrl": "../",
-    "target": "esnext",
+    "target": "es2017",
     "module": "CommonJS",
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "esModuleInterop": true,
