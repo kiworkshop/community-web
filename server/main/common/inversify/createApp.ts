@@ -18,12 +18,12 @@ export const createApp = (container: Container, errorHandlers?: ErrorRequestHand
 
   })
   .setErrorConfig((theApp) => {
+    theApp.get("*", (req, res) => handle(req, res));
+
     Optional.ofNullable(errorHandlers)
       .map(handlers => handlers.forEach(h => theApp.use(h)));
 
     const handle = new NextApp().get().getRequestHandler();
-
-    theApp.get("*", (req, res) => handle(req, res));
 
     theApp.use(defaultErrorHandler);
   })
