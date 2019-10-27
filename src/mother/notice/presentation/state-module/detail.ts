@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
+import { Endpoints } from 'server/common/utils/Constants';
 import Id from 'src/common/domain/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import stringify from 'src/util/stringify';
@@ -87,6 +88,8 @@ export function* saga() {
   yield takeLatest(getType(deleteNotice), sagaDeleteNotice);
 }
 
+const PATH = Endpoints["mother.notice"];
+
 function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
@@ -118,7 +121,7 @@ function* sagaDeleteNotice(action: ActionType<typeof deleteNotice>): Generator {
       }
     }))
 
-    Router.push("/mother/notice/index", "/mother/notice");
+    Router.push(`${PATH}/index`, PATH);
   } catch (e) {
     yield put(deleteNoticeAsync.failure());
     yield put(enqueueSnackbar({

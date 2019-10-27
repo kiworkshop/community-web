@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpGet, interfaces, request, requestParam, response } from "inversify-express-utils";
 import { NextApplication } from "server/common/nextjs/NextApplication";
+import { Endpoints } from "server/common/utils/Constants";
 
-const PATH = "/mother/notice";
+const PATH = Endpoints["mother.notice"];
 
 @controller(PATH)
 export class ImageController implements interfaces.Controller {

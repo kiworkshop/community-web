@@ -1,8 +1,7 @@
-// tslint:disable: no-identical-functions
-
 import { produce } from 'immer'
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
+import { Endpoints } from 'server/common/utils/Constants';
 import Id from 'src/common/domain/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import stringify from 'src/util/stringify';
@@ -141,6 +140,8 @@ function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>) 
   }
 }
 
+const PATH = Endpoints["mother.notice"];
+
 function* sagaPostNotice(action: ActionType<typeof postNotice>) {
   yield put(postNoticeAsync.request())
   const { noticeFormDto } = action.payload;
@@ -156,7 +157,7 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>) {
       }
     }))
 
-    Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
+    Router.push(`${PATH}/detail?id=${id}`, `${PATH}${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
     yield put(enqueueSnackbar({
@@ -183,7 +184,7 @@ function* sagaPutNotice(action: ActionType<typeof putNotice>): Generator {
       }
     }))
 
-    Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
+    Router.push(`${PATH}/detail?id=${id}`, `${PATH}/${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
     yield put(enqueueSnackbar({
