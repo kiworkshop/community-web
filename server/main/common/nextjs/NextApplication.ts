@@ -6,10 +6,10 @@ const APP = next({ dev: process.env.NODE_ENV !== 'production' });
 const preparedApp = APP.prepare();
 
 @injectable()
-export class NextApp {
+export class NextApplication {
   public get() { return APP; }
 
-  public getPreparedApp() {
+  public run() {
     return preparedApp;
   }
 }

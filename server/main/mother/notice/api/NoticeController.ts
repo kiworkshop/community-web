@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpGet, interfaces, request, requestParam, response } from "inversify-express-utils";
-import { NextApp } from "server/main/common/nextjs/NextApp";
+import { NextApplication } from "server/main/common/nextjs/NextApplication";
 
 const PATH = "/mother/notice";
 
 @controller(PATH)
 export class ImageController implements interfaces.Controller {
 
-  constructor(@inject("NextApp") private nextApp: NextApp) { }
+  constructor(@inject("NextApp") private nextApp: NextApplication) { }
 
   @httpGet("/add")
   public add(

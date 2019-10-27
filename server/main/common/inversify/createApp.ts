@@ -7,7 +7,7 @@ import Optional from 'optional-js';
 import I18NService from 'src/common/service/I18NService';
 import "../../mother/notice/api/NoticeController";
 import { defaultErrorHandler } from "../error/DefaultErrorHandler";
-import { NextApp } from '../nextjs/NextApp';
+import { NextApplication } from '../nextjs/NextApplication';
 
 export const createApp = (container: Container, errorHandlers?: ErrorRequestHandler[]) => new InversifyExpressServer(container)
   .setConfig((theApp) => {
@@ -23,7 +23,7 @@ export const createApp = (container: Container, errorHandlers?: ErrorRequestHand
     Optional.ofNullable(errorHandlers)
       .map(handlers => handlers.forEach(h => theApp.use(h)));
 
-    const handle = new NextApp().get().getRequestHandler();
+    const handle = new NextApplication().get().getRequestHandler();
 
     theApp.use(defaultErrorHandler);
   })

@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { NextApp } from '../nextjs/NextApp';
+import { NextApplication } from '../nextjs/NextApplication';
 
 import "../../common/api/CommonController";
 import "../../mother/api/MotherController";
@@ -7,6 +7,6 @@ import "../../mother/notice/api/NoticeController";
 
 export const createContainer = () => {
   const container = new Container();
-  container.bind<NextApp>('NextApp').to(NextApp);
+  container.bind<NextApplication>('NextApp').to(NextApplication);
   return container;
 }
