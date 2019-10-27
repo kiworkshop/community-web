@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpGet, interfaces, request, response } from "inversify-express-utils";
-import { NextApplication } from "server/main/common/nextjs/NextApplication";
+import { NextApplication } from "server/common/nextjs/NextApplication";
 
 const PATH = "/content"
 
