@@ -13,9 +13,7 @@ const useStyles = makeStyles(createStyles({
 
 const { useTranslation } = I18NService;
 
-const ImmutableTextField: React.FC<TextFieldProps> = (
-  props
-) => {
+const ImmutableTextField: React.FC<TextFieldProps> = (props) => {
   const classes = useStyles();
   const { className, margin, placeholder, disabled, value } = props;
   const { t } = useTranslation("common");

@@ -4,7 +4,7 @@
   "compilerOptions": {
     "baseUrl": "../",
     "target": "es2017",
-    "module": "CommonJS",
+    "module": "commonjs",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
