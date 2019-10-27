@@ -8,13 +8,13 @@ const PATH = "/"
 @controller(PATH)
 export class CommonController implements interfaces.Controller {
 
-  constructor(@inject("NextApp") private nextApp: NextApplication) { }
+  constructor(@inject("NextApp") private nextApplication: NextApplication) { }
 
   @httpGet("/")
   public get(
     @request() req: Request,
     @response() res: Response,
   ) {
-    return this.nextApp.get().render(req, res, PATH)
+    return this.nextApplication.render(req, res, PATH)
   }
 }

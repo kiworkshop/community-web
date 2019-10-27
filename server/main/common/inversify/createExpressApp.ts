@@ -9,7 +9,7 @@ import "../../mother/notice/api/NoticeController";
 import { defaultErrorHandler } from "../error/DefaultErrorHandler";
 import { NextApplication } from '../nextjs/NextApplication';
 
-export const createApp = (container: Container, errorHandlers?: ErrorRequestHandler[]) => new InversifyExpressServer(container)
+export const createExpressApp = (container: Container, errorHandlers?: ErrorRequestHandler[]) => new InversifyExpressServer(container)
   .setConfig((theApp) => {
     theApp.use(bodyParser.urlencoded({ extended: true }));
     theApp.use(bodyParser.json());
@@ -18,12 +18,13 @@ export const createApp = (container: Container, errorHandlers?: ErrorRequestHand
 
   })
   .setErrorConfig((theApp) => {
+    const handle = new NextApplication().getRequestHandler();
+
     theApp.get("*", (req, res) => handle(req, res));
 
     Optional.ofNullable(errorHandlers)
       .map(handlers => handlers.forEach(h => theApp.use(h)));
 
-    const handle = new NextApplication().get().getRequestHandler();
 
     theApp.use(defaultErrorHandler);
   })

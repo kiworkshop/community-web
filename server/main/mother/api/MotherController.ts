@@ -11,10 +11,7 @@ export class MotherController implements interfaces.Controller {
   constructor(@inject("NextApp") private nextApp: NextApplication) { }
 
   @httpGet("/")
-  public get(
-    @request() req: Request,
-    @response() res: Response,
-  ) {
-    return this.nextApp.get().render(req, res, PATH)
+  public get(@request() req: Request, @response() res: Response) {
+    return this.nextApp.render(req, res, PATH)
   }
 }
