@@ -11,10 +11,7 @@ export class CommonController implements interfaces.Controller {
   constructor(@inject("NextApp") private nextApplication: NextApplication) { }
 
   @httpGet("/")
-  public get(
-    @request() req: Request,
-    @response() res: Response,
-  ) {
+  public get(@request() req: Request, @response() res: Response) {
     return this.nextApplication.render(req, res, PATH)
   }
 }
