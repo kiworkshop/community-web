@@ -6,9 +6,8 @@ const preparedApp = APP.prepare();
 
 @injectable()
 export class NextApplication {
+  public handle = APP.getRequestHandler();
+
   public render: typeof APP.render = (...args) => APP.render(...args)
-
-  public getRequestHandler = () => APP.getRequestHandler();
-
   public run = () => preparedApp;
 }
