@@ -3,10 +3,10 @@ import { inject } from "inversify";
 import { controller, httpGet, interfaces, request, response } from "inversify-express-utils";
 import { NextApp } from "server/main/common/nextjs/NextApp";
 
-const PATH = "/mother"
+const PATH = "/"
 
 @controller(PATH)
-export class MotherController implements interfaces.Controller {
+export class CommonController implements interfaces.Controller {
 
   constructor(@inject("NextApp") private nextApp: NextApp) { }
 

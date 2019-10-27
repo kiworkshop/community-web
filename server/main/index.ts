@@ -2,11 +2,15 @@ import "reflect-metadata";
 
 import { createApp } from "./common/inversify/createApp";
 import { createContainer } from "./common/inversify/createContainer";
+import { NextApp } from "./common/nextjs/NextApp";
 import { logger } from "./common/utils";
 import { errorHandlers } from "./errorHandlers";
-import "./mother/notice/api/NoticeController";
 
 const PORT = 3000;
 
-createApp(createContainer(), errorHandlers).listen(PORT);
-logger.log("info", `server is running on port:${PORT}`);
+const nextApp = new NextApp();
+
+nextApp.getPreparedApp().then(() => {
+  createApp(createContainer(), errorHandlers).listen(PORT);
+  logger.log("info", `server is running on port:${PORT}`);
+});

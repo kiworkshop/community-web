@@ -15,7 +15,7 @@ export class ImageController implements interfaces.Controller {
     @request() req: Request,
     @response() res: Response,
   ) {
-    this.nextApp.get().render(req, res, `${PATH}/add`);
+    return this.nextApp.get().render(req, res, `${PATH}/add`);
   }
 
   @httpGet("/edit/:id")
@@ -24,7 +24,7 @@ export class ImageController implements interfaces.Controller {
     @response() res: Response,
     @requestParam("id") id: string,
   ) {
-    this.nextApp.get().render(req, res, `${PATH}/form`, { id });
+    return this.nextApp.get().render(req, res, `${PATH}/form`, { id });
   }
 
   @httpGet("/:id")
@@ -33,7 +33,7 @@ export class ImageController implements interfaces.Controller {
     @response() res: Response,
     @requestParam("id") id: string,
   ) {
-    this.nextApp.get().render(req, res, `${PATH}/detail`, { id });
+    return this.nextApp.get().render(req, res, `${PATH}/detail`, { id });
   }
 
   @httpGet("/")
@@ -41,6 +41,6 @@ export class ImageController implements interfaces.Controller {
     @request() req: Request,
     @response() res: Response,
   ) {
-    this.nextApp.get().render(req, res, PATH);
+    return this.nextApp.get().render(req, res, PATH);
   }
 }
