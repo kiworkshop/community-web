@@ -4,7 +4,7 @@ import { controller, httpGet, interfaces, request, response } from "inversify-ex
 import { NextApplication } from "server/common/nextjs/NextApplication";
 import { TYPES } from "../inversify/types";
 
-const PATH = "/"
+const PATH = "/";
 
 @controller(PATH)
 export class CommonController implements interfaces.Controller {
