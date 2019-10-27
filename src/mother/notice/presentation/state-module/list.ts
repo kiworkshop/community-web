@@ -58,7 +58,7 @@ export function* saga() {
   yield takeLatest(getType(fetchNoticePage), sagaFetchNotice);
 }
 
-function* sagaFetchNotice(): Generator {
+function* sagaFetchNotice() {
   yield put(fetchNoticePageAsync.request())
   try {
     const page: Page<Notice> = yield call(NoticeServiceImpl.getNoticePage, { page: 1, size: 1 << 31 - 1 });

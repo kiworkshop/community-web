@@ -87,7 +87,7 @@ export function* saga() {
   yield takeLatest(getType(deleteNotice), sagaDeleteNotice);
 }
 
-function* sagaFetchNotice(action: ActionType<typeof fetchNotice>): Generator {
+function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {

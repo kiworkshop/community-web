@@ -123,7 +123,7 @@ export function* saga() {
   yield takeLatest(getType(putNotice), sagaPutNotice);
 }
 
-function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>): Generator {
+function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>) {
   yield put(fetchInitialNoticeAsync.request())
   const { id } = action.payload
   try {
@@ -141,7 +141,7 @@ function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>):
   }
 }
 
-function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
+function* sagaPostNotice(action: ActionType<typeof postNotice>) {
   yield put(postNoticeAsync.request())
   const { noticeFormDto } = action.payload;
   try {
