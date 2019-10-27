@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import Id from 'src/common/domain/Id';
 import * as commonModule from "src/common/presentation/state-module/common"
 import { RootState } from 'src/common/presentation/state-module/root';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import Notice from '../../domain/Notice';
 import NoticeDetail from '../components/organisms/NoticeDetail';
 import * as detailModule from "../state-module/detail"
@@ -20,7 +20,7 @@ interface Props {
   commonDispatchers: typeof commonModule
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const NoticeDetailContainer: React.FC<Props> = ({ id, notice, pending, rejected, dispatchers, commonDispatchers }) => {
   React.useEffect(() => {

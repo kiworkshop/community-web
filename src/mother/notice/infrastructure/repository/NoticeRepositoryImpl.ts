@@ -1,18 +1,16 @@
 import Axios from 'axios';
-import { inject, injectable } from "inversify";
 import Id from 'src/common/domain/Id';
 import Page from 'src/common/domain/Page';
 import PageRequest from 'src/common/domain/PageRequest';
+import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
 import CommonErrorService from 'src/common/service/CommonErrorService';
-import { inversifyIds } from "src/inversifyIds"
 import Notice from '../../domain/Notice';
 import NoticeRepository from '../../domain/NoticeRepository'
 
 const NOTICE_REPO_URL = `${process.env.REPOSITORY_URL}/notices`
 
-@injectable()
-export default class NoticeRepositoryImpl implements NoticeRepository {
-  @inject(inversifyIds.common.CommonErrorService) private commonErrorService!: CommonErrorService
+class NoticeRepositoryImpl implements NoticeRepository {
+  constructor(private commonErrorService: CommonErrorService) { }
 
   public findById = (id: Id): Promise<Notice> => new Promise((resolve, rejected) => {
     Axios.get<Notice>(`${NOTICE_REPO_URL}/${id}`)
@@ -56,3 +54,5 @@ export default class NoticeRepositoryImpl implements NoticeRepository {
       .catch(e => rejected(this.commonErrorService.createRepositoryErrorFrom(e)));
   })
 }
+
+export default new NoticeRepositoryImpl(CommonErrorServiceImpl);

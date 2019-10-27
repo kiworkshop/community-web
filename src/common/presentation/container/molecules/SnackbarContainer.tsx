@@ -5,7 +5,7 @@ import * as React from 'react';
 import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import { RootState } from '../../state-module/root';
 import * as snackbarModule from '../../state-module/snackbar';
 import { Snackbar } from '../../state-module/snackbar';
@@ -15,7 +15,7 @@ interface Props extends WithSnackbarProps, WithTranslation {
   dispatchers: typeof snackbarModule
 }
 
-const { withTranslation } = inversifyServices.common.i18NService;
+const { withTranslation } = I18NService;
 
 class SnackbarContainer extends React.Component<Props> {
   private displayed: string[] = [];

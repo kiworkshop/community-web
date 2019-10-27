@@ -7,10 +7,9 @@ import ImmutableTextField from 'src/common/presentation/components/atmos/Immutab
 import MarkdownPreview from 'src/common/presentation/components/atmos/previews/MarkdownPreview';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import Notice from 'src/mother/notice/domain/Notice';
 import { createLinkClickHandler } from 'src/util/createLinkClickHandler';
-
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   spacing: { height: theme.spacing(1) },
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   }
 }))
 
-
 interface Props {
   notice: Notice
   pending: boolean
@@ -37,7 +35,7 @@ interface Props {
   deleteNotice(): void
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const NoticeDetail: React.FC<Props> = ({ notice, pending, rejected, deleteNotice }) => {
   const classes = useStyles();

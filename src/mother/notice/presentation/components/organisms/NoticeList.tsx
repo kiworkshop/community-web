@@ -5,7 +5,7 @@ import MyTable from "src/common/presentation/components/atmos/MyTable";
 import Spacer from 'src/common/presentation/components/atmos/Spacer';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import Notice from 'src/mother/notice/domain/Notice';
 import { createLinkClickHandler } from 'src/util/createLinkClickHandler';
 
@@ -15,7 +15,7 @@ interface Props {
   rejected: boolean
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const onRowClick = (e?: React.MouseEvent, data?: Notice) => {
   if (!e || !data) {

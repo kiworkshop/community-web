@@ -47,8 +47,6 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-decorators": "^7.4.4",
     "@types/assert-plus": "^1.0.4",
     "@types/axios": "^0.14.0",
     "@types/enzyme": "^3.10.3",

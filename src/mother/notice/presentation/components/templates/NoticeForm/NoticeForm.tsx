@@ -10,7 +10,7 @@ import Spacer from 'src/common/presentation/components/atmos/Spacer';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import MarkdownEditor from 'src/common/presentation/components/organisms/MarkdownEditor';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import NoticeFormDto from 'src/mother/notice/api/dto/NoticeFormDto';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -35,7 +35,7 @@ interface Props {
   rejected: boolean
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const NoticeForm: React.FC<InjectedFormProps<NoticeFormDto, Props> & Props> = ({
   handleSubmit,

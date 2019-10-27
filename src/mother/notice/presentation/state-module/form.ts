@@ -5,12 +5,12 @@ import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
 import Id from 'src/common/domain/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
-import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
 import NoticeRequestDto from '../../api/dto/NoticeRequestDto';
 import Notice from "../../domain/Notice";
+import NoticeServiceImpl from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeForm/RESET")();
 export const setPendingFalse = createStandardAction("@noticeForm/SET_PENDING_FALSE")();
@@ -123,12 +123,11 @@ export function* saga() {
   yield takeLatest(getType(putNotice), sagaPutNotice);
 }
 
-const noticeService = inversifyServices.mother.notice.service
 function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>): Generator {
   yield put(fetchInitialNoticeAsync.request())
   const { id } = action.payload
   try {
-    const notice: Notice = yield call(noticeService.getNotice, id);
+    const notice: Notice = yield call(NoticeServiceImpl.getNotice, id);
     const initialNoticeFormDto = yield call(NoticeFormDto.of, notice);
     yield put(fetchInitialNoticeAsync.success({ initialNoticeFormDto }));
   } catch (e) {
@@ -147,7 +146,7 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
   const { noticeFormDto } = action.payload;
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
-    const id: Id = yield call(noticeService.postNotice, noticeRequestDto);
+    const id: Id = yield call(NoticeServiceImpl.postNotice, noticeRequestDto);
 
     yield put(postNoticeAsync.success());
     yield put(enqueueSnackbar({
@@ -174,7 +173,7 @@ function* sagaPutNotice(action: ActionType<typeof putNotice>): Generator {
   const { id, noticeFormDto } = action.payload;
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
-    yield call(noticeService.putNotice, id, noticeRequestDto);
+    yield call(NoticeServiceImpl.putNotice, id, noticeRequestDto);
 
     yield put(postNoticeAsync.success());
     yield put(enqueueSnackbar({

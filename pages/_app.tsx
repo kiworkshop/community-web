@@ -16,9 +16,9 @@ import NotificationCenterContainer from 'src/common/presentation/container/organ
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 
-const { appWithTranslation } = inversifyServices.common.i18NService;
+const { appWithTranslation } = I18NService;
 
 const makeStore = (preloadedState = {} as RootState) => {
   const bindMiddleware = (middlewares: Middleware[]) => {

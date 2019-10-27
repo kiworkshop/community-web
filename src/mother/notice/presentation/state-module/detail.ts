@@ -3,10 +3,10 @@ import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
 import Id from 'src/common/domain/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
-import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/Notice";
+import NoticeServiceImpl from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
 
@@ -87,12 +87,11 @@ export function* saga() {
   yield takeLatest(getType(deleteNotice), sagaDeleteNotice);
 }
 
-const noticeService = inversifyServices.mother.notice.service
 function* sagaFetchNotice(action: ActionType<typeof fetchNotice>): Generator {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
-    const notice: Notice = yield call(noticeService.getNotice, id);
+    const notice: Notice = yield call(NoticeServiceImpl.getNotice, id);
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
     yield put(fetchNoticeAsync.failure());
@@ -110,7 +109,7 @@ function* sagaDeleteNotice(action: ActionType<typeof deleteNotice>): Generator {
   yield put(deleteNoticeAsync.request())
   const { id } = action.payload
   try {
-    yield call(noticeService.deleteNotice, id);
+    yield call(NoticeServiceImpl.deleteNotice, id);
     yield put(deleteNoticeAsync.success());
     yield put(enqueueSnackbar({
       snackbar: {

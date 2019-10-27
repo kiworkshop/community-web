@@ -18,7 +18,7 @@ import React, { Fragment } from 'react';
 import { WithTranslation } from 'react-i18next';
 import { FirstDepthPath } from 'src/common/domain/constants/FIRST_DEPTH_PATHS';
 import SIDE_BAR_ITEMS from 'src/common/domain/constants/SIDE_BAR_ITEMS';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import HorizontalMenuBarContainer from '../../container/molecules/HorizontalMenuBarContainer';
 import LanguageToggleButton from '../atmos/LanguageToggleButton';
 import Link from '../atmos/Link';
@@ -27,7 +27,7 @@ import NotificationCenterButton from '../atmos/NotificationCenterButton';
 const drawerWidth = 240;
 const horizontalMenuBarHeight = 31; /* manually calculate the height of horizonMenuBar */
 
-const { withTranslation } = inversifyServices.common.i18NService;
+const { withTranslation } = I18NService;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   flex: {

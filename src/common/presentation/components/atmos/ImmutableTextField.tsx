@@ -3,7 +3,7 @@ import { TextFieldProps } from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx'
 import * as React from 'react';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 
 const useStyles = makeStyles(createStyles({
   root: {
@@ -11,7 +11,7 @@ const useStyles = makeStyles(createStyles({
   }
 }));
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const ImmutableTextField: React.FC<TextFieldProps> = (
   props

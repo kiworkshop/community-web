@@ -1,15 +1,13 @@
-import { decorate, inject, injectable } from "inversify";
 import Id from 'src/common/domain/Id';
 import Page from "src/common/domain/Page";
 import PageRequest from "src/common/domain/PageRequest";
 import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
 import Notice from "../../domain/Notice";
 import NoticeRepository from "../../domain/NoticeRepository";
-import { notice } from "../../inversify.id";
 import NoticeService from "../../service/NoticeService";
+import NoticeRepositoryImpl from '../repository/NoticeRepositoryImpl';
 
-@injectable()
-export default class NoticeServiceImpl implements NoticeService {
+class NoticeServiceImpl implements NoticeService {
   constructor(private noticeRepository: NoticeRepository) { }
 
   public getNotice = (id: Id): Promise<Notice> => this.noticeRepository.findById(id)
@@ -27,4 +25,4 @@ export default class NoticeServiceImpl implements NoticeService {
     this.noticeRepository.deleteById(id).then(() => { return });
 }
 
-decorate(inject(notice.NoticeRepository) as ParameterDecorator, NoticeServiceImpl, 0);
+export default new NoticeServiceImpl(NoticeRepositoryImpl);

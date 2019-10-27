@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import Id from 'src/common/domain/Id';
 import * as commonModule from "src/common/presentation/state-module/common"
 import { RootState } from 'src/common/presentation/state-module/root';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/service/I18NService';
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
 import NoticeForm from '../components/templates/NoticeForm';
 import * as formModule from "../state-module/form";
@@ -21,7 +21,7 @@ interface Props {
   commonDispatchers: typeof commonModule
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 const NoticeFormContainer: React.FC<Props> = ({
   id,
   isEditing,

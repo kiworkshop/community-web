@@ -2,10 +2,10 @@ import { produce } from 'immer'
 import { call, put, takeLatest } from "redux-saga/effects";
 import Page from 'src/common/domain/Page';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
-import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/Notice";
+import NoticeServiceImpl from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeList/RESET")();
 
@@ -58,11 +58,10 @@ export function* saga() {
   yield takeLatest(getType(fetchNoticePage), sagaFetchNotice);
 }
 
-const noticeService = inversifyServices.mother.notice.service
 function* sagaFetchNotice(): Generator {
   yield put(fetchNoticePageAsync.request())
   try {
-    const page: Page<Notice> = yield call(noticeService.getNoticePage, { page: 1, size: 1 << 31 - 1 });
+    const page: Page<Notice> = yield call(NoticeServiceImpl.getNoticePage, { page: 1, size: 1 << 31 - 1 });
     yield put(fetchNoticePageAsync.success({ page }));
   } catch (e) {
     yield put(fetchNoticePageAsync.failure());
