@@ -1,6 +1,6 @@
 import { produce } from 'immer'
 import { call, put, takeLatest } from "redux-saga/effects";
-import Page from 'src/common/domain/Page';
+import Page from 'src/common/domain/model/Page';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";

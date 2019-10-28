@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import Id from 'src/common/domain/Id';
+import Id from 'src/common/domain/model/Id';
 import I18NService from 'src/common/domain/service/I18NService';
 import * as commonModule from "src/common/presentation/state-module/common";
 import { RootState } from 'src/common/presentation/state-module/root';

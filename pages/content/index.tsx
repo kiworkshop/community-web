@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NextPage from 'src/common/domain/NextPage';
+import NextPage from 'src/common/domain/model/NextPage';
 
 const ContentPage: NextPage = () => <>컨텐츠</>;
 

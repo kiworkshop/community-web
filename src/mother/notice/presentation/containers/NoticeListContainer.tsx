@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import Page from 'src/common/domain/Page';
+import Page from 'src/common/domain/model/Page';
 import { RootState } from 'src/common/presentation/state-module/root';
 import Notice from '../../domain/model/Notice';
 import NoticeList from '../components/organisms/NoticeList';

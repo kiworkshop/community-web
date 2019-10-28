@@ -1,6 +1,6 @@
 import { Add } from '@material-ui/icons';
 import * as React from 'react';
-import Page from 'src/common/domain/Page';
+import Page from 'src/common/domain/model/Page';
 import I18NService from 'src/common/domain/service/I18NService';
 import MyTable from "src/common/presentation/components/atmos/MyTable";
 import Spacer from 'src/common/presentation/components/atmos/Spacer';

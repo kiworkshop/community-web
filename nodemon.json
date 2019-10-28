@@ -1,7 +1,8 @@
 {
   "watch": [
     "server",
-    "static"
+    "static",
+    "src/**/api/**/*.ts"
   ],
   "ext": "ts",
   "ignore": [

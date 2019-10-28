@@ -1,4 +1,4 @@
-import RepositoryError from "src/common/domain/RepositoryError";
+import RepositoryError from "src/common/domain/model/RepositoryError";
 import createAxiosErrorWithData from "src/util/test/createAxiosErrorWithData";
 
 export const getRepositoryErrorFixture = () => {

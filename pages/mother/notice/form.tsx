@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import NextPage from 'src/common/domain/NextPage';
+import NextPage from 'src/common/domain/model/NextPage';
 import { RootState } from 'src/common/presentation/state-module/root';
 import NoticeFormContainer from "src/mother/notice/presentation/containers/NoticeFormContainer";
 import { fetchInitialNotice, setPendingFalse } from 'src/mother/notice/presentation/state-module/form';

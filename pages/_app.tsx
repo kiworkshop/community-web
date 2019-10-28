@@ -9,6 +9,7 @@ import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { AnyAction, applyMiddleware, createStore, Middleware, Store } from 'redux';
+import I18NService from 'src/common/domain/service/I18NService';
 import theme from 'src/common/presentation/components/theme';
 import ConfirmContainer from 'src/common/presentation/container/molecules/ConfirmContainer';
 import SnackbarContainer from 'src/common/presentation/container/molecules/SnackbarContainer';
@@ -16,7 +17,6 @@ import NotificationCenterContainer from 'src/common/presentation/container/organ
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
-import I18NService from 'src/common/domain/service/I18NService';
 
 const { appWithTranslation } = I18NService;
 
