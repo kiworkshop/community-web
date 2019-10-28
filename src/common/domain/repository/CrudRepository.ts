@@ -1,6 +1,6 @@
 import Id from 'src/common/domain/Id';
-import Page from "./Page";
-import PageRequest from "./PageRequest";
+import Page from "../Page";
+import PageRequest from "../PageRequest";
 
 export default interface CrudRepository<T> {
   findById(id: Id): Promise<T>

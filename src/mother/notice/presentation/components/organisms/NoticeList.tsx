@@ -1,12 +1,12 @@
 import { Add } from '@material-ui/icons';
 import * as React from 'react';
 import Page from 'src/common/domain/Page';
+import I18NService from 'src/common/domain/service/I18NService';
 import MyTable from "src/common/presentation/components/atmos/MyTable";
 import Spacer from 'src/common/presentation/components/atmos/Spacer';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
-import I18NService from 'src/common/service/I18NService';
-import Notice from 'src/mother/notice/domain/Notice';
+import Notice from 'src/mother/notice/domain/model/Notice';
 import { createLinkClickHandler } from 'src/util/createLinkClickHandler';
 
 interface Props {

@@ -16,7 +16,7 @@ import NotificationCenterContainer from 'src/common/presentation/container/organ
 import CmsLayoutContainer from 'src/common/presentation/container/templates/CmsLayoutContainer';
 import { setPaths } from 'src/common/presentation/state-module/common';
 import { rootReducer, rootSaga, RootState } from 'src/common/presentation/state-module/root';
-import I18NService from 'src/common/service/I18NService';
+import I18NService from 'src/common/domain/service/I18NService';
 
 const { appWithTranslation } = I18NService;
 

@@ -1,4 +1,4 @@
-import NoticeRepository from "src/mother/notice/domain/NoticeRepository";
+import NoticeRepository from "src/mother/notice/domain/repository/NoticeRepository";
 
 export const noticeRepository: NoticeRepository = {
   findById: jest.fn(),

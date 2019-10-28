@@ -2,8 +2,8 @@ import Id from 'src/common/domain/Id';
 import Page from "src/common/domain/Page";
 import PageRequest from "src/common/domain/PageRequest";
 import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
-import Notice from "../../domain/Notice";
-import NoticeService from "../../service/NoticeService";
+import Notice from "../../domain/model/Notice";
+import NoticeService from "../../domain/service/NoticeService";
 import { noticeRepository } from '../repository/NoticeRepositoryImpl';
 
 export const noticeService: NoticeService = {

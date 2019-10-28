@@ -4,7 +4,7 @@ jest.mock('axios')
 import { Page } from 'csstype';
 import RepositoryError from 'src/common/domain/RepositoryError';
 import { getRepositoryErrorFixture } from 'src/common/tests/domain/model/RepositoryError.unit.test';
-import Notice from 'src/mother/notice/domain/Notice';
+import Notice from 'src/mother/notice/domain/model/Notice';
 import { noticeRepository } from 'src/mother/notice/infrastructure/repository/NoticeRepositoryImpl';
 import createAxiosErrorWithData from 'src/util/test/createAxiosErrorWithData';
 

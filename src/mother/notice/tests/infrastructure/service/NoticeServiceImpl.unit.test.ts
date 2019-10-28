@@ -1,9 +1,9 @@
 import { noticeService } from "src/mother/notice/infrastructure/service/NoticeServiceImpl";
-import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
-import NoticeRepository from "../../domain/NoticeRepository";
-import { getNoticeFixture } from "../domain/Notice.unit.test";
+import NoticeRequestDto from "../../../api/dto/NoticeRequestDto";
+import NoticeRepository from "../../../domain/repository/NoticeRepository";
+import { getNoticeFixture } from "../model/Notice.unit.test";
 
-import { noticeRepository } from "../../infrastructure/repository/NoticeRepositoryImpl";
+import { noticeRepository } from "../../../infrastructure/repository/NoticeRepositoryImpl";
 jest.mock("../../infrastructure/repository/NoticeRepositoryImpl")
 
 describe("NoticeServiceImpl test", () => {
@@ -12,7 +12,7 @@ describe("NoticeServiceImpl test", () => {
   test("getNotice_ValidInput_ValidOutput", async () => {
     // given
     (mockNoticeRepository.findById as jest.Mock).mockResolvedValue(getNoticeFixture());
-    const id = 1;
+    const id = 1
 
     // when
     const notice = await noticeService.getNotice(id);

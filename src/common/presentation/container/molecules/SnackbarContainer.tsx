@@ -5,7 +5,7 @@ import * as React from 'react';
 import { WithTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import I18NService from 'src/common/service/I18NService';
+import I18NService from 'src/common/domain/service/I18NService';
 import { RootState } from '../../state-module/root';
 import * as snackbarModule from '../../state-module/snackbar';
 import { Snackbar } from '../../state-module/snackbar';

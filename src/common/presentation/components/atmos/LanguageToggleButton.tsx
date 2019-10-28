@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import * as React from 'react';
-import I18NService from 'src/common/service/I18NService';
+import I18NService from 'src/common/domain/service/I18NService';
 import Maybe from './Maybe';
 
 const { i18n } = I18NService;

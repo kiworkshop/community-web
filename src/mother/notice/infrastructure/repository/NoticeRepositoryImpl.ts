@@ -3,8 +3,8 @@ import Id from 'src/common/domain/Id';
 import Page from 'src/common/domain/Page';
 import PageRequest from 'src/common/domain/PageRequest';
 import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
-import Notice from '../../domain/Notice';
-import NoticeRepository from '../../domain/NoticeRepository'
+import Notice from '../../domain/model/Notice';
+import NoticeRepository from '../../domain/repository/NoticeRepository'
 
 const NOTICE_REPO_URL = `${process.env.REPOSITORY_URL}/notices`
 

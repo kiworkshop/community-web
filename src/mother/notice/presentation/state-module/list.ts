@@ -4,7 +4,7 @@ import Page from 'src/common/domain/Page';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
-import Notice from "../../domain/Notice";
+import Notice from "../../domain/model/Notice";
 import { noticeService } from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeList/RESET")();

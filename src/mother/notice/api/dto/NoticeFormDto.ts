@@ -1,4 +1,4 @@
-import Notice from "../../domain/Notice";
+import Notice from "../../domain/model/Notice";
 
 export default class NoticeFormDto {
   public static of = (notice: Notice) => {

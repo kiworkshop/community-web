@@ -2,12 +2,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import Id from 'src/common/domain/Id';
-import * as commonModule from "src/common/presentation/state-module/common"
+import I18NService from 'src/common/domain/service/I18NService';
+import * as commonModule from "src/common/presentation/state-module/common";
 import { RootState } from 'src/common/presentation/state-module/root';
-import I18NService from 'src/common/service/I18NService';
-import Notice from '../../domain/Notice';
+import Notice from '../../domain/model/Notice';
 import NoticeDetail from '../components/organisms/NoticeDetail';
-import * as detailModule from "../state-module/detail"
+import * as detailModule from "../state-module/detail";
 
 interface Props {
   id: Id
