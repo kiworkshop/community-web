@@ -9,7 +9,7 @@ import { ActionType, createAsyncAction, createReducer, createStandardAction, get
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
 import NoticeRequestDto from '../../api/dto/NoticeRequestDto';
 import Notice from "../../domain/Notice";
-import NoticeServiceImpl from '../../infrastructure/service/NoticeServiceImpl';
+import { noticeService } from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeForm/RESET")();
 export const setPendingFalse = createStandardAction("@noticeForm/SET_PENDING_FALSE")();
@@ -126,7 +126,7 @@ function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>) 
   yield put(fetchInitialNoticeAsync.request())
   const { id } = action.payload
   try {
-    const notice: Notice = yield call(NoticeServiceImpl.getNotice, id);
+    const notice: Notice = yield call(noticeService.getNotice, id);
     const initialNoticeFormDto = yield call(NoticeFormDto.of, notice);
     yield put(fetchInitialNoticeAsync.success({ initialNoticeFormDto }));
   } catch (e) {
@@ -147,7 +147,7 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>) {
   const { noticeFormDto } = action.payload;
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
-    const id: Id = yield call(NoticeServiceImpl.postNotice, noticeRequestDto);
+    const id: Id = yield call(noticeService.postNotice, noticeRequestDto);
 
     yield put(postNoticeAsync.success());
     yield put(enqueueSnackbar({
@@ -174,7 +174,7 @@ function* sagaPutNotice(action: ActionType<typeof putNotice>): Generator {
   const { id, noticeFormDto } = action.payload;
   try {
     const noticeRequestDto = NoticeRequestDto.of(noticeFormDto);
-    yield call(NoticeServiceImpl.putNotice, id, noticeRequestDto);
+    yield call(noticeService.putNotice, id, noticeRequestDto);
 
     yield put(postNoticeAsync.success());
     yield put(enqueueSnackbar({

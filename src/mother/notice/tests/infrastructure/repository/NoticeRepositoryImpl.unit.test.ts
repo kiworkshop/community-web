@@ -2,19 +2,13 @@ import _Axios from 'axios';
 jest.mock('axios')
 
 import { Page } from 'csstype';
-import 'reflect-metadata'
 import RepositoryError from 'src/common/domain/RepositoryError';
-import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
 import { getRepositoryErrorFixture } from 'src/common/tests/domain/model/RepositoryError.unit.test';
 import Notice from 'src/mother/notice/domain/Notice';
-import NoticeRepository from 'src/mother/notice/domain/NoticeRepository';
-import NoticeRepositoryImpl from 'src/mother/notice/infrastructure/repository/NoticeRepositoryImpl';
+import { noticeRepository } from 'src/mother/notice/infrastructure/repository/NoticeRepositoryImpl';
 import createAxiosErrorWithData from 'src/util/test/createAxiosErrorWithData';
 
 describe("NoticeRepositoryImpl test", () => {
-  const noticeRepository: NoticeRepository = new NoticeRepositoryImpl();
-  Reflect.set(noticeRepository, "commonErrorService", new CommonErrorServiceImpl());
-
   const Axios = _Axios as jest.Mocked<typeof _Axios>
 
   test("findById_ValidInput_ValidOutput", async () => {

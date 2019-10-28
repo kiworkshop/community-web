@@ -3,26 +3,20 @@ import Page from "src/common/domain/Page";
 import PageRequest from "src/common/domain/PageRequest";
 import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
 import Notice from "../../domain/Notice";
-import NoticeRepository from "../../domain/NoticeRepository";
 import NoticeService from "../../service/NoticeService";
-import NoticeRepositoryImpl from '../repository/NoticeRepositoryImpl';
+import { noticeRepository } from '../repository/NoticeRepositoryImpl';
 
-class NoticeServiceImpl implements NoticeService {
-  constructor(private noticeRepository: NoticeRepository) { }
+export const noticeService: NoticeService = {
+  getNotice: (id: Id): Promise<Notice> => noticeRepository.findById(id),
 
-  public getNotice = (id: Id): Promise<Notice> => this.noticeRepository.findById(id)
+  getNoticePage: (pageRequest: PageRequest): Promise<Page<Notice>> =>
+    noticeRepository.findAll(pageRequest),
 
-  public getNoticePage = (pageRequest: PageRequest): Promise<Page<Notice>> =>
-    this.noticeRepository.findAll(pageRequest);
+  postNotice: ({ title, content }: NoticeRequestDto): Promise<Id> =>
+    noticeRepository.save({ id: -1, title, content }),
 
-  public postNotice = ({ title, content }: NoticeRequestDto): Promise<Id> =>
-    this.noticeRepository.save({ id: -1, title, content });
+  putNotice: (id: Id, { title, content }: NoticeRequestDto): Promise<void> =>
+    noticeRepository.save({ id, title, content }).then(() => { return }),
 
-  public putNotice = (id: Id, { title, content }: NoticeRequestDto): Promise<void> =>
-    this.noticeRepository.save({ id, title, content }).then(() => { return });
-
-  public deleteNotice = (id: Id): Promise<void> =>
-    this.noticeRepository.deleteById(id).then(() => { return });
+  deleteNotice: (id: Id): Promise<void> => noticeRepository.deleteById(id)
 }
-
-export default new NoticeServiceImpl(NoticeRepositoryImpl);

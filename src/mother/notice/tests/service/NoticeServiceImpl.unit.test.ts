@@ -1,19 +1,13 @@
-import "reflect-metadata"
-import NoticeServiceImpl from "src/mother/notice/infrastructure/service/NoticeServiceImpl";
+import { noticeService } from "src/mother/notice/infrastructure/service/NoticeServiceImpl";
 import NoticeRequestDto from "../../api/dto/NoticeRequestDto";
 import NoticeRepository from "../../domain/NoticeRepository";
-import NoticeService from "../../service/NoticeService";
 import { getNoticeFixture } from "../domain/Notice.unit.test";
 
-describe("NoticeServiceImpl test", () => {
-  const mockNoticeRepository: NoticeRepository = {
-    findById: jest.fn(),
-    findAll: jest.fn(),
-    save: jest.fn(),
-    deleteById: jest.fn(),
-  }
+import { noticeRepository } from "../../infrastructure/repository/NoticeRepositoryImpl";
+jest.mock("../../infrastructure/repository/NoticeRepositoryImpl")
 
-  const noticeService: NoticeService = new NoticeServiceImpl(mockNoticeRepository);
+describe("NoticeServiceImpl test", () => {
+  const mockNoticeRepository = noticeRepository as jest.Mocked<NoticeRepository>;
 
   test("getNotice_ValidInput_ValidOutput", async () => {
     // given

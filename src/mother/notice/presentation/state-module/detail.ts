@@ -7,7 +7,7 @@ import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/Notice";
-import NoticeServiceImpl from '../../infrastructure/service/NoticeServiceImpl';
+import { noticeService } from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
 
@@ -94,7 +94,7 @@ function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
-    const notice: Notice = yield call(NoticeServiceImpl.getNotice, id);
+    const notice: Notice = yield call(noticeService.getNotice, id);
     yield put(fetchNoticeAsync.success({ notice }));
   } catch (e) {
     yield put(fetchNoticeAsync.failure());
@@ -112,7 +112,7 @@ function* sagaDeleteNotice(action: ActionType<typeof deleteNotice>): Generator {
   yield put(deleteNoticeAsync.request())
   const { id } = action.payload
   try {
-    yield call(NoticeServiceImpl.deleteNotice, id);
+    yield call(noticeService.deleteNotice, id);
     yield put(deleteNoticeAsync.success());
     yield put(enqueueSnackbar({
       snackbar: {

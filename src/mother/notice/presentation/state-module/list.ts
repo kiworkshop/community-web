@@ -5,7 +5,7 @@ import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import Notice from "../../domain/Notice";
-import NoticeServiceImpl from '../../infrastructure/service/NoticeServiceImpl';
+import { noticeService } from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeList/RESET")();
 
@@ -61,7 +61,7 @@ export function* saga() {
 function* sagaFetchNotice() {
   yield put(fetchNoticePageAsync.request())
   try {
-    const page: Page<Notice> = yield call(NoticeServiceImpl.getNoticePage, { page: 1, size: 1 << 31 - 1 });
+    const page: Page<Notice> = yield call(noticeService.getNoticePage, { page: 1, size: 1 << 31 - 1 });
     yield put(fetchNoticePageAsync.success({ page }));
   } catch (e) {
     yield put(fetchNoticePageAsync.failure());
