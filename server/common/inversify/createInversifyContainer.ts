@@ -2,9 +2,9 @@ import { Container } from 'inversify';
 import { NextApplication } from '../nextjs/NextApplication';
 import { TYPES } from './types';
 
-import "../../mother/api/MotherController";
-import "../../mother/notice/api/NoticeController";
-import "../api/CommonController";
+import "src/common/api/CommonController";
+import "src/mother/api/MotherController";
+import "src/mother/notice/api/NoticeController";
 
 export const createInversifyContainer = () => {
   const container = new Container();

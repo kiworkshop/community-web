@@ -8,10 +8,6 @@ import I18NService from 'src/common/domain/service/I18NService';
 import { defaultErrorHandler } from "../error/DefaultErrorHandler";
 import { NextApplication } from '../nextjs/NextApplication';
 
-import "../../content/api/ContentController";
-import "../../mother/api/MotherController";
-import "../../mother/notice/api/NoticeController";
-
 export const createExpressApp = (container: Container, errorHandlers?: ErrorRequestHandler[]) => new InversifyExpressServer(container)
   .setConfig((theApp) => {
     theApp.use(bodyParser.urlencoded({ extended: true }));
