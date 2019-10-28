@@ -92,7 +92,7 @@ module.exports = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest',
+  presets: ['ts-jest', "react"],
 
   // Run tests from one or more projects
   // projects: null,
@@ -125,15 +125,16 @@ module.exports = {
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   // setupFiles: [],
+  setupFiles: ["<rootDir>/src/setupTests.ts"],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
+  // setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  // testEnvironment: "node",
+  testEnvironment: "node",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
