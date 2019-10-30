@@ -1,5 +1,6 @@
 import { PropTypes } from '@material-ui/core';
 import { AccountBalance, Announcement, Backspace, Edit, RecordVoiceOver } from '@material-ui/icons';
+import * as React from 'react';
 import FIRST_DEPTH_PATHS, { FirstDepthPath } from './FIRST_DEPTH_PATHS';
 
 interface SideBarItem {
