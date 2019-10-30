@@ -1,9 +1,9 @@
 import { Button } from '@material-ui/core';
 import * as React from 'react';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/domain/service/I18NService';
 import Maybe from './Maybe';
 
-const { i18n } = inversifyServices.common.i18NService;
+const { i18n } = I18NService;
 const toggleLanguage = () => i18n.changeLanguage(i18n.language === 'ko' ? 'en' : 'ko');
 
 const LanguageToggleButton: React.FC = () =>

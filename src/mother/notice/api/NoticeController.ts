@@ -1,34 +1,34 @@
-import { Request, Response } from 'express'
-import { Express } from "express-serve-static-core";
-import Server from 'next-server/dist/server/next-server';
+import { Request, Response } from "express";
+import { inject } from "inversify";
+import { controller, httpGet, interfaces, request, requestParam, response } from "inversify-express-utils";
+import { TYPES } from "server/common/inversify/types";
+import { NextApplication } from "server/common/nextjs/NextApplication";
+import { Endpoints } from "server/common/utils/Constants";
 
-export default (path: string, app: Server, server: Express): void => {
-  server.get(`${path}/add`, (req: Request, res: Response) => {
+const PATH = Endpoints["mother.notice"];
 
-    const actualPage = `${path}/form`
-    app.render(req, res, actualPage)
-  })
+@controller(PATH)
+export class ImageController implements interfaces.Controller {
 
-  server.get(`${path}/edit/:id`, (req: Request, res: Response) => {
-    const queryParams = {
-      id: req.params.id,
-    }
+  constructor(@inject(TYPES.NextApplication) private nextApp: NextApplication) { }
 
-    const actualPage = `${path}/form`
-    app.render(req, res, actualPage, queryParams)
-  })
+  @httpGet("/add")
+  public add(@request() req: Request, @response() res: Response) {
+    return this.nextApp.render(req, res, `${PATH}/add`);
+  }
 
-  server.get(`${path}/:id`, (req: Request, res: Response) => {
-    const queryParams = {
-      id: req.params.id,
-    }
+  @httpGet("/edit/:id")
+  public edit(@request() req: Request, @response() res: Response, @requestParam("id") id: string) {
+    return this.nextApp.render(req, res, `${PATH}/form`, { id });
+  }
 
-    const actualPage = `${path}/detail`
-    app.render(req, res, actualPage, queryParams)
-  })
+  @httpGet("/:id")
+  public detail(@request() req: Request, @response() res: Response, @requestParam("id") id: string) {
+    return this.nextApp.render(req, res, `${PATH}/detail`, { id });
+  }
 
-
-  server.get(path, (req: Request, res: Response) => {
-    app.render(req, res, path)
-  })
+  @httpGet("/")
+  public index(@request() req: Request, @response() res: Response) {
+    return this.nextApp.render(req, res, PATH);
+  }
 }

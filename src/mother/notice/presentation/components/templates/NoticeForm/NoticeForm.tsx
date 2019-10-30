@@ -5,12 +5,12 @@ import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
 import { BaseFieldProps, Field, InjectedFormProps, reduxForm } from 'redux-form';
+import I18NService from 'src/common/domain/service/I18NService';
 import MutableTextField from 'src/common/presentation/components/atmos/MutableTextField';
 import Spacer from 'src/common/presentation/components/atmos/Spacer';
 import ErrorTypography from 'src/common/presentation/components/atmos/typographies/ErrorTypography';
 import MySpeedDial, { SpeedDialActionData } from 'src/common/presentation/components/molecules/MySpeedDial';
 import MarkdownEditor from 'src/common/presentation/components/organisms/MarkdownEditor';
-import inversifyServices from 'src/inversifyServices';
 import NoticeFormDto from 'src/mother/notice/api/dto/NoticeFormDto';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -35,7 +35,7 @@ interface Props {
   rejected: boolean
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const NoticeForm: React.FC<InjectedFormProps<NoticeFormDto, Props> & Props> = ({
   handleSubmit,

@@ -4,7 +4,7 @@ import { fade } from '@material-ui/core/styles';
 import { createStyles, makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import * as React from 'react';
-import inversifyServices from 'src/inversifyServices';
+import I18NService from 'src/common/domain/service/I18NService';
 import { ConfirmPayload } from '../../state-module/common';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -31,7 +31,7 @@ interface Props {
   closeConfirmDialog(): void
 }
 
-const { useTranslation } = inversifyServices.common.i18NService;
+const { useTranslation } = I18NService;
 
 const Confirm: React.FC<Props> = ({ isConfirmOpened, confirmData, closeConfirmDialog }) => {
   const classes = useStyles();

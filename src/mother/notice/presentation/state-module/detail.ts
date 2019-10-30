@@ -1,12 +1,13 @@
 import { produce } from 'immer';
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
-import Id from 'src/common/domain/Id';
+import { Endpoints } from 'server/common/utils/Constants';
+import Id from 'src/common/domain/model/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
-import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
-import Notice from "../../domain/Notice";
+import Notice from "../../domain/model/Notice";
+import { noticeService } from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeDetail/RESET")();
 
@@ -87,8 +88,9 @@ export function* saga() {
   yield takeLatest(getType(deleteNotice), sagaDeleteNotice);
 }
 
-const noticeService = inversifyServices.mother.notice.service
-function* sagaFetchNotice(action: ActionType<typeof fetchNotice>): Generator {
+const PATH = Endpoints["mother.notice"];
+
+function* sagaFetchNotice(action: ActionType<typeof fetchNotice>) {
   yield put(fetchNoticeAsync.request())
   const { id } = action.payload
   try {
@@ -119,7 +121,7 @@ function* sagaDeleteNotice(action: ActionType<typeof deleteNotice>): Generator {
       }
     }))
 
-    Router.push("/mother/notice/index", "/mother/notice");
+    Router.push(`${PATH}/index`, PATH);
   } catch (e) {
     yield put(deleteNoticeAsync.failure());
     yield put(enqueueSnackbar({

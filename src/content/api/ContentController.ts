@@ -1,11 +1,19 @@
-import { Request, Response } from 'express'
-import { Express } from "express-serve-static-core";
-import Server from 'next-server/dist/server/next-server';
+import { Request, Response } from "express";
+import { inject } from "inversify";
+import { controller, httpGet, interfaces, request, response } from "inversify-express-utils";
+import { TYPES } from "server/common/inversify/types";
+import { NextApplication } from "server/common/nextjs/NextApplication";
+import { Endpoints } from "server/common/utils/Constants";
 
-const ContentController = (path: string, app: Server, server: Express) => {
-  server.get(path, (req: Request, res: Response) => {
-    app.render(req, res, path)
-  })
+const PATH = Endpoints.content;
+
+@controller(PATH)
+export class ContentController implements interfaces.Controller {
+
+  constructor(@inject(TYPES.NextApplication) private nextApplication: NextApplication) { }
+
+  @httpGet("/")
+  public get(@request() req: Request, @response() res: Response) {
+    return this.nextApplication.render(req, res, PATH)
+  }
 }
-
-export default ContentController;

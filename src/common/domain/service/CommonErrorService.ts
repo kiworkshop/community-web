@@ -1,4 +1,4 @@
-import RepositoryError, { RepositoryErrorData } from "../domain/RepositoryError";
+import RepositoryError, { RepositoryErrorData } from "../model/RepositoryError";
 
 export default interface CommonErrorService {
   createRepositoryErrorFrom(e?: RepositoryErrorData): RepositoryError

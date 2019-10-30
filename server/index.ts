@@ -1,25 +1,16 @@
-import express from 'express';
-import next from 'next';
-import nextI18NextMiddleware from 'next-i18next/middleware';
-import inversifyServices from '../src/inversifyServices';
-import registerControllers from './registerControllers';
+import "reflect-metadata";
 
-const nextI18next = inversifyServices.common.i18NService;
+import { createExpressApp } from "./common/inversify/createExpressApp";
+import { createInversifyContainer } from "./common/inversify/createInversifyContainer";
+import { NextApplication } from "./common/nextjs/NextApplication";
+import { logger } from "./common/utils";
+import { errorHandlers } from "./errorHandlers";
 
-export const PORT = process.env.PORT || 3000;
-export const APP = next({ dev: process.env.NODE_ENV !== 'production' });
-export const SERVER = express();
-export const handle = APP.getRequestHandler();
+const PORT = 3000;
 
-APP.prepare().then(() => {
-  SERVER.use(nextI18NextMiddleware(nextI18next));
+const nextApplication = new NextApplication();
 
-  registerControllers(APP, SERVER);
-
-  SERVER.get('*', (req, res) => handle(req, res));
-
-  SERVER.listen(PORT);
-
-  // tslint:disable-next-line: no-console
-  console.log(`> Ready on http://localhost:${PORT}`);
-})
+nextApplication.run().then(() => {
+  createExpressApp(createInversifyContainer(), errorHandlers).listen(PORT);
+  logger.log("info", `server is running on port:${PORT}`);
+});

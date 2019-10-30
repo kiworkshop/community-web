@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NextPage from 'src/common/domain/NextPage';
+import NextPage from 'src/common/domain/model/NextPage';
 import NoticeListContainer from 'src/mother/notice/presentation/containers/NoticeListContainer';
 
 const NoticePage: NextPage = () => <NoticeListContainer />;

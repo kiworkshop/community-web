@@ -1,12 +1,8 @@
 import { AxiosError } from 'axios';
 import Optional from 'optional-js'
+import { ApiError } from 'server/common/error/ApiError';
 
-export interface RepositoryErrorData extends AxiosError<{
-  timestamp: string;
-  status: number;
-  error: string;
-  message: string;
-}> { }
+export interface RepositoryErrorData extends AxiosError<ApiError> { }
 
 export default class RepositoryError {
 

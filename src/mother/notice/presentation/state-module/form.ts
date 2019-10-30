@@ -1,16 +1,15 @@
-// tslint:disable: no-identical-functions
-
 import { produce } from 'immer'
 import Router from 'next/router';
 import { call, put, takeLatest } from "redux-saga/effects";
-import Id from 'src/common/domain/Id';
+import { Endpoints } from 'server/common/utils/Constants';
+import Id from 'src/common/domain/model/Id';
 import { enqueueSnackbar } from 'src/common/presentation/state-module/snackbar';
-import inversifyServices from "src/inversifyServices";
 import stringify from 'src/util/stringify';
 import { ActionType, createAsyncAction, createReducer, createStandardAction, getType } from "typesafe-actions";
 import NoticeFormDto from '../../api/dto/NoticeFormDto';
 import NoticeRequestDto from '../../api/dto/NoticeRequestDto';
-import Notice from "../../domain/Notice";
+import Notice from "../../domain/model/Notice";
+import { noticeService } from '../../infrastructure/service/NoticeServiceImpl';
 
 export const reset = createStandardAction("@noticeForm/RESET")();
 export const setPendingFalse = createStandardAction("@noticeForm/SET_PENDING_FALSE")();
@@ -123,8 +122,7 @@ export function* saga() {
   yield takeLatest(getType(putNotice), sagaPutNotice);
 }
 
-const noticeService = inversifyServices.mother.notice.service
-function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>): Generator {
+function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>) {
   yield put(fetchInitialNoticeAsync.request())
   const { id } = action.payload
   try {
@@ -142,7 +140,9 @@ function* sagaFetchInitialNotice(action: ActionType<typeof fetchInitialNotice>):
   }
 }
 
-function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
+const PATH = Endpoints["mother.notice"];
+
+function* sagaPostNotice(action: ActionType<typeof postNotice>) {
   yield put(postNoticeAsync.request())
   const { noticeFormDto } = action.payload;
   try {
@@ -157,7 +157,7 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>): Generator {
       }
     }))
 
-    Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
+    Router.push(`${PATH}/detail?id=${id}`, `${PATH}${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
     yield put(enqueueSnackbar({
@@ -184,7 +184,7 @@ function* sagaPutNotice(action: ActionType<typeof putNotice>): Generator {
       }
     }))
 
-    Router.push(`/mother/notice/detail?id=${id}`, `/mother/notice/${id}`)
+    Router.push(`${PATH}/detail?id=${id}`, `${PATH}/${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
     yield put(enqueueSnackbar({
