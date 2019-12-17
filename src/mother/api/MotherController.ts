@@ -5,6 +5,8 @@ import { TYPES } from "server/common/inversify/types";
 import { NextApplication } from "server/common/nextjs/NextApplication";
 import { Endpoints } from "server/common/utils/Constants";
 
+import "src/mother/notice/api/NoticeController";
+
 const PATH = Endpoints.mother;
 
 @controller(PATH)

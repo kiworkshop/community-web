@@ -3,8 +3,8 @@ import { NextApplication } from '../nextjs/NextApplication';
 import { TYPES } from './types';
 
 import "src/common/api/CommonController";
+import "src/content/api/ContentController";
 import "src/mother/api/MotherController";
-import "src/mother/notice/api/NoticeController";
 
 export const createInversifyContainer = () => {
   const container = new Container();

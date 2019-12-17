@@ -5,17 +5,15 @@ import { TYPES } from "server/common/inversify/types";
 import { NextApplication } from "server/common/nextjs/NextApplication";
 import { Endpoints } from "server/common/utils/Constants";
 
-import "src/content/mjarticle/api/MjArticleController";
-
-const PATH = Endpoints.content;
+const PATH = Endpoints["content.mjArticle"];
 
 @controller(PATH)
-export class ContentController implements interfaces.Controller {
+export class MjArticleController implements interfaces.Controller {
 
-  constructor(@inject(TYPES.NextApplication) private nextApplication: NextApplication) { }
+  constructor(@inject(TYPES.NextApplication) private nextApp: NextApplication) { }
 
   @httpGet("/")
-  public get(@request() req: Request, @response() res: Response) {
-    return this.nextApplication.render(req, res, PATH)
+  public index(@request() req: Request, @response() res: Response) {
+    return this.nextApp.render(req, res, PATH);
   }
 }
