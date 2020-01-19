@@ -82,7 +82,7 @@ phases:
       - $(aws ecr get-login --no-include-email)
   build:
     commands:
-      - docker build --build-arg browser_env="$(echo $BROWSER_ENV)" -f web.Dockerfile -t "$(cat /tmp/build_tag.txt)" .
+      - docker build --build-arg browser_env="$(echo $BROWSER_ENV)" -t "$(cat /tmp/build_tag.txt)" .
   post_build:
     commands:
       - docker push "$(cat /tmp/build_tag.txt)"
