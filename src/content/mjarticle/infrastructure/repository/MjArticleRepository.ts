@@ -3,24 +3,21 @@ import Id from 'src/common/domain/model/Id';
 import Page from 'src/common/domain/model/Page';
 import PageRequest from 'src/common/domain/model/PageRequest';
 import CommonErrorServiceImpl from 'src/common/infrastructure/service/CommonErrorServiceImpl';
-import Notice from '../../domain/model/Notice';
-import NoticeRepository from '../../domain/repository/NoticeRepository'
+import { MjArticle } from '../../domain/model/MjArticle';
+import MjArticleRepository from '../../domain/repository/MjArticleRepository'
 
-const NOTICE_REPO_URL = `${process.env.MOTHER_API}/notices`
+const MJ_ARTICLE_REPO_URL = `${process.env.CONTENT_API}/myeongjae/articles`
 
-export const noticeRepository: NoticeRepository = {
-  findById: (id: Id): Promise<Notice> => new Promise((resolve, rejected) => {
-    Axios.get<Notice>(`${NOTICE_REPO_URL}/${id}`)
-      .then(({ data }) => resolve({
-        ...data,
-        id
-      }))
+export const mjArticleRepository: MjArticleRepository = {
+  findById: (id: Id): Promise<MjArticle> => new Promise((resolve, rejected) => {
+    Axios.get<MjArticle>(`${MJ_ARTICLE_REPO_URL}/${id}`)
+      .then(({ data }) => resolve(data))
       .catch(e => rejected(CommonErrorServiceImpl.createRepositoryErrorFrom(e)));
   }),
 
-  findAll: ({ page, size, sort = "id,desc" }: PageRequest): Promise<Page<Notice>> =>
+  findAll: ({ page, size, sort = "id,desc" }: PageRequest): Promise<Page<MjArticle>> =>
     new Promise((resolve, rejected) => {
-      Axios.get<Page<Notice>>(NOTICE_REPO_URL, {
+      Axios.get<Page<MjArticle>>(MJ_ARTICLE_REPO_URL, {
         params: {
           page, size, sort
         }
@@ -29,24 +26,24 @@ export const noticeRepository: NoticeRepository = {
         .catch(e => rejected(CommonErrorServiceImpl.createRepositoryErrorFrom(e)));
     }),
 
-  save: (notice: Notice): Promise<Id> => {
-    if (notice.id > 0) {
+  save: (mjArticle: MjArticle): Promise<Id> => {
+    if (mjArticle.id > 0) {
       return new Promise((resolve, rejected) => {
-        Axios.put<void>(`${NOTICE_REPO_URL}/${notice.id}`, notice)
-          .then(() => resolve(notice.id))
+        Axios.put<void>(`${MJ_ARTICLE_REPO_URL}/${mjArticle.id}`, mjArticle)
+          .then(() => resolve(mjArticle.id))
           .catch(e => rejected(CommonErrorServiceImpl.createRepositoryErrorFrom(e)));
       })
     }
 
     return new Promise((resolve, rejected) => {
-      Axios.post<Id>(NOTICE_REPO_URL, notice)
+      Axios.post<Id>(MJ_ARTICLE_REPO_URL, mjArticle)
         .then(({ data: id }) => resolve(id))
         .catch(e => rejected(CommonErrorServiceImpl.createRepositoryErrorFrom(e)));
     })
   },
 
   deleteById: (id: Id): Promise<void> => new Promise((resolve, rejected) => {
-    Axios.delete<void>(`${NOTICE_REPO_URL}/${id}`)
+    Axios.delete<void>(`${MJ_ARTICLE_REPO_URL}/${id}`)
       .then(() => resolve())
       .catch(e => rejected(CommonErrorServiceImpl.createRepositoryErrorFrom(e)));
   })

@@ -6,7 +6,8 @@ module.exports = {
     return config
   },
   env: {
-    REPOSITORY_URL: process.env.REPOSITORY_URL,
+    CONTENT_API: process.env.CONTENT_API,
+    MOTHER_API: process.env.MOTHER_API,
   },
   useFileSystemPublicRoutes: false,
 };
