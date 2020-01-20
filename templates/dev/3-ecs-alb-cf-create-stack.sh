@@ -2,7 +2,7 @@
 
 python3 3-ecs-alb-cf-template.py > 3-ecs-alb-cf.template
 
-aws --profile ki cloudformation update-stack \
+aws --profile ki cloudformation create-stack \
 --stack-name community-web-dev-alb \
 --capabilities CAPABILITY_IAM \
 --template-body file://3-ecs-alb-cf.template

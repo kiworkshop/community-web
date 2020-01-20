@@ -2,7 +2,7 @@
 
 python3 ./2-ecs-cluster-cf-template.py > 2-ecs-cluster-cf.template
 
-aws --profile ki cloudformation update-stack \
+aws --profile ki cloudformation create-stack \
 --stack-name community-web-dev-cluster \
 --capabilities CAPABILITY_IAM \
 --template-body file://2-ecs-cluster-cf.template \
