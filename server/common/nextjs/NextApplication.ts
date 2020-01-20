@@ -1,13 +1,26 @@
+import { Request } from 'express';
+import { ServerResponse } from 'http';
 import { injectable } from 'inversify';
-import next from 'next';
-
-const app = next({ dev: process.env.NODE_ENV !== 'production' });
-const preparedApp = app.prepare();
+import Server from 'next/dist/next-server/server/next-server';
+import { ParsedUrlQuery } from 'querystring';
 
 @injectable()
 export class NextApplication {
-  public handle = app.getRequestHandler();
+  public handle = this.app.getRequestHandler();
 
-  public render: typeof app.render = (...args) => app.render(...args)
-  public run = () => preparedApp;
+  public constructor(
+    private app: Server
+  ) { }
+
+  public render = (
+    req: Request,
+    res: ServerResponse,
+    pathname: string,
+    query?: ParsedUrlQuery,
+    amp?: {
+      amphtml?: boolean;
+      hasAmp?: boolean;
+      dataOnly?: boolean;
+    }
+  ): Promise<string | null> => this.app.renderToHTML(req, res, pathname, query, amp);
 }

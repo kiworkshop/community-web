@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import createSagaMiddleware from "@redux-saga/core";
 import withReduxSaga from 'next-redux-saga';
 import withRedux from 'next-redux-wrapper';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
@@ -61,7 +61,7 @@ class MyApp extends App<AppProps> {
     store.dispatch(setPaths({ pathname: router.pathname }))
 
     return (
-      <Container>
+      <>
         <Head>
           <title>My page</title>
         </Head>
@@ -80,7 +80,7 @@ class MyApp extends App<AppProps> {
             </SnackbarProvider>
           </ReduxStoreProvider>
         </ThemeProvider>
-      </Container>
+      </>
     );
   }
 }
