@@ -96,7 +96,6 @@ t.add_resource(ecs.Service(
             [Select(0, Split("-", Ref("AWS::StackName"))),
              Select(1, Split("-", Ref("AWS::StackName"))),
              Select(2, Split("-", Ref("AWS::StackName"))),
-             Select(3, Split("-", Ref("AWS::StackName"))),
                 "cluster-id"]
         )
     ),
@@ -106,8 +105,7 @@ t.add_resource(ecs.Service(
         ContainerName=Join(
             "-",
             [Select(0, Split("-", Ref("AWS::StackName"))),
-             Select(1, Split("-", Ref("AWS::StackName"))),
-             Select(2, Split("-", Ref("AWS::StackName")))]
+             Select(1, Split("-", Ref("AWS::StackName")))]
         ),
         ContainerPort=80,
         TargetGroupArn=ImportValue(
@@ -116,7 +114,6 @@ t.add_resource(ecs.Service(
                 [Select(0, Split("-", Ref("AWS::StackName"))),
                  Select(1, Split("-", Ref("AWS::StackName"))),
                  Select(2, Split("-", Ref("AWS::StackName"))),
-                 Select(3, Split("-", Ref("AWS::StackName"))),
                     "alb-target-group"]
             ),
         ),

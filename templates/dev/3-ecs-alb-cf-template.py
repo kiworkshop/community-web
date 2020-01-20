@@ -99,7 +99,7 @@ t.add_resource(elb.Listener(
     )],
     # SSL certificate for https.
     Certificates=[elb.Certificate(
-        CertificateArn="arn:aws:acm:ap-northeast-2:540379673889:certificate/3202b1b0-7446-420e-99d2-4b175ecd6310")]
+        CertificateArn="arn:aws:acm:ap-northeast-2:540379673889:certificate/acbb8020-82db-4753-9686-f7d21faa98d2")]
 ))
 
 t.add_resource(elb.Listener(

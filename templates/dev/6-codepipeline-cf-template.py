@@ -184,7 +184,7 @@ t.add_resource(Pipeline(
                                           "service"]
                         ),
                         "Capabilities": "CAPABILITY_NAMED_IAM",
-                        "TemplatePath": "App::web/templates/dev/4-ecs-service-cf.template",
+                        "TemplatePath": "App::templates/dev/4-ecs-service-cf.template",
                         "RoleArn": GetAtt("CloudFormationCommunityWebDevRole", "Arn"),
                         "ParameterOverrides": """{
                             "Tag": {

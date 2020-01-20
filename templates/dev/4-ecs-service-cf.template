@@ -1,5 +1,5 @@
 {
-    "Description": "community-mother-api: ECS service",
+    "Description": "community-web: ECS service",
     "Parameters": {
         "ApplicationEnv": {
             "Default": "",
@@ -83,19 +83,6 @@
                                         }
                                     ]
                                 },
-                                {
-                                    "Fn::Select": [
-                                        3,
-                                        {
-                                            "Fn::Split": [
-                                                "-",
-                                                {
-                                                    "Ref": "AWS::StackName"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
                                 "cluster-id"
                             ]
                         ]
@@ -124,19 +111,6 @@
                                     {
                                         "Fn::Select": [
                                             1,
-                                            {
-                                                "Fn::Split": [
-                                                    "-",
-                                                    {
-                                                        "Ref": "AWS::StackName"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "Fn::Select": [
-                                            2,
                                             {
                                                 "Fn::Split": [
                                                     "-",
@@ -195,19 +169,6 @@
                                                 }
                                             ]
                                         },
-                                        {
-                                            "Fn::Select": [
-                                                3,
-                                                {
-                                                    "Fn::Split": [
-                                                        "-",
-                                                        {
-                                                            "Ref": "AWS::StackName"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
                                         "alb-target-group"
                                     ]
                                 ]
@@ -228,7 +189,7 @@
             "Properties": {
                 "ContainerDefinitions": [
                     {
-                        "Cpu": 1024,
+                        "Cpu": 2048,
                         "Environment": [
                             {
                                 "Name": "application_env",
@@ -251,7 +212,7 @@
                                     ".amazonaws.com",
                                     "/",
                                     {
-                                        "Fn::ImportValue": "community-mother-api-dev-repo"
+                                        "Fn::ImportValue": "community-web-dev-repo"
                                     },
                                     ":",
                                     {
@@ -260,7 +221,7 @@
                                 ]
                             ]
                         },
-                        "Memory": 976,
+                        "Memory": 957,
                         "Name": {
                             "Fn::Join": [
                                 "-",
@@ -281,19 +242,6 @@
                                     {
                                         "Fn::Select": [
                                             1,
-                                            {
-                                                "Fn::Split": [
-                                                    "-",
-                                                    {
-                                                        "Ref": "AWS::StackName"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "Fn::Select": [
-                                            2,
                                             {
                                                 "Fn::Split": [
                                                     "-",
