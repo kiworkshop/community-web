@@ -9,5 +9,5 @@ module.exports = {
     CONTENT_API: process.env.CONTENT_API,
     MOTHER_API: process.env.MOTHER_API,
   },
-  useFileSystemPublicRoutes: false,
+  useFileSystemPublicRoutes: true,
 };
