@@ -157,7 +157,7 @@ function* sagaPostNotice(action: ActionType<typeof postNotice>) {
       }
     }))
 
-    Router.push(`${PATH}/detail?id=${id}`, `${PATH}${id}`)
+    Router.push(`${PATH}/detail?id=${id}`, `${PATH}/${id}`)
   } catch (e) {
     yield put(postNoticeAsync.failure());
     yield put(enqueueSnackbar({
