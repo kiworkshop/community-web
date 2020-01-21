@@ -71,6 +71,7 @@ t.add_resource(elb.TargetGroup(
     HealthCheckIntervalSeconds="20",
     HealthCheckProtocol="HTTP",
     HealthCheckTimeoutSeconds="15",
+    HealthCheckPath="/health",
     HealthyThresholdCount="5",
     Matcher=elb.Matcher(
         HttpCode="200"),

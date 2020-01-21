@@ -4,6 +4,7 @@ import { TYPES } from './types';
 
 import next from 'next';
 import "src/common/api/CommonController";
+import "src/common/api/HealthController";
 import "src/content/api/ContentController";
 import "src/mother/api/MotherController";
 

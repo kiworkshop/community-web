@@ -15,7 +15,6 @@ export const createExpressApp = (container: Container, errorHandlers?: ErrorRequ
     theApp.use(bodyParser.json());
 
     theApp.use(nextI18NextMiddleware(I18NService));
-
   })
   .setErrorConfig((theApp) => {
     theApp.get("*", (req, res) => container.get<NextApplication>(TYPES.NextApplication).handle(req, res));
